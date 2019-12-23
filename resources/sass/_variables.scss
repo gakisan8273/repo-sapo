@@ -1,0 +1,164 @@
+// Body
+$body-bg: #f8fafc;
+
+// Typography
+$font-family-sans-serif: 'Nunito', sans-serif;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
+// Colors
+$blue: #3490dc;
+$indigo: #6574cd;
+$purple: #9561e2;
+$pink: #f66d9b;
+$red: #e3342f;
+$orange: #f6993f;
+$yellow: #ffed4a;
+$green: #38c172;
+$teal: #4dc0b5;
+$cyan: #6cb2eb;
+
+// ここから自分で設定
+
+$font-color-dafault: #495057;
+$main-color: #1DA1F2;
+$header-color: #F8F8F8;
+$footer-color:#383838;
+$not_edit-color : #E6ECF0;
+
+// containerクラスを作り、それに当てる　共通クラス
+$site-width: 980px;
+
+$font-size_s: 12px;
+$font-size_m: 14px;
+$font-size_default: 16px;
+$font-size_l: 18px;
+$font-size_xl: 24px;
+$font-size_xxl: 30px;
+
+$font-family: 'Hiragino Maru Gothic ProN';
+
+$space_s: 5px;
+$space_m: 10px;
+$space_l: 15px;
+$space_xl: 20px;
+$space_xxl: 30px;
+$space_3l: 40px;
+
+// マップ型変数
+$breakpoints:(
+  'sm': 'screen and (max-width: 414px)',
+  'md': 'screen and (max-width: 768px)',
+  'lg': 'screen and (max-width: 1000px)',
+  'xl': 'screen and (max-width: 1200px)',
+) !default;
+
+// smをデフォルトの引数
+@mixin mq($breakpoint: sm){
+  @media #{map-get($breakpoints, $breakpoint)} {
+    @content;
+  }
+}
+
+// base
+html, body{
+  width:100%;
+  color: $font-color-dafault;
+  font-size: $font-size_default;
+  line-height: 1.6;
+  font-family: $font-family;
+  background: #fff;
+  padding: 0;
+  margin: 0;
+}
+
+p,a{
+  // フォントをみやすく表示する
+  -webkit-font-smoothing: antialiased;
+}
+
+a{
+  color:$font-color-dafault;
+  text-decoration: none;
+  // ホバーした時にフワッとなる
+  transition: .3s;
+}
+a:hover{
+  // TOOD：ホバーした時の色を設定する
+  color:$font-color-dafault;
+  transition: .3s;
+}
+
+img{
+  width:100%;
+}
+ul{
+  padding:0;
+  padding-top: 0;;
+  padding-right: 0;
+  padding-bottom: 0;
+  padding-right: 0;
+  margin:0;
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+}
+li{
+  list-style: none;
+}
+
+// header
+.header{
+  box-sizing: border-box;
+  width:100%;
+  height:120px;
+  color:$font-color-dafault;
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: $space_xxl;
+  padding-right: $space-xxl;
+  background: $header-color;
+  position:fixed;
+  z-index:2;
+
+  @include mq() {
+    height: 60px;
+  }
+  
+  &-img_container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    & img{
+      width:auto;
+      height:110px;
+      margin-right: $space_xl;
+
+      @include mq() {
+        height: 50px;
+      }
+
+    }  
+  }
+  &-nav{
+    margin:0;
+    &-menu{
+      display:flex;
+      align-items: center;
+      justify-content:flex-end;
+      @include mq(){
+        display: none;
+      }
+      &-item{
+        margin-left: $space_3l;
+        cursor: pointer;
+        // TODO : 今いるページのみ下線を引く様にする
+        border-bottom: 4px solid $main-color;
+      }
+    }
+  }
+
+}
+
