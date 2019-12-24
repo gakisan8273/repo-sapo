@@ -16,3 +16,6 @@ Route::get('/', function () {
 });
 
 Route::get('/make', 'TweetController@index')->name('make');
+Route::get('/login', 'TweetController@login')->name('login');
+Route::get('/format', 'TweetController@format')->name('format');
+Route::get('/calcday', 'TweetController@calcday')->name('calcday');

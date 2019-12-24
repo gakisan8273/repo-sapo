@@ -29,4 +29,30 @@
     </ul>
   </nav>
 
+  <nav class="header-menu-trigger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </nav>
+  <nav class="header-nav-sm">
+    <ul class="header-nav-sm-menu">
+      <li class="header-nav-sm-menu-item">
+        <a href="" class="header-nav-sm-menu-item-link">報告ツイート生成</a>
+      </li>
+      <li class="header-nav-sm-menu-item">
+        <a href="" class="header-nav-sm-menu-item-link">フォーマット登録/変更</a>
+      </li>
+      <li class="header-nav-sm-menu-item">
+        <a href="" class="header-nav-sm-menu-item-link">日数計算方法変更</a>
+      </li>
+      <li class="header-nav-sm-menu-item">
+        <a href="" class="header-nav-sm-menu-item-link">Readme</a>
+      </li>
+      <li class="header-nav-sm-menu-item">
+        <a href="" class="header-nav-sm-menu-item-link">新規登録/ログイン</a>
+      </li>
+    </ul>
+  </nav>
+
+
 </div>
