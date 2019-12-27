@@ -169,7 +169,7 @@ li{
       position: absolute;
       top:0;
       right:-100%;
-      background:$header-color;
+      background: #000000;;
       width:100%;
       height:100vh;
       padding-top: 80px;
@@ -180,6 +180,10 @@ li{
       &-menu-item{
           cursor: pointer;
           margin-bottom: $space_l;
+          &-link{
+            color:#fff;
+            font-weight: 800;
+          }
       }
       @include mq(){
         display:block;
@@ -243,12 +247,22 @@ main{
   // ヘッダーを固定した分だけ下にずらしておく
   padding-top: $header-height;
   margin-bottom: $space_xxl;
+  @include mq(){
+    padding-top: $header-height-sm;
+    margin-bottom: $space_l;
+  }
 }
 .container{
   width:$site-width;
   display:flex;
   align-items: flex-start;
   justify-content: space-between;
+  @include mq(){
+    width:380px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
 }
 .edit_table{
   width:30%;
@@ -256,6 +270,9 @@ main{
   border-collapse: collapse;
   table-layout:auto;
   width:30%;
+  @include mq(){
+    width: 100%
+  }
   & tr{
     border-bottom: solid 1px $not_edit-color;
     border-top: solid 1px $not_edit-color;
@@ -283,6 +300,10 @@ main{
   margin-left: $space_3l;
   //　「前回の値」と高さを揃える
   margin-top: 35px;
+  @include mq(){
+    margin-left: $space_l;
+    margin-right: $space_l;
+  }
   &-show{
     border-radius: 4px;
     border: 1px solid  $not_edit-color;
@@ -331,14 +352,23 @@ main{
   padding-bottom: $space_xl;
   margin-top: $space_3l;
   // TODO：画面の真ん中にくる様JS作る
+  @include mq(){
+    width:100%;
+  }
   &-sentence{
     font-size:$font-size_xl;
+    margin-bottom: $space_l;
   }
   &-btn{
-    width:100%
+    width:100%;
+    @include mq(){
+      width:80%;
+    }
   }
 }
-
+.container-login{
+  justify-content: center;
+}
 
 //loginここまで----------------------------------------------------------
 
@@ -349,6 +379,11 @@ main{
   flex-flow: column;
   margin-top: $space_xxl;
   margin-right: $space_xxl;
+  @include mq(){
+    width: 100%;
+    margin-right: $space_l;    
+    margin-left: $space_l;
+  }
   &-id{
     display: flex;
     flex-flow: row;
@@ -358,12 +393,16 @@ main{
     height: 60px;
     margin-bottom: $space_l;
     &-input{
+      padding-left: $space_m;
       margin-left: $space_l;
       width:320px;
       border-radius: 4px;
       margin-bottom: $space_l;
       // height: 45px;
       display: block;
+      @include mq(){
+        width:250px;
+      }
     }
   }
   &-hash{
@@ -394,7 +433,12 @@ main{
   flex-flow: column;
   justify-content: flex-start;
   margin-top: $space_xxl;
-  margin-right: $space_xxl;
+  // margin-right: $space_xxl;
+  @include mq(){
+    width: 100%;
+    margin-right: $space_l;    
+    margin-left: $space_l;
+  }
   &-hash{
     display: flex;
     flex-flow: column;
@@ -423,7 +467,47 @@ main{
 
 // formatここまで------------------------------------------------------
 
+// calcday-------------------------------------------------------------
 
+.calcday{
+  width:100%;
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  @include mq(){
+    align-items: stretch;
+  }
+  & .form-check{
+    width:400px;
+    border-bottom: 1px solid $not_edit-color;
+    padding-top: $space_xl;
+    padding-bottom: $space_xl;
+    margin-bottom: 0;
+    @include mq(){
+      width:100%;
+    }
+    &:last-child{
+      border-bottom: none;
+    }
+    &-label{
+      width:500px; 
+     }
+  }
+  & .calc-title{
+    font-weight: 800;
+    margin-bottom: $space_s;
+  }
+  .input-group{
+    width:400px;
+    @include mq(){
+      width:350px;
+    }
+  }
+}
+
+
+// calcdayここまで------------------------------------------------
 
 // 共通パーツ
 .main-btn{

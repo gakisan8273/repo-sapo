@@ -11485,7 +11485,7 @@ li {
   position: absolute;
   top: 0;
   right: -100%;
-  background: #F8F8F8;
+  background: #000000;
   width: 100%;
   height: 100vh;
   padding-top: 80px;
@@ -11499,6 +11499,11 @@ li {
 .header-nav-sm-menu-item {
   cursor: pointer;
   margin-bottom: 15px;
+}
+
+.header-nav-sm-menu-item-link {
+  color: #fff;
+  font-weight: 800;
 }
 
 @media screen and (max-width: 414px) {
@@ -11576,6 +11581,13 @@ main {
   margin-bottom: 30px;
 }
 
+@media screen and (max-width: 414px) {
+  main {
+    padding-top: 60px;
+    margin-bottom: 15px;
+  }
+}
+
 .container {
   width: 980px;
   display: -webkit-box;
@@ -11586,12 +11598,31 @@ main {
           justify-content: space-between;
 }
 
+@media screen and (max-width: 414px) {
+  .container {
+    width: 380px;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+            flex-direction: column;
+    -webkit-box-align: center;
+            align-items: center;
+    -webkit-box-pack: start;
+            justify-content: flex-start;
+  }
+}
+
 .edit_table {
   width: 30%;
   margin-top: 20px;
   border-collapse: collapse;
   table-layout: auto;
   width: 30%;
+}
+
+@media screen and (max-width: 414px) {
+  .edit_table {
+    width: 100%;
+  }
 }
 
 .edit_table tr {
@@ -11625,6 +11656,13 @@ main {
           flex-flow: column;
   margin-left: 40px;
   margin-top: 35px;
+}
+
+@media screen and (max-width: 414px) {
+  .tweet {
+    margin-left: 15px;
+    margin-right: 15px;
+  }
 }
 
 .tweet-show {
@@ -11675,12 +11713,30 @@ main {
   margin-top: 40px;
 }
 
+@media screen and (max-width: 414px) {
+  .login {
+    width: 100%;
+  }
+}
+
 .login-sentence {
   font-size: 24px;
+  margin-bottom: 15px;
 }
 
 .login-btn {
   width: 100%;
+}
+
+@media screen and (max-width: 414px) {
+  .login-btn {
+    width: 80%;
+  }
+}
+
+.container-login {
+  -webkit-box-pack: center;
+          justify-content: center;
 }
 
 .make_format {
@@ -11692,6 +11748,14 @@ main {
           flex-flow: column;
   margin-top: 30px;
   margin-right: 30px;
+}
+
+@media screen and (max-width: 414px) {
+  .make_format {
+    width: 100%;
+    margin-right: 15px;
+    margin-left: 15px;
+  }
 }
 
 .make_format-id {
@@ -11710,11 +11774,18 @@ main {
 }
 
 .make_format-id-input {
+  padding-left: 10px;
   margin-left: 15px;
   width: 320px;
   border-radius: 4px;
   margin-bottom: 15px;
   display: block;
+}
+
+@media screen and (max-width: 414px) {
+  .make_format-id-input {
+    width: 250px;
+  }
 }
 
 .make_format-hash {
@@ -11760,7 +11831,14 @@ main {
   -webkit-box-pack: start;
           justify-content: flex-start;
   margin-top: 30px;
-  margin-right: 30px;
+}
+
+@media screen and (max-width: 414px) {
+  .ex_format {
+    width: 100%;
+    margin-right: 15px;
+    margin-left: 15px;
+  }
 }
 
 .ex_format-hash {
@@ -11793,6 +11871,63 @@ main {
   font-size: 12px;
   padding-left: 10px;
   padding-right: 10px;
+}
+
+.calcday {
+  width: 100%;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+  -webkit-box-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+          align-items: center;
+}
+
+@media screen and (max-width: 414px) {
+  .calcday {
+    -webkit-box-align: stretch;
+            align-items: stretch;
+  }
+}
+
+.calcday .form-check {
+  width: 400px;
+  border-bottom: 1px solid #E6ECF0;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 0;
+}
+
+@media screen and (max-width: 414px) {
+  .calcday .form-check {
+    width: 100%;
+  }
+}
+
+.calcday .form-check:last-child {
+  border-bottom: none;
+}
+
+.calcday .form-check-label {
+  width: 500px;
+}
+
+.calcday .calc-title {
+  font-weight: 800;
+  margin-bottom: 5px;
+}
+
+.calcday .input-group {
+  width: 400px;
+}
+
+@media screen and (max-width: 414px) {
+  .calcday .input-group {
+    width: 350px;
+  }
 }
 
 .main-btn {

@@ -15,7 +15,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/make', 'TweetController@index')->name('make');
-Route::get('/login', 'TweetController@login')->name('login');
-Route::get('/format', 'TweetController@format')->name('format');
-Route::get('/calcday', 'TweetController@calcday')->name('calcday');
+Route::get('/make', 'Auth\TwitterController@index')->name('make');
+Route::post('/make', 'Auth\TwitterController@editFormat')->name('make');
+Route::get('/login', 'Auth\TwitterController@login')->name('login');
+Route::get('/format', 'Auth\TwitterController@format')->name('format');
+Route::get('/calcday', 'Auth\TwitterController@calcday')->name('calcday');
+
+//ログインURL
+Route::get('/auth/twitter', 'Auth\TwitterController@redirectToProvider');
+// コールバックURL
+Route::get('/auth/twitter/callback', 'Auth\TwitterController@handleProviderCallback');
+// ログアウトURL
+Route::get('/auth/twitter/logout', 'Auth\TwitterController@logout');

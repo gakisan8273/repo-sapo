@@ -34,4 +34,13 @@ return [
         'secret' => env('SPARKPOST_SECRET'),
     ],
 
+    /**  
+     * socialite Settings
+     */
+    'twitter' => [
+        'client_id'     => env('TWITTER_API_KEY'),
+        'client_secret' => env('TWITTER_API_SECRET'),
+        'redirect'      => env('TWITTER_CALLBACKURL'),
+    ],
+
 ];

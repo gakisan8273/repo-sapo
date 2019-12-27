@@ -6,8 +6,9 @@
                     <div class="card-header">Example Component</div>
 
                     <div class="card-body">
-                        I'm an example component.
+                        {{ title }}
                     </div>
+                    <test message="{{ "message" }}"></test>
                 </div>
             </div>
         </div>
@@ -15,9 +16,16 @@
 </template>
 
 <script>
+    import test from './test.vue';
     export default {
+        data: function() {
+            return {
+                message: "tes t"
+            }
+        },
+        props: ['title'],
         mounted() {
-            console.log('Component mounted.')
+            // console.log('Component mounted.')
         }
     }
 </script>

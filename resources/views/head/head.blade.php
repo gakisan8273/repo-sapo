@@ -15,6 +15,7 @@
   <!-- Styles -->
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   
+  
   <title>れぽさぽ for twitter</title>
 </head>
 <body>
@@ -26,5 +27,7 @@
 
   {{-- フッターを差し込む --}}
   @include('footer.footer')
+
+  <script src="{{ asset('js/app.js')}}"></script>
 </body>
 </html>
