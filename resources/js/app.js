@@ -22,6 +22,13 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('make-format', require('./components/MakeFormat.vue').default);
 Vue.component('test', require('./components/test.vue').default);
+Vue.component('edit-format', require('./components/format/editFormat.vue').default);
+Vue.component('insert-button', require('./components/format/insertButton.vue').default);
+Vue.component('send-format', require('./components/format/sendFormat.vue').default);
+Vue.component('make-tweet', require('./components/make/MakeTweet.vue').default);
+Vue.component('header-vue', require('./components/header/Header.vue').default);
+// Vue.component('insert-numbers', require('./components/make/InsertNumbers.vue').default);
+// Vue.component('input-numbers', require('./components/make/InputNumbers.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -32,3 +39,7 @@ Vue.component('test', require('./components/test.vue').default);
 const app = new Vue({
     el: '#app',
 });
+
+const app2 = new Vue({
+    el:'#app2',
+})

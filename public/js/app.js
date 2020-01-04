@@ -1894,11 +1894,867 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['format'],
+  computed: {
+    copyFormat: function copyFormat() {
+      console.log(this.format);
+      return this.format;
+    },
+    // []と{}の中身を*+*に置換する
+    modifyFormat: function modifyFormat() {
+      if (this.format) {
+        //フォーマットの中の数字を置換して一般化する
+        // let replacePattern = '/\{[^}]*\}+/u';
+        // \{ : \を付けると特殊文字をエスケープする, [^}] : }以外にマッチする , * : 0回以上の繰り返し , \} : \を付けると特殊文字をエスケープする, 'g' : 
+        var replacePattern1 = /\{[^}]*\}/g;
+        var replaceObj1 = new RegExp(replacePattern1);
+        var replacement1 = '{*+*}';
+        var modifiedFormat = this.format.replace(replaceObj1, replacement1); // [^~~~~] 内で{ はエスケープいらないが、]は必要だった…
+
+        var replacePattern2 = /\[[^\]]*\]/g;
+        var replaceObj2 = new RegExp(replacePattern2);
+        var replacement2 = '[*+*]';
+        modifiedFormat = modifiedFormat.replace(replaceObj2, replacement2);
+        console.log(modifiedFormat);
+        return modifiedFormat;
+      } else {}
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/format/editFormat.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/format/editFormat.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _insertButton_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./insertButton.vue */ "./resources/js/components/format/insertButton.vue");
+/* harmony import */ var _sendFormat_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sendFormat.vue */ "./resources/js/components/format/sendFormat.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      receivedFormat: this.format,
+      modifiedFormat: this.format
+    };
+  },
+  props: ['format', 'hash_tags', 'user'],
+  mounted: function mounted() {},
   methods: {
     // []と{}の中身を*+*に置換する
-    replace: replace
+    modifyFormat: function modifyFormat() {
+      // event.preventDefault()
+      //フォーマットの中の数字を置換して一般化する
+      // let replacePattern = '/\{[^}]*\}+/u';
+      // \{ : \を付けると特殊文字をエスケープする, [^}] : }以外にマッチする , * : 0回以上の繰り返し , \} : \を付けると特殊文字をエスケープする, 'g' : 
+      var replacePattern1 = /\{[^}]*\}/g;
+      var replaceObj1 = new RegExp(replacePattern1);
+      var replacement1 = '{*+*}';
+      this.modifiedFormat = this.receivedFormat.replace(replaceObj1, replacement1); // [^~~~~] 内で{ はエスケープいらないが、]は必要だった…
+
+      var replacePattern2 = /\[[^\]]*\]/g;
+      var replaceObj2 = new RegExp(replacePattern2);
+      var replacement2 = '[*+*]';
+      this.modifiedFormat = this.modifiedFormat.replace(replaceObj2, replacement2);
+      console.log(this.modifiedFormat);
+    },
+    insertPattern_day: function insertPattern_day() {
+      console.log("insertPattern_day"); // フォーマット入力欄に[]を挿入する
+      // dataにあるrecievedFormatを操作する
+      // 選択カーソルの最初と最後を取得する
+      // カーソル最初まででsliceする
+      // カーソル最後からsliceする
+      // 真ん中のものの前後に[]を付与する
+      // 文字列を結合する 改行はどうなる？
+      // console.log(this.$refs.insert.focus());
+      // let textarea = document.getElementsByClassName('js-format')[0];
+
+      var pos_start = this.$refs.insert.selectionStart;
+      var pos_end = this.$refs.insert.selectionEnd;
+      var val = this.receivedFormat;
+      var range = val.slice(pos_start, pos_end);
+      var beforeNode = val.slice(0, pos_start);
+      var afterNode = val.slice(pos_end);
+      var insertNode = "[" + range + "]";
+      this.receivedFormat = beforeNode + insertNode + afterNode;
+      this.modifyFormat(); // console.log({beforeNode});
+      // console.log({insertNode});
+      // console.log({afterNode});
+      // console.log(this.receivedFormat);
+    },
+    insertPattern_time: function insertPattern_time() {
+      console.log("insertPattern_time"); // フォーマット入力欄に[]を挿入する
+      // dataにあるrecievedFormatを操作する
+      // 選択カーソルの最初と最後を取得する
+      // カーソル最初まででsliceする
+      // カーソル最後からsliceする
+      // 真ん中のものの前後に[]を付与する
+      // 文字列を結合する 改行はどうなる？
+      // console.log(this.$refs.insert.focus());
+      // let textarea = document.getElementsByClassName('js-format')[0];
+
+      var pos_start = this.$refs.insert.selectionStart;
+      var pos_end = this.$refs.insert.selectionEnd;
+      var val = this.receivedFormat;
+      var range = val.slice(pos_start, pos_end);
+      var beforeNode = val.slice(0, pos_start);
+      var afterNode = val.slice(pos_end);
+      var insertNode = "{" + range + "}";
+      this.receivedFormat = beforeNode + insertNode + afterNode;
+      this.modifyFormat(); // console.log({beforeNode});
+      // console.log({insertNode});
+      // console.log({afterNode});
+      // console.log(this.receivedFormat);
+    },
+    insertPattern_copypaste: function insertPattern_copypaste() {
+      console.log("insertPattern_copypaste"); // フォーマット入力欄に[]を挿入する
+      // dataにあるrecievedFormatを操作する
+      // 選択カーソルの最初と最後を取得する
+      // カーソル最初まででsliceする
+      // カーソル最後からsliceする
+      // 真ん中のものの前後に[]を付与する
+      // 文字列を結合する 改行はどうなる？
+      // console.log(this.$refs.insert.focus());
+      // let textarea = document.getElementsByClassName('js-format')[0];
+
+      var pos_start = this.$refs.insert.selectionStart;
+      var pos_end = this.$refs.insert.selectionEnd;
+      var val = this.receivedFormat;
+      var range = val.slice(pos_start, pos_end);
+      var beforeNode = val.slice(0, pos_start);
+      var afterNode = val.slice(pos_end);
+      var insertNode = "*---*";
+      this.receivedFormat = beforeNode + insertNode + afterNode;
+      this.modifyFormat(); // console.log({beforeNode});
+      // console.log({insertNode});
+      // console.log({afterNode});
+      // console.log(this.receivedFormat);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/format/insertButton.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/format/insertButton.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    handleClick1: function handleClick1() {
+      // disabledがボタンについているとイベントが発火しない
+      event.preventDefault();
+      console.log('handleClick1');
+      this.$emit('child-event1');
+    },
+    handleClick2: function handleClick2() {
+      event.preventDefault();
+      this.$emit('child-event2');
+    },
+    handleClick3: function handleClick3() {
+      event.preventDefault();
+      this.$emit('child-event3');
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/format/sendFormat.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/format/sendFormat.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['user'],
+  methods: {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/header/Header.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/header/Header.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      menu: false,
+      activeMake: false,
+      activeFormat: false,
+      activeCalcday: false,
+      activeReadme: false,
+      activeLogin: false
+    };
+  },
+  props: ['icon'],
+  mounted: function mounted() {
+    this.getPath();
+  },
+  methods: {
+    activateMenu: function activateMenu() {
+      // スマホのハンバーガーメニューをクリックすると、activeクラスを付与する
+      // activeになってるときはactiveを外す
+      console.log("activateMenu");
+      this.menu = !this.menu;
+      console.log(this.menu);
+    },
+    getPath: function getPath() {
+      var path = location.pathname;
+      console.log('getPath');
+      console.log({
+        path: path
+      });
+
+      switch (path) {
+        case "/make":
+          this.activeMake = true;
+          break;
+
+        case "/format":
+          this.activeFormat = true;
+          break;
+
+        case "/calcday":
+          this.activeCalcday = true;
+          break;
+
+        case "/readme":
+          this.activeReadme = true;
+          break;
+
+        case "/login":
+          this.activeLogin = true;
+          break;
+
+        case "/":
+          this.activeMake = true;
+          break;
+
+        default:
+          break;
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/make/MakeTweet.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/make/MakeTweet.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      receivedFormat: this.format,
+      replacedFormat: this.format,
+      inputData_day: "",
+      inputData_time: Array(this.countDOM()['count']),
+      //count個の空配列
+      checkBoxes: [],
+      diffDays: 0
+    };
+  },
+  props: ['user', 'format', 'calcday', 'start_date', 'latestReportTweet_tweet', 'latestReportTweet_time', 'latestReportTweet_time_for_js'],
+  mounted: function mounted() {
+    this.replaceFormat_copypaste();
+    this.recommendDays();
+    this.replaceFormat_day();
+    console.log("mounted");
+  },
+  computed: {
+    dividedIndex: function dividedIndex() {
+      console.log("dividedIndex"); // {が何個あるか探す (count - 1 ) +1 = count 個ある
+
+      var count = 0;
+      var dividedIndex = []; // { がある位置
+      // let format = this.replacedFormat;
+
+      dividedIndex[count] = this.replacedFormat.indexOf('{'); // indexOfは一致しなければ−1を返す
+
+      while (dividedIndex[count] > 0) {
+        count++;
+        dividedIndex[count] = this.replacedFormat.indexOf('{', dividedIndex[count - 1] + 1);
+      } // console.log({dividedIndex});
+      // console.log({count});
+
+
+      var result = {
+        count: count,
+        dividedIndex: dividedIndex
+      };
+      return dividedIndex;
+    },
+    dividedIndex_day: function dividedIndex_day() {
+      console.log("dividedIndex_day"); // {が何個あるか探す (count - 1 ) +1 = count 個ある
+
+      var count = 0;
+      var dividedIndex = []; // { がある位置
+      // let format = this.replacedFormat;
+
+      dividedIndex[count] = this.replacedFormat.indexOf('['); // indexOfは一致しなければ−1を返す
+
+      while (dividedIndex[count] > 0) {
+        count++;
+        dividedIndex[count] = this.replacedFormat.indexOf('[', dividedIndex[count - 1] + 1);
+      } // console.log({dividedIndex});
+      // console.log({count});
+
+
+      var result = {
+        count: count,
+        dividedIndex: dividedIndex
+      };
+      return dividedIndex;
+    },
+    getTimesFromLatestTweet: function getTimesFromLatestTweet() {
+      console.log('getTimesFromLatestTweet'); // 過去ツイートから学習時間を取得する
+      // フォーマットに{}が含まれている行に対して数字とかの検索〜取得を実行する
+      // フォーマットを行ごとに分割する
+
+      var splitFormat = this.format.split(/\r\r|\n/); // {}を含むか判定する ついでに[]もやっとくか
+
+      var pattern = "{"; // 判定パターン
+
+      var findIndex = []; // { があるインデックスにフラグを立てる
+      // 行ごとに分割したフォーマットの各行に{があれば配列に１を格納ー＞１は{がある行
+
+      for (var i = 0; i < splitFormat.length; i++) {
+        if (splitFormat[i].indexOf(pattern) >= 0) {
+          findIndex[i] = 1;
+        } else {
+          findIndex[i] = 0;
+        }
+      } // 過去ツイートを上から数字などで検索して取得する ヒットした順に、インデックスをつける（各インプットボックスと対応させる）
+
+
+      var splitLatestReportTweet = this.latestReportTweet_tweet.split(/\r\r|\n/);
+      var tmp = [];
+      var latestReportTweet_times = []; // 過去ツイートの時間を格納する配列
+
+      pattern = /[0-9０-９]+[..．:：0-9０-９hoursmin分時間\s]*[0-9０-９hoursmin分時間]*/g;
+
+      for (var _i = 0; _i < findIndex.length; _i++) {
+        if (findIndex[_i] === 1) {
+          // 数字などを検索する 正規表現で ヒットしたらそれを取得し、配列に格納
+          tmp = splitLatestReportTweet[_i].match(pattern);
+          console.log({
+            tmp: tmp
+          });
+          latestReportTweet_times = latestReportTweet_times.concat(tmp);
+          console.log(latestReportTweet_times);
+        } else {// 何もしない
+        }
+      }
+
+      return latestReportTweet_times;
+    },
+    getDaysFromLatestTweet: function getDaysFromLatestTweet() {
+      console.log('getDaysFromLatestTweet'); // 過去ツイートから日数を取得する
+      // フォーマットに[]が含まれている行に対して数字とかの検索〜取得を実行する
+      // フォーマットを行ごとに分割する
+
+      var splitFormat = this.format.split(/\r\r|\n/); // []を含むか判定する
+
+      var pattern = "["; // 判定パターン
+
+      var findIndex = []; // { があるインデックスにフラグを立てる
+      // 行ごとに分割したフォーマットの各行に[があれば配列に１を格納ー＞１は{がある行
+
+      for (var i = 0; i < splitFormat.length; i++) {
+        if (splitFormat[i].indexOf(pattern) >= 0) {
+          findIndex[i] = 1;
+          break; // 日数は一つのみとするので、１個見つかったらループを抜ける
+        } else {
+          findIndex[i] = 0;
+        }
+      } // 過去ツイートを上から数字などで検索して取得する
+
+
+      var splitLatestReportTweet = this.latestReportTweet_tweet.split(/\r\r|\n/);
+      var tmp = [];
+      var latestReportTweet_days = []; // 過去ツイートの時間を格納する配列
+
+      pattern = /[0-9０-９]+[..．:：0-9０-９hoursmin分時間\-\s]*[0-9０-９hoursmin分時間]*/g;
+
+      for (var _i2 = 0; _i2 < findIndex.length; _i2++) {
+        if (findIndex[_i2] === 1) {
+          // 数字などを検索する 正規表現で ヒットしたらそれを取得し、配列に格納
+          tmp = splitLatestReportTweet[_i2].match(pattern);
+          console.log({
+            tmp: tmp
+          });
+          latestReportTweet_days = latestReportTweet_days.concat(tmp);
+          console.log(latestReportTweet_days);
+        } else {// 何もしない
+        }
+      }
+
+      return latestReportTweet_days;
+    },
+    sentText: function sentText() {
+      //[]と{}を削除したものをツイート用に
+      var sentText = this.replacedFormat.replace(/[\{\}\[\]]/g, '');
+      console.log({
+        sentText: sentText
+      });
+      return sentText;
+    }
+  },
+  methods: {
+    countDOM: function countDOM() {
+      console.log("countDOM()"); // {が何個あるか探す (count - 1 ) +1 = count 個ある
+
+      var count = 0;
+      var dividedIndex = []; // { がある位置
+      // let format = this.replacedFormat;
+
+      dividedIndex[count] = this.format.indexOf('{'); // indexOfは一致しなければ−1を返す
+
+      while (dividedIndex[count] > 0) {
+        count++;
+        dividedIndex[count] = this.format.indexOf('{', dividedIndex[count - 1] + 1);
+      } // console.log({dividedIndex});
+      // console.log({count});
+
+
+      var result = {
+        count: count,
+        dividedIndex: dividedIndex
+      };
+      return result; // { の個数を返す この数だけtimeのDOMを生成する
+    },
+    replaceFormat: function replaceFormat(item) {
+      // inputboxに入力すると、対応した[]{}が入力された数字に置換される
+      // フォーマットを{任意文字列}で検索（{}が何番目かは、入力したinputboxの引数から読み取る）し、それを{入力文字列}に置換する
+      // index、入力文字列は子のInputNumbers.vueから受け取る
+      console.log('replaceFormat');
+      console.log({
+        item: item
+      }); // { がある位置
+
+      var dividedIndex = this.dividedIndex[item - 1]; //computedから
+
+      var dividedFormat = [];
+      console.log({
+        dividedIndex: dividedIndex
+      }); // 検索の開始位置をずらす-> {}の位置の前後で文字列を分割し、後ろの文字列から検索する
+
+      dividedFormat[0] = this.replacedFormat.slice(0, dividedIndex); //最初から { まで
+
+      dividedFormat[1] = this.replacedFormat.slice(dividedIndex); // { から終わりまで
+
+      console.log(dividedFormat[0]);
+      console.log(dividedFormat[1]); // { の前と、置換した{ 以降のものを結合する
+
+      this.replacedFormat = dividedFormat[0] + dividedFormat[1].replace(/\{(?:[\0-\|~-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])*\}+/, '{' + this.inputData_time[item - 1] + '}');
+    },
+    replaceFormat_day: function replaceFormat_day() {
+      console.log('replaceFormat_day'); //日付欄用
+      // [ がある位置
+
+      var dividedIndex = this.dividedIndex_day; //computedから
+
+      var dividedFormat = [];
+      console.log({
+        dividedIndex: dividedIndex
+      }); // 検索の開始位置をずらす-> {}の位置の前後で文字列を分割し、後ろの文字列から検索する
+
+      dividedFormat[0] = this.replacedFormat.slice(0, dividedIndex); //最初から { まで
+
+      dividedFormat[1] = this.replacedFormat.slice(dividedIndex); // { から終わりまで
+
+      console.log(dividedFormat[0]);
+      console.log(dividedFormat[1]); // { の前と、置換した{ 以降のものを結合する
+
+      this.replacedFormat = dividedFormat[0] + dividedFormat[1].replace(/\[(?:[\0-\\\^-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])*\]+/, '[' + this.diffDays + ']');
+    },
+    replaceFormat_copypaste: function replaceFormat_copypaste() {
+      // フォーマットを\nで検索し、そこで分割する 分割前に*---*があるか？あれば１行目をコピペすればいい
+      // 次の\nまでにあるか？ あれば２行目をコピペすればいい
+      console.log("replaceFormat_copypasete"); // 何行目をコピペすればいいか、フォーマットから取得
+
+      var splitFormat = this.format.split(/\r\r|\n/);
+      console.log(splitFormat);
+      var pattern = "*---*"; // コピペする行を示すパターン
+
+      var row = "";
+      var findIndex = ""; // 何行目に*---*があるか ０→１行目
+
+      for (var i = 0; i < splitFormat.length; i++) {
+        if (splitFormat[i].indexOf(pattern) >= 0) {
+          findIndex = i;
+          break;
+        }
+      }
+
+      console.log(findIndex); // 前回ツイートからコピーする作業
+      // 前回ツイートを分割する
+
+      var splitLatestReportTweet = this.latestReportTweet_tweet.split(/\r\r|\n/); // findIndex行目を取得する
+
+      var copiedText = splitLatestReportTweet[findIndex]; // 生成するツイートのfindIndex行目をcopiedTextに置き換える
+
+      splitFormat[findIndex] = copiedText; // 生成するツイートを再結合する
+
+      var format = "";
+
+      for (var _i3 = 0; _i3 < splitFormat.length; _i3++) {
+        format += splitFormat[_i3];
+        format += "\n";
+      }
+
+      console.log(this.replacedFormat);
+      this.replacedFormat = format;
+    },
+    addUrl: function addUrl() {
+      // 末尾にURLが追加される チェックボックスがONになっていれば、Twitter画面に遷移するときに付与する
+      // POSTの前にこのメソッドを実行してthis.replacedFormatを書き換える
+      // チェックボックスの状態をDataにもたせておく
+      console.log("addUrl");
+      var word = 'Posted by:';
+      var url = 'https://gakisan8273.com/reportsupporter/';
+      var pattern = word + url;
+
+      if (this.checkBoxes.find(function (item) {
+        return item === "addUrl";
+      })) {
+        this.replacedFormat += "\n" + pattern;
+        console.log("added");
+      } else {
+        this.replacedFormat = this.replacedFormat.replace(pattern, "");
+        console.log("deleted");
+      }
+    },
+    recommendDays: function recommendDays() {
+      console.log('diffDays'); // TODO 過去ツイートに日数がないときの演算は？ 何を出力させる？
+      // 前回ツイートの日付と日数計算オプション設定値から、日付の提案の値を産出する
+      // 1 前回ツイート日からの経過日数計算
+      // 前回の報告ツイート内にある日数を取得し、
+      // そこから何日経過したかを計算します
+      //2 学習した日付のみの日数をカウント
+      // 前回の報告ツイート内にある日数を取得し、
+      // それに＋１します
+      // Option 3
+      // 学習開始日からの経過日数を計算
+      // 学習開始日を設定し、
+      // そこから何日経過したかを計算します
+      // １８時〜２４時のツイートは、当日扱いとする
+      // ０時〜１８時のツイートは、前日扱いとする （日を跨いで前日の報告ツイートをすることを想定）
+
+      var hour = 18; // この時間を境目に前日扱いにする
+
+      var latestDate = new Date(this.latestReportTweet_time_for_js); // 前回ツイートの日付 Dateオブジェクト
+
+      var latestDate_hour = latestDate.getHours(); // 時間を取得
+
+      var latestDate_time = latestDate.getTime(); // ミリ秒単位の経過時間
+
+      var nowDate = new Date();
+      var nowDate_hour = nowDate.getHours();
+      var nowDate_time = nowDate.getTime();
+      var diffDays = 0;
+
+      switch (this.calcday) {
+        case "1":
+          diffDays = Number(this.getDaysFromLatestTweet) + parseInt((nowDate_time - latestDate_time) / (1000 * 60 * 60 * 24), 10); // 小数点以下切り捨て 
+
+          console.log(this.calcday);
+          console.log(_typeof(Number(this.getDaysFromLatestTweet)));
+          console.log({
+            nowDate_time: nowDate_time
+          });
+          console.log({
+            latestDate_time: latestDate_time
+          });
+          console.log((nowDate_time - latestDate_time) / (1000 * 60 * 60 * 24));
+          console.log({
+            diffDays: diffDays
+          }); // 1になってる ここから修正
+          // calcday１〜2共通の処理
+
+          if (latestDate_hour < hour) {
+            // 前回ツイート時間が18時以前だったら、前回ツイート日より1日前のツイートの意味
+            // 普通に経過日時を計算すると1日足りなくなるので、diffDaysを＋１する
+            console.log("前回ツイートが１８時以前");
+            diffDays++;
+            console.log({
+              diffDays: diffDays
+            });
+          }
+
+          break;
+
+        case "2":
+          diffDays = Number(this.getDaysFromLatestTweet) + 1; // 前回ツイートの日数＋１
+
+          console.log(this.calcday);
+          console.log({
+            diffDays: diffDays
+          }); // calcday１〜2共通の処理
+
+          if (latestDate_hour < hour) {
+            // 前回ツイート時間が18時以前だったら、前回ツイート日より1日前のツイートの意味
+            // 普通に経過日時を計算すると1日足りなくなるので、diffDaysを＋１する
+            console.log("前回ツイートが１８時以前");
+            diffDays++;
+            console.log({
+              diffDays: diffDays
+            });
+          }
+
+          break;
+
+        case "3":
+          // calcday3のときのみ
+          var start_date_year = this.start_date.slice(0, 4); //"yyyy"-mm-dd
+
+          var start_date_month = this.start_date.slice(5, 7); //yyyy-"mm"-dd
+
+          var start_date_day = this.start_date.slice(8, 10); //yyyy-mm-"dd"
+
+          latestDate_time = new Date(start_date_year, start_date_month - 1, start_date_day);
+          console.log(this.calcday);
+          console.log({
+            latestDate_time: latestDate_time
+          });
+          console.log({
+            nowDate_time: nowDate_time
+          });
+          diffDays = 1 + parseInt((nowDate_time - latestDate_time) / (1000 * 60 * 60 * 24), 10); // 小数点以下切り捨て start_date（yyyy-mm-dd） と 今の日付の差
+          // 初日を1日目とするため１を足す
+          // https://keisan.casio.jp/exec/system/1177658154 日数計算サイト これと一致した 前のreportsupporterは間違っていた・・・
+
+          break;
+
+        default:
+          console.log("no switch");
+          break;
+      } //calcday1~3共通の処理
+
+
+      if (nowDate_hour < hour) {
+        // 今回のツイート時間が１８時以前だったら、昨日のツイートの意味
+        // 普通に経過時間を計算すると1日多くなるので、diffDaysを−１する
+        console.log("今回ツイートが１８時以前");
+        diffDays--;
+        console.log({
+          diffDays: diffDays
+        });
+      }
+
+      console.log("出力される日数は↓");
+      console.log({
+        diffDays: diffDays
+      }); // return diffDays;
+
+      this.diffDays = diffDays;
+    }
   }
 });
 
@@ -37373,23 +38229,12 @@ var render = function() {
     _vm._m(0),
     _vm._v(" "),
     _c("textarea", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.format,
-          expression: "format"
-        }
-      ],
       staticClass: "tweet-show today-tweet-show",
       attrs: { name: "format", id: "format", cols: "30", rows: "5" },
       domProps: { value: _vm.format },
       on: {
         input: function($event) {
-          if ($event.target.composing) {
-            return
-          }
-          _vm.format = $event.target.value
+          return _vm.$emit("input", $event.target.value)
         }
       }
     })
@@ -37435,6 +38280,752 @@ var staticRenderFns = [
         )
       ])
     ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/format/editFormat.vue?vue&type=template&id=2c6fb704&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/format/editFormat.vue?vue&type=template&id=2c6fb704& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("div", { staticClass: "make_format-hash" }, [
+        _c("label", { staticClass: "label", attrs: { for: "" } }, [
+          _vm._v("ハッシュタグ")
+        ]),
+        _vm._v(" "),
+        _c("textarea", {
+          staticClass: "tweet-show today-tweet-show",
+          attrs: { name: "hash_tags", id: "", cols: "30", rows: "3" },
+          domProps: { value: _vm.hash_tags },
+          on: {
+            input: function($event) {
+              return _vm.$emit("input", $event.target.value)
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "make_format-format" }, [
+        _c("label", { staticClass: "label", attrs: { for: "" } }, [
+          _vm._v("フォーマット")
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "make_format-format-insert" },
+          [
+            _c("insert-button", {
+              on: {
+                "child-event1": _vm.insertPattern_day,
+                "child-event2": _vm.insertPattern_time,
+                "child-event3": _vm.insertPattern_copypaste
+              }
+            })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "textarea",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.receivedFormat,
+                expression: "receivedFormat"
+              }
+            ],
+            ref: "insert",
+            staticClass: "tweet-show today-tweet-show",
+            attrs: {
+              name: "format_original",
+              id: "format_original",
+              cols: "30",
+              rows: "5"
+            },
+            domProps: { value: _vm.receivedFormat },
+            on: {
+              keyup: _vm.modifyFormat,
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.receivedFormat = $event.target.value
+              }
+            }
+          },
+          [
+            _vm._v(
+              "    <!-- @input=\"$emit('input', $event.target.value)\" -->\n    "
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c("textarea", {
+          staticClass: "tweet-show today-tweet-show",
+          staticStyle: { display: "none" },
+          attrs: { name: "format", id: "format", cols: "30", rows: "5" },
+          domProps: { value: _vm.modifiedFormat }
+        })
+      ]),
+      _vm._v(" "),
+      _c("send-format", { attrs: { user: _vm.user } })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/format/insertButton.vue?vue&type=template&id=a4d43230&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/format/insertButton.vue?vue&type=template&id=a4d43230& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("small", { staticClass: "make_format-format-insert-btn" }, [
+    _c("p", [_vm._v("挿入ボタン")]),
+    _vm._v(" "),
+    _c("p", [_vm._v(": Day")]),
+    _c(
+      "button",
+      { staticClass: "small-btn", on: { click: _vm.handleClick1 } },
+      [_vm._v("[]")]
+    ),
+    _vm._v(" "),
+    _c("p", [_vm._v("Time")]),
+    _c(
+      "button",
+      { staticClass: "small-btn", on: { click: _vm.handleClick2 } },
+      [_vm._v("{}")]
+    ),
+    _vm._v(" "),
+    _c("p", [_vm._v("コピペ行")]),
+    _c(
+      "button",
+      { staticClass: "small-btn", on: { click: _vm.handleClick3 } },
+      [_vm._v("*---*")]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/format/sendFormat.vue?vue&type=template&id=0a99407c&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/format/sendFormat.vue?vue&type=template&id=0a99407c& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "button",
+    {
+      staticClass: "today-make_tweet main-btn",
+      class: { active: _vm.activeFormat },
+      attrs: { disabled: !_vm.user }
+    },
+    [_vm._v("\n  フォーマット登録/変更\n")]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/header/Header.vue?vue&type=template&id=4c955e98&":
+/*!****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/header/Header.vue?vue&type=template&id=4c955e98& ***!
+  \****************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "header" }, [
+    _c("div", { staticClass: "header-img_container" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "header-icon" }, [
+        this.icon
+          ? _c("img", {
+              staticClass: "header-icon-img",
+              attrs: { src: this.icon, alt: "れぽさぽ" }
+            })
+          : _c("img", {
+              staticClass: "header-icon-img",
+              attrs: { src: "/assets/images/default_icon.png", alt: "れぽさぽ" }
+            })
+      ])
+    ]),
+    _vm._v(" "),
+    _c("nav", { staticClass: "header-nav" }, [
+      _c("ul", { staticClass: "header-nav-menu" }, [
+        _c("li", { staticClass: "header-nav-menu-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "header-nav-menu-item-link",
+              class: { active: _vm.activeMake },
+              attrs: { href: "/make" }
+            },
+            [_vm._v("報告ツイート生成")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "header-nav-menu-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "header-nav-menu-item-link",
+              class: { active: _vm.activeFormat },
+              attrs: { href: "/format" }
+            },
+            [_vm._v("フォーマット登録/変更")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "header-nav-menu-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "header-nav-menu-item-link",
+              class: { active: _vm.activeCalcday },
+              attrs: { href: "/calcday" }
+            },
+            [_vm._v("日数計算方法変更")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "header-nav-menu-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "header-nav-menu-item-link",
+              class: { active: _vm.activeReadme },
+              attrs: { href: "/readme" }
+            },
+            [_vm._v("Readme")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "header-nav-menu-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "header-nav-menu-item-link",
+              class: { active: _vm.activeLogin },
+              attrs: { href: "/login" }
+            },
+            [_vm._v("新規登録/ログイン/ログアウト")]
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "nav",
+      {
+        staticClass: "header-menu-trigger",
+        class: { active: _vm.menu },
+        on: { click: _vm.activateMenu }
+      },
+      [_c("span"), _vm._v(" "), _c("span"), _vm._v(" "), _c("span")]
+    ),
+    _vm._v(" "),
+    _c("nav", { staticClass: "header-nav-sm", class: { active: _vm.menu } }, [
+      _c("ul", { staticClass: "header-nav-sm-menu" }, [
+        _c("li", { staticClass: "header-nav-sm-menu-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "header-nav-sm-menu-item-link",
+              class: { active: _vm.activeMake },
+              attrs: { href: "/make" }
+            },
+            [_vm._v("報告ツイート生成")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "header-nav-sm-menu-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "header-nav-sm-menu-item-link",
+              class: { active: _vm.activeFormat },
+              attrs: { href: "/format" }
+            },
+            [_vm._v("フォーマット登録/変更")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "header-nav-sm-menu-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "header-nav-sm-menu-item-link",
+              class: { active: _vm.activeCalcday },
+              attrs: { href: "/calcday" }
+            },
+            [_vm._v("日数計算方法変更")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "header-nav-sm-menu-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "header-nav-sm-menu-item-link",
+              class: { active: _vm.activeReadme },
+              attrs: { href: "/readme" }
+            },
+            [_vm._v("Readme")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "header-nav-sm-menu-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "header-nav-sm-menu-item-link",
+              class: { active: _vm.activeLogin },
+              attrs: { href: "/login" }
+            },
+            [_vm._v("新規登録/ログイン/ログアウト")]
+          )
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "header-logo" }, [
+      _c("img", {
+        attrs: { src: "/assets/images/repo-sapo_logo.png", alt: "れぽさぽ" }
+      })
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/make/MakeTweet.vue?vue&type=template&id=168b07a6&":
+/*!*****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/make/MakeTweet.vue?vue&type=template&id=168b07a6& ***!
+  \*****************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c(
+      "table",
+      { staticClass: "edit_table" },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("tr", [
+          _c("td", [_vm._v("Day")]),
+          _vm._v(" "),
+          _c("td", [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.diffDays,
+                  expression: "diffDays"
+                }
+              ],
+              attrs: { type: "text" },
+              domProps: { value: _vm.diffDays },
+              on: {
+                input: [
+                  function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.diffDays = $event.target.value
+                  },
+                  _vm.replaceFormat_day
+                ]
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("td", [
+            _c("input", {
+              staticClass: "edit_disabled",
+              attrs: { type: "text", disabled: "" },
+              domProps: { value: _vm.getDaysFromLatestTweet }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _vm._l(_vm.countDOM()["count"], function(item) {
+          return _c("tr", { key: item, attrs: { item: item } }, [
+            _c("td", [_vm._v("time")]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.inputData_time[item - 1],
+                    expression: "inputData_time[item-1]"
+                  }
+                ],
+                attrs: { type: "text" },
+                domProps: { value: _vm.inputData_time[item - 1] },
+                on: {
+                  input: [
+                    function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.inputData_time,
+                        item - 1,
+                        $event.target.value
+                      )
+                    },
+                    function($event) {
+                      return _vm.replaceFormat(item)
+                    }
+                  ]
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                staticClass: "edit_disabled",
+                attrs: { type: "text", disabled: "" },
+                domProps: { value: _vm.getTimesFromLatestTweet[item - 1] }
+              })
+            ])
+          ])
+        })
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        staticClass: "today tweet",
+        attrs: { action: "https://twitter.com/compose/tweet", method: "get" }
+      },
+      [
+        _c("label", { staticClass: "today-label label", attrs: { for: "" } }, [
+          _vm._v("生成されるツイート")
+        ]),
+        _vm._v(" "),
+        _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.replacedFormat,
+              expression: "replacedFormat"
+            }
+          ],
+          staticClass: "tweet-show today-tweet-show",
+          attrs: { name: "", id: "", cols: "30", rows: "10" },
+          domProps: { value: _vm.replacedFormat },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.replacedFormat = $event.target.value
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.sentText,
+              expression: "sentText"
+            }
+          ],
+          staticClass: "tweet-show today-tweet-show",
+          staticStyle: { display: "none" },
+          attrs: { name: "text", id: "", cols: "30", rows: "10" },
+          domProps: { value: _vm.sentText },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.sentText = $event.target.value
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("p", { staticClass: "tweet-tips" }, [
+          _vm._v("ctrl+cmd+space で絵文字が入力できます")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-check" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.checkBoxes,
+                expression: "checkBoxes"
+              }
+            ],
+            staticClass: "form-check-input js-addurl",
+            attrs: { value: "addUrl", type: "checkbox", id: "check1a" },
+            domProps: {
+              checked: Array.isArray(_vm.checkBoxes)
+                ? _vm._i(_vm.checkBoxes, "addUrl") > -1
+                : _vm.checkBoxes
+            },
+            on: {
+              change: [
+                function($event) {
+                  var $$a = _vm.checkBoxes,
+                    $$el = $event.target,
+                    $$c = $$el.checked ? true : false
+                  if (Array.isArray($$a)) {
+                    var $$v = "addUrl",
+                      $$i = _vm._i($$a, $$v)
+                    if ($$el.checked) {
+                      $$i < 0 && (_vm.checkBoxes = $$a.concat([$$v]))
+                    } else {
+                      $$i > -1 &&
+                        (_vm.checkBoxes = $$a
+                          .slice(0, $$i)
+                          .concat($$a.slice($$i + 1)))
+                    }
+                  } else {
+                    _vm.checkBoxes = $$c
+                  }
+                },
+                _vm.addUrl
+              ]
+            }
+          }),
+          _vm._v(" "),
+          _vm._m(1)
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-check today-form-check" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.checkBoxes,
+                expression: "checkBoxes"
+              }
+            ],
+            staticClass: "form-check-input js-addurl",
+            attrs: { value: "closeTab", type: "checkbox", id: "check2a" },
+            domProps: {
+              checked: Array.isArray(_vm.checkBoxes)
+                ? _vm._i(_vm.checkBoxes, "closeTab") > -1
+                : _vm.checkBoxes
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.checkBoxes,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = "closeTab",
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 && (_vm.checkBoxes = $$a.concat([$$v]))
+                  } else {
+                    $$i > -1 &&
+                      (_vm.checkBoxes = $$a
+                        .slice(0, $$i)
+                        .concat($$a.slice($$i + 1)))
+                  }
+                } else {
+                  _vm.checkBoxes = $$c
+                }
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm._m(2)
+        ]),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "today-make_tweet main-btn",
+            attrs: { disabled: !_vm.user }
+          },
+          [
+            _c("i", { staticClass: "fab fa-twitter" }),
+            _vm._v("\n        ツイート画面へ\n      ")
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "past tweet" }, [
+      _c("label", { staticClass: "past-label label", attrs: { for: "" } }, [
+        _vm._v("前回のツイート"),
+        _c("small", { staticClass: "past-time" }, [
+          _vm._v(_vm._s(_vm.latestReportTweet_time))
+        ])
+      ]),
+      _vm._v(" "),
+      _c("textarea", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.latestReportTweet_tweet,
+            expression: "latestReportTweet_tweet"
+          }
+        ],
+        staticClass: "tweet-show past-tweet-show edit_disabled",
+        attrs: { disabled: "", name: "", id: "", cols: "30", rows: "10" },
+        domProps: { value: _vm.latestReportTweet_tweet },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.latestReportTweet_tweet = $event.target.value
+          }
+        }
+      })
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td"),
+      _vm._v(" "),
+      _c("td", [_vm._v("本日の値")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("前回の値")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "form-check-label", attrs: { for: "check1a" } },
+      [
+        _vm._v("作成者を応援する"),
+        _c("small", [_vm._v("（本文にURLを表記）")]),
+        _c("br"),
+        _vm._v(" "),
+        _c("small", [
+          _c(
+            "a",
+            {
+              attrs: { href: "https://ofuse.me/users/13507", target: "_blank" }
+            },
+            [
+              _c("br"),
+              _vm._v("もっと応援してくれる人はこちら"),
+              _c("br"),
+              _vm._v("（外部サイトに移動します）")
+            ]
+          )
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "form-check-label", attrs: { for: "check2a" } },
+      [
+        _vm._v("ツイート生成後タブを閉じる"),
+        _c("small", [_vm._v("（未実装）")])
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -49655,6 +51246,13 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
 Vue.component('make-format', __webpack_require__(/*! ./components/MakeFormat.vue */ "./resources/js/components/MakeFormat.vue")["default"]);
 Vue.component('test', __webpack_require__(/*! ./components/test.vue */ "./resources/js/components/test.vue")["default"]);
+Vue.component('edit-format', __webpack_require__(/*! ./components/format/editFormat.vue */ "./resources/js/components/format/editFormat.vue")["default"]);
+Vue.component('insert-button', __webpack_require__(/*! ./components/format/insertButton.vue */ "./resources/js/components/format/insertButton.vue")["default"]);
+Vue.component('send-format', __webpack_require__(/*! ./components/format/sendFormat.vue */ "./resources/js/components/format/sendFormat.vue")["default"]);
+Vue.component('make-tweet', __webpack_require__(/*! ./components/make/MakeTweet.vue */ "./resources/js/components/make/MakeTweet.vue")["default"]);
+Vue.component('header-vue', __webpack_require__(/*! ./components/header/Header.vue */ "./resources/js/components/header/Header.vue")["default"]); // Vue.component('insert-numbers', require('./components/make/InsertNumbers.vue').default);
+// Vue.component('input-numbers', require('./components/make/InputNumbers.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -49663,6 +51261,9 @@ Vue.component('test', __webpack_require__(/*! ./components/test.vue */ "./resour
 
 var app = new Vue({
   el: '#app'
+});
+var app2 = new Vue({
+  el: '#app2'
 });
 
 /***/ }),
@@ -49845,6 +51446,351 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MakeFormat_vue_vue_type_template_id_d360bca0___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MakeFormat_vue_vue_type_template_id_d360bca0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/format/editFormat.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/format/editFormat.vue ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _editFormat_vue_vue_type_template_id_2c6fb704___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./editFormat.vue?vue&type=template&id=2c6fb704& */ "./resources/js/components/format/editFormat.vue?vue&type=template&id=2c6fb704&");
+/* harmony import */ var _editFormat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./editFormat.vue?vue&type=script&lang=js& */ "./resources/js/components/format/editFormat.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _editFormat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _editFormat_vue_vue_type_template_id_2c6fb704___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _editFormat_vue_vue_type_template_id_2c6fb704___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/format/editFormat.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/format/editFormat.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/format/editFormat.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_editFormat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./editFormat.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/format/editFormat.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_editFormat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/format/editFormat.vue?vue&type=template&id=2c6fb704&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/format/editFormat.vue?vue&type=template&id=2c6fb704& ***!
+  \**************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editFormat_vue_vue_type_template_id_2c6fb704___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./editFormat.vue?vue&type=template&id=2c6fb704& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/format/editFormat.vue?vue&type=template&id=2c6fb704&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editFormat_vue_vue_type_template_id_2c6fb704___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editFormat_vue_vue_type_template_id_2c6fb704___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/format/insertButton.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/format/insertButton.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _insertButton_vue_vue_type_template_id_a4d43230___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./insertButton.vue?vue&type=template&id=a4d43230& */ "./resources/js/components/format/insertButton.vue?vue&type=template&id=a4d43230&");
+/* harmony import */ var _insertButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./insertButton.vue?vue&type=script&lang=js& */ "./resources/js/components/format/insertButton.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _insertButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _insertButton_vue_vue_type_template_id_a4d43230___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _insertButton_vue_vue_type_template_id_a4d43230___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/format/insertButton.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/format/insertButton.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/format/insertButton.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_insertButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./insertButton.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/format/insertButton.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_insertButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/format/insertButton.vue?vue&type=template&id=a4d43230&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/format/insertButton.vue?vue&type=template&id=a4d43230& ***!
+  \****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_insertButton_vue_vue_type_template_id_a4d43230___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./insertButton.vue?vue&type=template&id=a4d43230& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/format/insertButton.vue?vue&type=template&id=a4d43230&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_insertButton_vue_vue_type_template_id_a4d43230___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_insertButton_vue_vue_type_template_id_a4d43230___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/format/sendFormat.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/format/sendFormat.vue ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _sendFormat_vue_vue_type_template_id_0a99407c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sendFormat.vue?vue&type=template&id=0a99407c& */ "./resources/js/components/format/sendFormat.vue?vue&type=template&id=0a99407c&");
+/* harmony import */ var _sendFormat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sendFormat.vue?vue&type=script&lang=js& */ "./resources/js/components/format/sendFormat.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _sendFormat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _sendFormat_vue_vue_type_template_id_0a99407c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _sendFormat_vue_vue_type_template_id_0a99407c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/format/sendFormat.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/format/sendFormat.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/format/sendFormat.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_sendFormat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./sendFormat.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/format/sendFormat.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_sendFormat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/format/sendFormat.vue?vue&type=template&id=0a99407c&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/format/sendFormat.vue?vue&type=template&id=0a99407c& ***!
+  \**************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_sendFormat_vue_vue_type_template_id_0a99407c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./sendFormat.vue?vue&type=template&id=0a99407c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/format/sendFormat.vue?vue&type=template&id=0a99407c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_sendFormat_vue_vue_type_template_id_0a99407c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_sendFormat_vue_vue_type_template_id_0a99407c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/header/Header.vue":
+/*!***************************************************!*\
+  !*** ./resources/js/components/header/Header.vue ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Header_vue_vue_type_template_id_4c955e98___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Header.vue?vue&type=template&id=4c955e98& */ "./resources/js/components/header/Header.vue?vue&type=template&id=4c955e98&");
+/* harmony import */ var _Header_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Header.vue?vue&type=script&lang=js& */ "./resources/js/components/header/Header.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Header_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Header_vue_vue_type_template_id_4c955e98___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Header_vue_vue_type_template_id_4c955e98___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/header/Header.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/header/Header.vue?vue&type=script&lang=js&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/header/Header.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Header_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Header.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/header/Header.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Header_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/header/Header.vue?vue&type=template&id=4c955e98&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/header/Header.vue?vue&type=template&id=4c955e98& ***!
+  \**********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Header_vue_vue_type_template_id_4c955e98___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Header.vue?vue&type=template&id=4c955e98& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/header/Header.vue?vue&type=template&id=4c955e98&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Header_vue_vue_type_template_id_4c955e98___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Header_vue_vue_type_template_id_4c955e98___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/make/MakeTweet.vue":
+/*!****************************************************!*\
+  !*** ./resources/js/components/make/MakeTweet.vue ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _MakeTweet_vue_vue_type_template_id_168b07a6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MakeTweet.vue?vue&type=template&id=168b07a6& */ "./resources/js/components/make/MakeTweet.vue?vue&type=template&id=168b07a6&");
+/* harmony import */ var _MakeTweet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MakeTweet.vue?vue&type=script&lang=js& */ "./resources/js/components/make/MakeTweet.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _MakeTweet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _MakeTweet_vue_vue_type_template_id_168b07a6___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _MakeTweet_vue_vue_type_template_id_168b07a6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/make/MakeTweet.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/make/MakeTweet.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/make/MakeTweet.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MakeTweet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./MakeTweet.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/make/MakeTweet.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MakeTweet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/make/MakeTweet.vue?vue&type=template&id=168b07a6&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/make/MakeTweet.vue?vue&type=template&id=168b07a6& ***!
+  \***********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MakeTweet_vue_vue_type_template_id_168b07a6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./MakeTweet.vue?vue&type=template&id=168b07a6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/make/MakeTweet.vue?vue&type=template&id=168b07a6&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MakeTweet_vue_vue_type_template_id_168b07a6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MakeTweet_vue_vue_type_template_id_168b07a6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

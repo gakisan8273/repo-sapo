@@ -11373,12 +11373,12 @@ p,
 a {
   -webkit-font-smoothing: antialiased;
   margin: 0;
+  display: block;
 }
 
 a {
   color: #495057;
-  -webkit-text-decoration: nona;
-          text-decoration: nona;
+  text-decoration: none;
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
@@ -11410,6 +11410,10 @@ li {
   list-style: none;
 }
 
+button:focus {
+  outline: 0;
+}
+
 .header {
   box-sizing: border-box;
   width: 100%;
@@ -11432,6 +11436,10 @@ li {
   .header {
     height: 60px;
   }
+}
+
+.header-icon-img {
+  border-radius: 100px;
 }
 
 .header-img_container {
@@ -11457,9 +11465,15 @@ li {
 
 .header-nav {
   margin: 0;
+  height: 50px;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+          align-items: center;
 }
 
 .header-nav-menu {
+  height: 100%;
   display: -webkit-box;
   display: flex;
   -webkit-box-align: center;
@@ -11475,8 +11489,17 @@ li {
 }
 
 .header-nav-menu-item {
+  height: 100%;
   margin-left: 40px;
   cursor: pointer;
+}
+
+.header-nav-menu-item-link {
+  height: 100%;
+  padding: 10px 0;
+}
+
+.header-nav-menu-item-link.active {
   border-bottom: 4px solid #1DA1F2;
 }
 
@@ -11611,12 +11634,34 @@ main {
   }
 }
 
+.container-column {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+          justify-content: flex-start;
+}
+
+@media screen and (max-width: 414px) {
+  .container-column {
+    width: 380px;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+            flex-direction: column;
+    -webkit-box-align: center;
+            align-items: center;
+    -webkit-box-pack: start;
+            justify-content: flex-start;
+  }
+}
+
 .edit_table {
   width: 30%;
   margin-top: 20px;
   border-collapse: collapse;
   table-layout: auto;
-  width: 30%;
 }
 
 @media screen and (max-width: 414px) {
@@ -11649,6 +11694,7 @@ main {
 }
 
 .tweet {
+  width: 35%;
   display: -webkit-box;
   display: flex;
   -webkit-box-orient: vertical;
@@ -11660,6 +11706,7 @@ main {
 
 @media screen and (max-width: 414px) {
   .tweet {
+    width: 100%;
     margin-left: 15px;
     margin-right: 15px;
   }
@@ -11688,6 +11735,7 @@ main {
           align-items: center;
   -webkit-box-pack: center;
           justify-content: center;
+  position: relative;
 }
 
 .footer-copyright {
@@ -11711,6 +11759,10 @@ main {
   padding-top: 20px;
   padding-bottom: 20px;
   margin-top: 40px;
+}
+
+.login:last-child {
+  border-top: none;
 }
 
 @media screen and (max-width: 414px) {
@@ -11737,6 +11789,10 @@ main {
 .container-login {
   -webkit-box-pack: center;
           justify-content: center;
+}
+
+.logout-btn {
+  background: #E6ECF0;
 }
 
 .make_format {
@@ -11921,13 +11977,22 @@ main {
 }
 
 .calcday .input-group {
-  width: 400px;
+  width: 350px;
+}
+
+.calcday .input-group button {
+  margin-top: 20px;
 }
 
 @media screen and (max-width: 414px) {
   .calcday .input-group {
-    width: 350px;
+    width: 300px;
   }
+}
+
+.calcday button {
+  margin-top: 30px;
+  width: 86%;
 }
 
 .main-btn {
@@ -11936,6 +12001,7 @@ main {
   padding-top: 10px;
   padding-bottom: 10px;
   border-radius: 8px;
+  width: 100%;
 }
 
 .fa-twitter {
@@ -11963,6 +12029,10 @@ small {
   height: 25px;
   padding: 0 10px;
   margin-right: 15px;
+  background: #1DA1F2;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
 .small-btn:first-child {
@@ -11971,5 +12041,15 @@ small {
 
 .small-btn:last-child {
   margin-right: 0;
+}
+
+.sub-btn {
+  background: #E6ECF0;
+  color: #495057;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 8px;
+  width: 100%;
+  cursor: pointer;
 }
 

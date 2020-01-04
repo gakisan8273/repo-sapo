@@ -20,7 +20,7 @@
 </head>
 <body>
   {{-- ヘッダーを差し込む --}}
-  @include('header.header')
+  @include('header.header',['user'=>$user])
 
   {{-- コンテンツを差し込む --}}
   @yield('content')
@@ -29,5 +29,41 @@
   @include('footer.footer')
 
   <script src="{{ asset('js/app.js')}}"></script>
+  <script>
+    let ftr = document.getElementById('footer');
+    //window高さを取得し、フッターの開始位置と比較する
+    // jQueryでなく生JSで書く
+    // ウィンドウ高さの方が高い→画面中央よりにフッターが表示されている　のであれば、フッター開始位置を最下部＋フッター高さにする
+    let windowHeight = window.innerHeight;
+    let ftrHeight = ftr.clientHeight;
+    // let ftrPosition = ftr.offset().top;
+    let rect = ftr.getBoundingClientRect();
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    let ftrPosition = rect.top + scrollTop;
+    let ftrPosition_bottom = rect.bottom + scrollTop;
+    // console.log('ウィンドウ高さ' + windowHeight);
+    // console.log('フッター自身の高さ' + ftrHeight);
+    // console.log('フッターの初期位置' + ftrPosition);
+    let set = (windowHeight - ftrHeight)  - ftrPosition;
+    // console.log({windowHeight});
+    // console.log({ftrHeight});
+    // console.log({ftr});
+    // console.log({ftrPosition});
+    // console.log(rect.top);
+    // console.log(rect.bottom);
+    // console.log({scrollTop});
+    if(windowHeight > ftrPosition + ftrHeight){
+      // console.log('in if');
+      // ftr.attr({'style': 'top:' + ( (windowHeight - ftrHeight)  - ftrPosition) + 'px'});
+      ftr.style.top = set + 'px';
+      // フッターの今のポシション＋α　にしたい
+      // ウィンドウの最下部-フッター高さ　＝　フッター開始位置
+      // 今のフッター高さ
+      // フッター開始位置　ー　今のフッター高さ　をtopに指定し、relativeのままでいく
+      console.log('フッター高さ変更');
+    }else{
+      console.log('フッター高さ変更なし');
+    }  
+  </script>
 </body>
 </html>

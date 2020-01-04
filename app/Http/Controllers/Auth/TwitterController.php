@@ -11,21 +11,46 @@ use Illuminate\Support\Facades\Auth;
 class TwitterController extends Controller
 {
     public function index(){
-        return view('make.make');
+			if (Auth::user()){
+        $user = User::find(Auth::user()->id);
+        // $myTweets = User::getMyTweets();
+				$latestReportTweet = User::getReportTweet();
+				return view('make.make', 
+				['user'=>$user,'latestReportTweet_tweet'=>$latestReportTweet['tweet'],
+				'latestReportTweet_time'=>$latestReportTweet['created_at'],
+				'latestReportTweet_time_for_js' =>$latestReportTweet["created_at_forJS"] ]);
+			} else {
+				return view('make.make',['user'=>""]);
+			}
     }
 
     public function login(){
-        return view('login.login');
+			if (Auth::user()){
+				$user = User::find(Auth::user()->id);
+				return view('login.login', compact('user'));
+			} else {
+        return view('login.login',['user'=>""]);
+			}
     }
 
     public function format(){
+			if (Auth::user()){
         $user = User::find(Auth::user()->id);
         // $user = json_encode($user);
-        return view('format.format', compact('user'));
+				return view('format.format', compact('user'));
+			} else {
+				return view('format.format', ['user'=>""]);
+			}
     }
 
     public function calcday(){
-        return view('calcday.calcday');
+			if (Auth::user()){
+				$user = User::find(Auth::user()->id);
+				return view('calcday.calcday', compact('user'));
+			} else {
+				return view('calcday.calcday', ['user'=>""]);
+			}
+
     }
 
     public function editFormat(Request $request){
@@ -33,6 +58,20 @@ class TwitterController extends Controller
         $user->hash_tags = $request['hash_tags'];
         $user->format = $request['format'];
         $user->save();
+
+        return redirect('/make');
+    }
+    public function editCalcday(Request $request){
+        $user = User::find(Auth::user()->id);
+				$user->calcday = $request['calc_option'];
+				// calcdayが３なら、学習開始日をDBに保存
+				if ($request['calc_option'] === "3"){
+					// dd($request['start_date']);
+					$user->start_date = $request['start_date'];
+				}
+
+				$user->save();
+				
 
         return redirect('/make');
     }
@@ -49,10 +88,11 @@ class TwitterController extends Controller
         $twitterUser = Socialite::driver('twitter')->user();
         $twitter_id = $twitterUser->nickname; //ツイッターID
         $twitter_name = $twitterUser->name; //表示名
-        $twitter_icon = $twitterUser->avatar; //アイコン画像のURL
+				$twitter_icon = $twitterUser->avatar_original; //アイコン画像のURLを保存する
         // var_dump($twitter_id);
         // var_dump($twitterUser);
-
+				// $path = $request->file->store('public');
+				// dd($twitter_icon);
         // 各自ログイン処理 初回はDBに登録、2回目以降は認証のみ
         // 例
 
@@ -65,7 +105,7 @@ class TwitterController extends Controller
             $user = User::create([
                 'twitter_id' => $twitter_id,
                 'twitter_name' => $twitter_name,
-                // iconはDB修正してから
+								'twitter_icon' => $twitter_icon,
           ]);
         }
         // こうすると $user（ユーザーインスタンス）でログイン中になるのかな？
@@ -80,8 +120,8 @@ class TwitterController extends Controller
     public function logout(Request $request){
         // ログアウト処理
         // ex
-        // Auth::logoutl
-        return redirect('/');
+        Auth::logout();
+        return redirect('/make');
     }
 
 

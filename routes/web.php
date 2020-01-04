@@ -16,7 +16,8 @@ Route::get('/', function () {
 });
 
 Route::get('/make', 'Auth\TwitterController@index')->name('make');
-Route::post('/make', 'Auth\TwitterController@editFormat')->name('make');
+Route::post('/post-format', 'Auth\TwitterController@editFormat')->name('post-format');
+Route::post('/post-calcday', 'Auth\TwitterController@editCalcday')->name('post-calcday');
 Route::get('/login', 'Auth\TwitterController@login')->name('login');
 Route::get('/format', 'Auth\TwitterController@format')->name('format');
 Route::get('/calcday', 'Auth\TwitterController@calcday')->name('calcday');

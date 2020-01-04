@@ -3,36 +3,29 @@
 @section('content')
 
   <main class="container">
-    <form class="make_format" method="post" action="/make">
+    <form class="make_format" method="post" action="/post-format">
 
       @csrf
 
       <div class="make_format-id">
         <label for="" class="label">Twitter ID</label>
-        <input type="text" disabled class="edit_disabled make_format-id-input" placeholder="{{ $user->twitter_id }}">
+        @if ($user)
+          <input type="text" disabled class="edit_disabled make_format-id-input" placeholder="{{ $user->twitter_id }}">
+        @else
+          <input type="text" disabled class="edit_disabled make_format-id-input" placeholder="（ログインしていません）">
+        @endif
       </div>
-      <div class="make_format-hash">
-        <label for="" class="label">ハッシュタグ</label>
-        <textarea name="hash_tags" id="" cols="30" rows="3" class="tweet-show today-tweet-show">{{ $user->hash_tags }}</textarea>
-      </div>
-
       <div id="app">
-        {{-- @php
-          var_dump($user->format);
-          var_dump(json_decode(json_encode($user->format)));
-        @endphp --}}
         {{-- prposで渡す時、データに半角スペース・改行が含まれると渡せない --}}
         {{-- DB登録時、半角スペースと改行を別の文字に変換して登録、propsで渡してから半角スペースと改行に戻す？ --}}
         {{-- make-format -ここに全角スペースが入っていたことが原因だった- format --}}
-        <make-format format="{{ $user->format }}">
-        </make-format>
-        
+        @if ($user)
+          <edit-format format="{{ $user->format }}" hash_tags="{{ $user->hash_tags }}" user="{{ $user->twitter_id }}"></edit-format>
+        @else
+          <edit-format format="" hash_tags=""></edit-format>
+        @endif
       </div>
-
-      <button class="today-make_tweet main-btn">
-          {{-- <i class="fab fa-twitter"></i> --}}
-          フォーマット登録/変更
-      </button>
+      
     </form>
 
     <div class="ex_format">

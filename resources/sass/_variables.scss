@@ -81,11 +81,12 @@ p,a{
   // フォントをみやすく表示する
   -webkit-font-smoothing: antialiased;
   margin: 0;
+  display:block;
 }
 
 a{
   color:$font-color-default;
-  text-decoration: nona;
+  text-decoration: none;
   // ホバeした時にフワッとなる
   transition: .3s;
 }
@@ -113,6 +114,9 @@ ul{
 li{
   list-style: none;
 }
+button:focus {
+	outline:0;
+}
 
 // header-------------------------------
 .header{
@@ -132,7 +136,9 @@ li{
   @include mq() {
     height: $header-height-sm;
   }
-  
+  &-icon-img{
+    border-radius: 100px;
+  }
   &-img_container{
     display: flex;
     align-items: center;
@@ -141,16 +147,21 @@ li{
       width:auto;
       height:110px;
       margin-right: $space_xl;
+      
 
       @include mq() {
         height: 50px;
       }
-
+  
     }  
   }
   &-nav{
     margin:0;
+    height: 50px;
+    display: flex;
+    align-items: center;
     &-menu{
+      height: 100%;
       display:flex;
       align-items: center;
       justify-content:flex-end;
@@ -158,10 +169,18 @@ li{
         display: none;
       }
       &-item{
+        height: 100%;
         margin-left: $space_3l;
         cursor: pointer;
+        // padding : 10px 0;
         // TODO : 今いるページのみ下線を引く様にする
-        border-bottom: 4px solid $main-color;
+        &-link{
+          height: 100%;
+          padding : 10px 0;
+          &.active{
+            border-bottom: 4px solid $main-color;
+          }
+        }
       }
     }
     &-sm{
@@ -195,6 +214,7 @@ li{
       }
     }
   }
+  // ハンバーガーメニューのボタン クリックしたらactiveクラスを付与する
   &-menu-trigger{
     display: none;
     @include mq(){
@@ -264,12 +284,22 @@ main{
     justify-content: flex-start;
   }
 }
+.container-column{
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  @include mq(){
+    width:380px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+}
 .edit_table{
   width:30%;
   margin-top: $space_xl;
   border-collapse: collapse;
   table-layout:auto;
-  width:30%;
   @include mq(){
     width: 100%
   }
@@ -295,12 +325,14 @@ main{
 }
 
 .tweet{
+  width:35%;
   display:flex;
   flex-flow: column;
   margin-left: $space_3l;
   //　「前回の値」と高さを揃える
   margin-top: 35px;
   @include mq(){
+    width:100%;
     margin-left: $space_l;
     margin-right: $space_l;
   }
@@ -328,6 +360,7 @@ main{
   align-items: center;
   justify-content: center;
   // TODO：画面の最下部にくる様JS作る
+  position: relative;
   &-copyright{
     color: #fff;
     margin: 0;
@@ -351,7 +384,9 @@ main{
   padding-top: $space_xl;
   padding-bottom: $space_xl;
   margin-top: $space_3l;
-  // TODO：画面の真ん中にくる様JS作る
+  &:last-child{
+    border-top: none;
+  }
   @include mq(){
     width:100%;
   }
@@ -368,6 +403,9 @@ main{
 }
 .container-login{
   justify-content: center;
+}
+.logout-btn{
+  background: $not_edit-color;
 }
 
 //loginここまで----------------------------------------------------------
@@ -499,10 +537,17 @@ main{
     margin-bottom: $space_s;
   }
   .input-group{
-    width:400px;
-    @include mq(){
-      width:350px;
+    width:350px;
+    & button{
+     margin-top: $space_xl; 
     }
+    @include mq(){
+      width:300px;
+    }
+  }
+  & button{
+    margin-top: $space_xxl;
+    width: 86%;
   }
 }
 
@@ -516,6 +561,7 @@ main{
   padding-top: $space_m;
   padding-bottom: $space_m;
   border-radius: 8px;
+  width:100%;
 }
 .fa-twitter{
   margin-right: $space_s;
@@ -538,11 +584,24 @@ small{
   height: 25px;
   padding:0 $space_m;
   margin-right: $space_l;
+  background: $main-color;
+  color:#fff;
+  border-radius: 8px;
+  cursor: pointer;
   &:first-child{
     margin-left: $space_l;
   }
   &:last-child{
     margin-right: 0;
   }
+}
+.sub-btn{
+  background: $not_edit-color;
+  color:$font-color-default;
+  padding-top: $space_m;
+  padding-bottom: $space_m;
+  border-radius: 8px;
+  width:100%;
+  cursor: pointer
 }
   

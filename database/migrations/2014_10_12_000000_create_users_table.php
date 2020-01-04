@@ -17,12 +17,14 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string('twitter_id')->unique();
             $table->string('twitter_name')->nullable();
+            $table->string('twitter_icon')->nullable();
             // $table->string('email')->unique();
             // $table->timestamp('email_verified_at')->nullable();
             // $table->string('password');
             $table->string('hash_tags')->nullable();
             $table->string('format')->nullable();
             $table->integer('calcday')->default(1);
+            $table->date('start_date')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
