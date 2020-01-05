@@ -3,7 +3,8 @@
 
   <div class="header-img_container">
     <div class="header-logo">
-      <img src="/assets/images/repo-sapo_logo.png" alt="れぽさぽ">
+      <a href="/make"><img src="/assets/images/repo-sapo_logo.png" alt="れぽさぽ"></a>
+      <!-- <a href="/make"><img :src="this.logo" alt="れぽさぽ"></a> -->
     </div>
     <div class="header-icon">
         <img :src="this.icon" alt="れぽさぽ" class="header-icon-img" v-if="this.icon">
@@ -70,7 +71,7 @@ export default {
       activeLogin : false,
     }
   },
-  props : ['icon'],
+  props : ['icon','logo'],
   mounted(){
     this.getPath();
   },

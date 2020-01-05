@@ -7,10 +7,13 @@ use Socialite;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage; //S3用
 
 class TwitterController extends Controller
 {
+
     public function index(){
+			// $path = Storage::disk('s3')->url('repo-sapo_logo.png');
 			if (Auth::user()){
         $user = User::find(Auth::user()->id);
         // $myTweets = User::getMyTweets();
@@ -18,9 +21,16 @@ class TwitterController extends Controller
 				return view('make.make', 
 				['user'=>$user,'latestReportTweet_tweet'=>$latestReportTweet['tweet'],
 				'latestReportTweet_time'=>$latestReportTweet['created_at'],
-				'latestReportTweet_time_for_js' =>$latestReportTweet["created_at_forJS"] ]);
+				'latestReportTweet_time_for_js' =>$latestReportTweet["created_at_forJS"]],
+				);
+				// return view('make.make', 
+				// ['user'=>$user,'latestReportTweet_tweet'=>$latestReportTweet['tweet'],
+				// 'latestReportTweet_time'=>$latestReportTweet['created_at'],
+				// 'latestReportTweet_time_for_js' =>$latestReportTweet["created_at_forJS"],
+				// 'logo'=>$path]);
 			} else {
 				return view('make.make',['user'=>""]);
+				// return view('make.make',['user'=>"",'logo'=>$path]);
 			}
     }
 
@@ -30,6 +40,14 @@ class TwitterController extends Controller
 				return view('login.login', compact('user'));
 			} else {
         return view('login.login',['user'=>""]);
+			}
+		}
+		public function readme(){
+			if (Auth::user()){
+				$user = User::find(Auth::user()->id);
+				return view('readme.readme', compact('user'));
+			} else {
+        return view('readme.readme',['user'=>""]);
 			}
     }
 
@@ -69,6 +87,21 @@ class TwitterController extends Controller
 					// dd($request['start_date']);
 					$user->start_date = $request['start_date'];
 				}
+
+				// バリデーション validateを使って書く フォームリクエストはあとで書く
+				// TODO フォームリクエストでバリデーション書き直す
+				// ラジオボタンのいずれかがあるか・日付がyyyy-mm-ddか
+
+				$validate_rule = [
+					'calc_option' => 'required',
+					'start_date' => 'date_format:Y-m-d'
+				];
+				$validate_message = [
+					'calc_option.required' => "ラジオボタンのいずれかにチェックを入れて下さい",
+					'start_date.date_format:Y-m-d' => "yyyy-mm-dd 形式で入力してください"
+				];
+
+				$request->validate($validate_rule);
 
 				$user->save();
 				
@@ -124,5 +157,18 @@ class TwitterController extends Controller
         return redirect('/make');
     }
 
-
+		public function upload(Request $request)
+{
+    $file = $request->file('file');
+    // 第一引数はディレクトリの指定
+    // 第二引数はファイル
+    // 第三引数はpublickを指定することで、URLによるアクセスが可能となる
+    // $path = Storage::disk('s3')->putFile('/', $file, 'public');
+    $path = Storage::disk('s3')->putFileAs('/', $file, 'repo-sapo_logo.png', 'public');
+    // hogeディレクトリにアップロード
+    // $path = Storage::disk('s3')->putFile('/hoge', $file, 'public');
+    // ファイル名を指定する場合はputFileAsを利用する
+    // $path = Storage::disk('s3')->putFileAs('/', $file, 'hoge.jpg', 'public');
+    return redirect('/make');
+}
 }

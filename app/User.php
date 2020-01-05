@@ -45,9 +45,8 @@ class User extends Authenticatable
 
         //User::getTweet()->tweet, created_at とかで取得するためにはどうクラスを作ればいい？
 
-        //TODO : token.phpで取得したベアラートークン ここは別ファイルで隠す .envにできないか？
         // require('token.php');
-        $bearerToken = env("TWITTER_BEARER_TOKEN");
+        $bearerToken = env("TWITTER_BEARER_TOKEN"); // 公開しないものは.envから読み込む
         // エンドポイント
         // https://developer.twitter.com/en/docs/tweets/timelines/api-reference/get-statuses-user_timeline から
         $requestUrl ='https://api.twitter.com/1.1/statuses/user_timeline.json';

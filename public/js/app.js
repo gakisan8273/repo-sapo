@@ -2208,6 +2208,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2219,7 +2220,7 @@ __webpack_require__.r(__webpack_exports__);
       activeLogin: false
     };
   },
-  props: ['icon'],
+  props: ['icon', 'logo'],
   mounted: function mounted() {
     this.getPath();
   },
@@ -2632,8 +2633,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
     },
     recommendDays: function recommendDays() {
-      console.log('diffDays'); // TODO 過去ツイートに日数がないときの演算は？ 何を出力させる？
-      // 前回ツイートの日付と日数計算オプション設定値から、日付の提案の値を産出する
+      console.log('diffDays'); // 前回ツイートの日付と日数計算オプション設定値から、日付の提案の値を産出する
       // 1 前回ツイート日からの経過日数計算
       // 前回の報告ツイート内にある日数を取得し、
       // そこから何日経過したかを計算します
@@ -38656,9 +38656,11 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "header-logo" }, [
-      _c("img", {
-        attrs: { src: "/assets/images/repo-sapo_logo.png", alt: "れぽさぽ" }
-      })
+      _c("a", { attrs: { href: "/make" } }, [
+        _c("img", {
+          attrs: { src: "/assets/images/repo-sapo_logo.png", alt: "れぽさぽ" }
+        })
+      ])
     ])
   }
 ]
@@ -38730,7 +38732,7 @@ var render = function() {
         _vm._v(" "),
         _vm._l(_vm.countDOM()["count"], function(item) {
           return _c("tr", { key: item, attrs: { item: item } }, [
-            _c("td", [_vm._v("time")]),
+            _c("td", [_vm._v("time-" + _vm._s(item))]),
             _vm._v(" "),
             _c("td", [
               _c("input", {

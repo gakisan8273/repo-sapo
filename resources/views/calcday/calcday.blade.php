@@ -36,15 +36,31 @@
         {{-- <label for="radio1c" class="form-check-label">Option 3</label> --}}
         <label for="radio1c" class="calc-title">学習開始日からの経過日数を計算</label>
         <p>学習開始日を設定し、<br>そこから何日経過したかを計算します</p>
+        <p>(yyyy-mm-dd形式で入力してください)</p>
         <div class="input-group">
-          <div class="input-group-text">学習開始日</div>
+          <div class="input-group-text">学習開始日 
+          </div>
           {{-- 現在日付までで入力制限する --}}
         @if ($user)
-          <input type="text" class="form-control" name="start_date" value="{{ $user->start_date }}">
+          {{-- <input type="text" class="form-control" name="start_date" placeholder="yyyy-mm-dd"> --}}
+          <input type="text" class="form-control" name="start_date" placeholder="yyyy-mm-dd"
+          @if(count($errors)>0)
+            value="{{ old('start_date') }}"
+          @endif
+            value="{{ $user->start_date }}">
         @else
-          <input type="text" class="form-control" name="start_date" value="">
+          <input type="text" class="form-control" name="start_date" placeholder="yyyy-mm-dd" value="">
         @endif
         </div>
+
+        @if (count($errors) > 0 )
+          <div class="error">
+            @foreach ($errors->all() as $error)
+              {{ $error }}              
+            @endforeach
+          </div>
+        @endif
+
         @if ($user)
         <button class="main-btn">
           日数計算方法変更

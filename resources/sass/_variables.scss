@@ -173,7 +173,6 @@ button:focus {
         margin-left: $space_3l;
         cursor: pointer;
         // padding : 10px 0;
-        // TODO : 今いるページのみ下線を引く様にする
         &-link{
           height: 100%;
           padding : 10px 0;
@@ -359,7 +358,6 @@ main{
   display: flex;
   align-items: center;
   justify-content: center;
-  // TODO：画面の最下部にくる様JS作る
   position: relative;
   &-copyright{
     color: #fff;
@@ -604,4 +602,9 @@ small{
   width:100%;
   cursor: pointer
 }
-  
+
+// error
+.error{
+  font-size: $font-size_s;
+  color: red;
+}

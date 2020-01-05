@@ -19,7 +19,7 @@
       </tr>
 
       <tr v-for="item in countDOM()['count']" :item='item' :key='item'>
-        <td>time</td>
+        <td>time-{{ item }}</td>
         <td><input type="text" v-model="inputData_time[item-1]" @input="replaceFormat(item)"></td>
         <td><input type="text" class="edit_disabled" disabled :value="getTimesFromLatestTweet[item-1]"></td>
         <!-- <td><input type="text" class="edit_disabled" disabled></td> -->
@@ -317,7 +317,6 @@ export default {
     },
     recommendDays: function(){
       console.log('diffDays');
-      // TODO 過去ツイートに日数がないときの演算は？ 何を出力させる？
 
       // 前回ツイートの日付と日数計算オプション設定値から、日付の提案の値を産出する
 
