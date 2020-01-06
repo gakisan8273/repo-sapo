@@ -2,7 +2,7 @@
 
 @section('content')
 
-<main class="container container-column" >
+<main class="container container-column readme" >
   {{-- Laravel x S3 練習用 --}}
   {{-- <form action="/upload" method="post" enctype="multipart/form-data"> --}}
     {{-- {{ csrf_field() }} --}}
@@ -14,7 +14,7 @@
   <h3>作った人</h3>
 <p><a href="https://twitter.com/gakisan8273">がき@gakisan8273</a></p>
 
-<h2>このwebアプリの目的</h2>
+<h3>このwebアプリの目的</h3>
 <p>以下のような学習進捗ツイートをしやすくすし、学習者の負担を少しでも下げることを目的としています</p>
 <p>すぐに使いたい方は、<a href="/make">こちら</a>で報告フォーマットの登録をお願いします</p>
 
@@ -38,9 +38,9 @@
   <li>本文を入力する</li>
   <li>ツイートする</li>
 </ol>
-<p>詳細は<a href="https://note.mu/mintdaa/n/nb01c23931cde">こちらのnote</a>に記載されています</p>
+<p>詳細は<a style="display:inline-block" href="https://gakisan8273.com/blog/xhack-report-api/">この記事</a>に記載されています</p>
 
-<h2>使い方</h2>
+<h3>使い方</h3>
 <p>Twitterログインを採用しています。</p>
 <p>ログイン後、初回のみ<a href="resister.php">報告フォーマットを登録</a>してください</p>
 <p>これだけで新規報告ツイートの作成準備は整います</p>

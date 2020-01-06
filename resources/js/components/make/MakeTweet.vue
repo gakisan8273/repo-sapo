@@ -75,7 +75,7 @@ export default {
       diffDays : 0,
     };
   },
-  props : ['user', 'format','calcday','start_date','latestReportTweet_tweet', 'latestReportTweet_time','latestReportTweet_time_for_js'],
+  props : ['user', 'format','calcday','hash_tags', 'start_date','latestReportTweet_tweet', 'latestReportTweet_time','latestReportTweet_time_for_js'],
   mounted() {
     this.replaceFormat_copypaste();
     this.recommendDays();
@@ -267,7 +267,7 @@ export default {
 
       // 何行目をコピペすればいいか、フォーマットから取得
       let splitFormat = this.format.split(/\r\r|\n/);
-      console.log(splitFormat);
+      console.log({splitFormat});
       let pattern  = "*---*"; // コピペする行を示すパターン
       let row = "";
 
@@ -279,7 +279,7 @@ export default {
           break;
         }
       }
-      console.log(findIndex);
+      console.log({findIndex});
 
       // 前回ツイートからコピーする作業
       // 前回ツイートを分割する
@@ -297,7 +297,8 @@ export default {
         format += "\n";
       }
       console.log(this.replacedFormat);
-        this.replacedFormat = format;
+      // 最後にハッシュタグを足しとく
+        this.replacedFormat = format + "\n" + this.hash_tags;
     },
     addUrl : function(){
       // 末尾にURLが追加される チェックボックスがONになっていれば、Twitter画面に遷移するときに付与する

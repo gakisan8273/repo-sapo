@@ -2361,7 +2361,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       diffDays: 0
     };
   },
-  props: ['user', 'format', 'calcday', 'start_date', 'latestReportTweet_tweet', 'latestReportTweet_time', 'latestReportTweet_time_for_js'],
+  props: ['user', 'format', 'calcday', 'hash_tags', 'start_date', 'latestReportTweet_tweet', 'latestReportTweet_time', 'latestReportTweet_time_for_js'],
   mounted: function mounted() {
     this.replaceFormat_copypaste();
     this.recommendDays();
@@ -2581,7 +2581,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       console.log("replaceFormat_copypasete"); // 何行目をコピペすればいいか、フォーマットから取得
 
       var splitFormat = this.format.split(/\r\r|\n/);
-      console.log(splitFormat);
+      console.log({
+        splitFormat: splitFormat
+      });
       var pattern = "*---*"; // コピペする行を示すパターン
 
       var row = "";
@@ -2594,7 +2596,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         }
       }
 
-      console.log(findIndex); // 前回ツイートからコピーする作業
+      console.log({
+        findIndex: findIndex
+      }); // 前回ツイートからコピーする作業
       // 前回ツイートを分割する
 
       var splitLatestReportTweet = this.latestReportTweet_tweet.split(/\r\r|\n/); // findIndex行目を取得する
@@ -2610,8 +2614,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         format += "\n";
       }
 
-      console.log(this.replacedFormat);
-      this.replacedFormat = format;
+      console.log(this.replacedFormat); // 最後にハッシュタグを足しとく
+
+      this.replacedFormat = format + "\n" + this.hash_tags;
     },
     addUrl: function addUrl() {
       // 末尾にURLが追加される チェックボックスがONになっていれば、Twitter画面に遷移するときに付与する

@@ -46,7 +46,7 @@ $space_xl: 20px;
 $space_xxl: 30px;
 $space_3l: 40px;
 
-$header-height: 120px;
+$header-height: 80px;
 $header-height-sm: 60px;
 
 // マップ型変数
@@ -114,6 +114,9 @@ ul{
 li{
   list-style: none;
 }
+button{
+  border : none;
+}
 button:focus {
 	outline:0;
 }
@@ -131,6 +134,7 @@ button:focus {
   padding-right: $space-xxl;
   background: $header-color;
   position:fixed;
+  font-size: $font-size_m;
   z-index:2;
 
   @include mq() {
@@ -145,7 +149,7 @@ button:focus {
     justify-content: space-between;
     & img{
       width:auto;
-      height:110px;
+      height:$header-height - 20px;
       margin-right: $space_xl;
       
 
@@ -174,8 +178,8 @@ button:focus {
         cursor: pointer;
         // padding : 10px 0;
         &-link{
-          height: 100%;
-          padding : 10px 0;
+          // height: 100%;
+          padding : 10px 0 5px 0;
           &.active{
             border-bottom: 4px solid $main-color;
           }
@@ -293,6 +297,9 @@ main{
     align-items: center;
     justify-content: flex-start;
   }
+}
+.readme{
+  align-items: flex-start;
 }
 .edit_table{
   width:30%;
@@ -461,6 +468,11 @@ main{
       margin-bottom: $space_s;
     }
   }
+  & textarea{
+    // font-size:$font-size_s;
+    padding-left: $space_m;
+    padding-right: $space_m;
+  }
 }
 
 .ex_format{
@@ -607,4 +619,12 @@ small{
 .error{
   font-size: $font-size_s;
   color: red;
+}
+
+h3{
+  margin-top: $space_xl;
+}
+.readme a{
+  display: inline-block;
+  color: $main-color;
 }
