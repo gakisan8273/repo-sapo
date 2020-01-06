@@ -2240,7 +2240,7 @@ __webpack_require__.r(__webpack_exports__);
       });
 
       switch (path) {
-        case "/make":
+        case "/":
           this.activeMake = true;
           break;
 
@@ -38524,7 +38524,7 @@ var render = function() {
             {
               staticClass: "header-nav-menu-item-link",
               class: { active: _vm.activeMake },
-              attrs: { href: "/make" }
+              attrs: { href: "/" }
             },
             [_vm._v("報告ツイート生成")]
           )
@@ -38598,7 +38598,7 @@ var render = function() {
             {
               staticClass: "header-nav-sm-menu-item-link",
               class: { active: _vm.activeMake },
-              attrs: { href: "/make" }
+              attrs: { href: "/" }
             },
             [_vm._v("報告ツイート生成")]
           )
@@ -38661,7 +38661,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "header-logo" }, [
-      _c("a", { attrs: { href: "/make" } }, [
+      _c("a", { attrs: { href: "/" } }, [
         _c("img", {
           attrs: { src: "/assets/images/repo-sapo_logo.png", alt: "れぽさぽ" }
         })

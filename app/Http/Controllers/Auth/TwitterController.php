@@ -77,7 +77,7 @@ class TwitterController extends Controller
         $user->format = $request['format'];
         $user->save();
 
-        return redirect('/make');
+        return redirect('/');
     }
     public function editCalcday(Request $request){
         $user = User::find(Auth::user()->id);
@@ -106,7 +106,7 @@ class TwitterController extends Controller
 				$user->save();
 				
 
-        return redirect('/make');
+        return redirect('/');
     }
 
 
@@ -154,7 +154,7 @@ class TwitterController extends Controller
         // ログアウト処理
         // ex
         Auth::logout();
-        return redirect('/make');
+        return redirect('/');
     }
 
 		public function upload(Request $request)
@@ -169,6 +169,6 @@ class TwitterController extends Controller
     // $path = Storage::disk('s3')->putFile('/hoge', $file, 'public');
     // ファイル名を指定する場合はputFileAsを利用する
     // $path = Storage::disk('s3')->putFileAs('/', $file, 'hoge.jpg', 'public');
-    return redirect('/make');
+    return redirect('/');
 }
 }

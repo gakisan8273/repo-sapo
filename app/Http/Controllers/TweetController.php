@@ -33,6 +33,6 @@ class TweetController extends Controller
         $user->format = $request['format'];
         $user->save();
 
-        return redirect('/make');
+        return redirect('/');
     }
 }

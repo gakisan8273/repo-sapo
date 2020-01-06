@@ -16,7 +16,7 @@
 
 <h3>このwebアプリの目的</h3>
 <p>以下のような学習進捗ツイートをしやすくすし、学習者の負担を少しでも下げることを目的としています</p>
-<p>すぐに使いたい方は、<a href="/make">こちら</a>で報告フォーマットの登録をお願いします</p>
+<p>すぐに使いたい方は、<a href="/">こちら</a>で報告フォーマットの登録をお願いします</p>
 
 
 <blockquote class="twitter-tweet"><p lang="ja" dir="ltr">Day: 83<br>today:6h<br>total: 234h<br>自作ツール(進捗報告支援)開発<br><br>ロジックが整理できた（と思う）<br><br>次やること<br>・残り機能を実装する<br>・こんな風に言語を使い分ける<br>　ーPHPはサーバからデータを引っ張ってくる、渡す<br>　ーJSはそのデータを加工する<br><br>頭が冴えてる日中にやりたい😂<a href="https://twitter.com/hashtag/%E3%82%A6%E3%82%A7%E3%83%96%E3%82%AB%E3%83%84?src=hash&amp;ref_src=twsrc%5Etfw">#ウェブカツ</a></p>&mdash; がき@地方で強く生きていく (@gakisan8273) <a href="https://twitter.com/gakisan8273/status/1166398906520883200?ref_src=twsrc%5Etfw">August 27, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -45,7 +45,7 @@
 <p>ログイン後、初回のみ<a href="resister.php">報告フォーマットを登録</a>してください</p>
 <p>これだけで新規報告ツイートの作成準備は整います</p>
 <p>一度フォーマットを登録すれば、次回以降は登録し直す必要はありません</p>
-<p>ブックマークは、<a href="/make">新規報告ツイート画面</a>をお勧めします</p>
+<p>ブックマークは、<a href="/">新規報告ツイート画面</a>をお勧めします</p>
 
 <h3>お問い合わせ</h3>
 <p>できるだけ説明なしに使えるように配慮したつもりです</p>

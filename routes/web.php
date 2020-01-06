@@ -11,11 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/make', 'Auth\TwitterController@index')->name('make');
+Route::get('/', 'Auth\TwitterController@index')->name('make');
 Route::post('/post-format', 'Auth\TwitterController@editFormat')->name('post-format');
 Route::post('/post-calcday', 'Auth\TwitterController@editCalcday')->name('post-calcday');
 Route::get('/login', 'Auth\TwitterController@login')->name('login');

@@ -3,8 +3,8 @@
 
   <div class="header-img_container">
     <div class="header-logo">
-      <a href="/make"><img src="/assets/images/repo-sapo_logo.png" alt="れぽさぽ"></a>
-      <!-- <a href="/make"><img :src="this.logo" alt="れぽさぽ"></a> -->
+      <a href="/"><img src="/assets/images/repo-sapo_logo.png" alt="れぽさぽ"></a>
+      <!-- <a href="/"><img :src="this.logo" alt="れぽさぽ"></a> -->
     </div>
     <div class="header-icon">
         <img :src="this.icon" alt="れぽさぽ" class="header-icon-img" v-if="this.icon">
@@ -15,7 +15,7 @@
   <nav class="header-nav">
     <ul class="header-nav-menu">
       <li class="header-nav-menu-item">
-        <a href="/make" class="header-nav-menu-item-link" :class="{ active: activeMake}">報告ツイート生成</a>
+        <a href="/" class="header-nav-menu-item-link" :class="{ active: activeMake}">報告ツイート生成</a>
       </li>
       <li class="header-nav-menu-item">
         <a href="/format" class="header-nav-menu-item-link" :class="{ active: activeFormat}">フォーマット登録/変更</a>
@@ -40,7 +40,7 @@
   <nav class="header-nav-sm" :class="{ active: menu }">
     <ul class="header-nav-sm-menu">
       <li class="header-nav-sm-menu-item">
-        <a href="/make" class="header-nav-sm-menu-item-link" :class="{ active: activeMake}" >報告ツイート生成</a>
+        <a href="/" class="header-nav-sm-menu-item-link" :class="{ active: activeMake}" >報告ツイート生成</a>
       </li>
       <li class="header-nav-sm-menu-item">
         <a href="/format" class="header-nav-sm-menu-item-link" :class="{ active: activeFormat}">フォーマット登録/変更</a>
@@ -88,7 +88,7 @@ export default {
       console.log('getPath');
       console.log({path});
       switch (path) {
-        case "/make":
+        case "/":
           this.activeMake = true;
           break;
         case "/format":
