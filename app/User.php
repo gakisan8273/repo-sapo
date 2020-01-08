@@ -128,6 +128,7 @@ class User extends Authenticatable
         // dd($myTweets_full_text);
         
         foreach ($myTweets as $tweet) {
+					
 					$flg = 1; // 検索ワード一致判定フラグ
 
 					// 検索ワードがツイートに含まれるかどうか判定
@@ -147,6 +148,7 @@ class User extends Authenticatable
 						// dd('test');
 						// dd($searchWord,$tweet,strpos($tweet, $searchWord), $flg );
 					}
+					
 					if ($flg) {
 						// 検索ワードが全て一致（flg=1)なら、変数を格納
 						// $latestReportTweet = $tweet;
@@ -155,12 +157,19 @@ class User extends Authenticatable
 							"tweet" => $tweet['full_text'],
 							"created_at" => $created_at,
 							"created_at_forJS" => $tweet['created_at'],
+							"found" => true,
 						);
 						// foreachを抜けたい
 						// dd('test');
 						break;
 					} else {
-						$latestReportTweet = "過去100件のツイートに報告ツイートが見つかりませんでした";
+						// $latestReportTweet = "過去100件のツイートに報告ツイートが見つかりませんでした";
+						$latestReportTweet = array(
+							"tweet" => "過去100件のツイートに報告ツイートが見つかりませんでした",
+							"created_at" => "",
+							"created_at_forJS" => "",
+							"found" => false,
+						);
 					}
 				}
 				//最新の報告ツイートを返す

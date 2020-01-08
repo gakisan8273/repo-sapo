@@ -14,7 +14,8 @@
         "laravel/socialite": "^4.3",
         "laravel/tinker": "^1.0",
         "league/flysystem-aws-s3-v3": "^1.0",
-        "panique/laravel-sass": "dev-master"
+        "panique/laravel-sass": "dev-master",
+        "xzxzyzyz/laravel-logging-rollbar": "^1.1"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

@@ -181,6 +181,11 @@ return [
          * Socialite
         */
         Laravel\Socialite\SocialiteServiceProvider::class,
+
+        // Rollbar アクセスログ
+        
+        Rollbar\Laravel\RollbarServiceProvider::class,
+
         
     ],
 

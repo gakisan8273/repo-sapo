@@ -2349,6 +2349,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2361,7 +2362,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       diffDays: 0
     };
   },
-  props: ['user', 'format', 'calcday', 'hash_tags', 'start_date', 'latestReportTweet_tweet', 'latestReportTweet_time', 'latestReportTweet_time_for_js'],
+  props: ['user', 'format', 'calcday', 'hash_tags', 'start_date', 'latestReportTweet_tweet', 'latestReportTweet_time', 'latestReportTweet_time_for_js', 'found'],
   mounted: function mounted() {
     this.replaceFormat_copypaste();
     this.recommendDays();
@@ -2414,9 +2415,16 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       return dividedIndex;
     },
     getTimesFromLatestTweet: function getTimesFromLatestTweet() {
-      console.log('getTimesFromLatestTweet'); // 過去ツイートから学習時間を取得する
+      console.log('getTimesFromLatestTweet');
+
+      if (this.found) {} else {
+        // console.log("if内");
+        // console.log(this.found);
+        return "";
+      } // 過去ツイートから学習時間を取得する
       // フォーマットに{}が含まれている行に対して数字とかの検索〜取得を実行する
       // フォーマットを行ごとに分割する
+
 
       var splitFormat = this.format.split(/\r\r|\n/); // {}を含むか判定する ついでに[]もやっとくか
 
@@ -2456,7 +2464,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       return latestReportTweet_times;
     },
     getDaysFromLatestTweet: function getDaysFromLatestTweet() {
-      console.log('getDaysFromLatestTweet'); // 過去ツイートから日数を取得する
+      console.log('getDaysFromLatestTweet');
+
+      if (this.found) {} else {
+        // console.log("if内");
+        // console.log(this.found);
+        return "";
+      }
+
+      console.log(this.found); // 過去ツイートから日数を取得する
       // フォーマットに[]が含まれている行に対して数字とかの検索〜取得を実行する
       // フォーマットを行ごとに分割する
 
@@ -2537,86 +2553,100 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       console.log('replaceFormat');
       console.log({
         item: item
-      }); // { がある位置
+      });
 
-      var dividedIndex = this.dividedIndex[item - 1]; //computedから
+      if (this.found) {
+        // { がある位置
+        var dividedIndex = this.dividedIndex[item - 1]; //computedから
 
-      var dividedFormat = [];
-      console.log({
-        dividedIndex: dividedIndex
-      }); // 検索の開始位置をずらす-> {}の位置の前後で文字列を分割し、後ろの文字列から検索する
+        var dividedFormat = [];
+        console.log({
+          dividedIndex: dividedIndex
+        }); // 検索の開始位置をずらす-> {}の位置の前後で文字列を分割し、後ろの文字列から検索する
 
-      dividedFormat[0] = this.replacedFormat.slice(0, dividedIndex); //最初から { まで
+        dividedFormat[0] = this.replacedFormat.slice(0, dividedIndex); //最初から { まで
 
-      dividedFormat[1] = this.replacedFormat.slice(dividedIndex); // { から終わりまで
+        dividedFormat[1] = this.replacedFormat.slice(dividedIndex); // { から終わりまで
 
-      console.log(dividedFormat[0]);
-      console.log(dividedFormat[1]); // { の前と、置換した{ 以降のものを結合する
+        console.log(dividedFormat[0]);
+        console.log(dividedFormat[1]); // { の前と、置換した{ 以降のものを結合する
 
-      this.replacedFormat = dividedFormat[0] + dividedFormat[1].replace(/\{(?:[\0-\|~-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])*\}+/, '{' + this.inputData_time[item - 1] + '}');
+        this.replacedFormat = dividedFormat[0] + dividedFormat[1].replace(/\{(?:[\0-\|~-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])*\}+/, '{' + this.inputData_time[item - 1] + '}');
+      } else {
+        this.replacedFormat = "";
+      }
     },
     replaceFormat_day: function replaceFormat_day() {
       console.log('replaceFormat_day'); //日付欄用
-      // [ がある位置
 
-      var dividedIndex = this.dividedIndex_day; //computedから
+      if (this.found) {
+        // [ がある位置
+        var dividedIndex = this.dividedIndex_day; //computedから
 
-      var dividedFormat = [];
-      console.log({
-        dividedIndex: dividedIndex
-      }); // 検索の開始位置をずらす-> {}の位置の前後で文字列を分割し、後ろの文字列から検索する
+        var dividedFormat = [];
+        console.log({
+          dividedIndex: dividedIndex
+        }); // 検索の開始位置をずらす-> {}の位置の前後で文字列を分割し、後ろの文字列から検索する
 
-      dividedFormat[0] = this.replacedFormat.slice(0, dividedIndex); //最初から { まで
+        dividedFormat[0] = this.replacedFormat.slice(0, dividedIndex); //最初から { まで
 
-      dividedFormat[1] = this.replacedFormat.slice(dividedIndex); // { から終わりまで
+        dividedFormat[1] = this.replacedFormat.slice(dividedIndex); // { から終わりまで
 
-      console.log(dividedFormat[0]);
-      console.log(dividedFormat[1]); // { の前と、置換した{ 以降のものを結合する
+        console.log(dividedFormat[0]);
+        console.log(dividedFormat[1]); // { の前と、置換した{ 以降のものを結合する
 
-      this.replacedFormat = dividedFormat[0] + dividedFormat[1].replace(/\[(?:[\0-\\\^-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])*\]+/, '[' + this.diffDays + ']');
+        this.replacedFormat = dividedFormat[0] + dividedFormat[1].replace(/\[(?:[\0-\\\^-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])*\]+/, '[' + this.diffDays + ']');
+      } else {
+        this.replacedFormat = "";
+      }
     },
     replaceFormat_copypaste: function replaceFormat_copypaste() {
       // フォーマットを\nで検索し、そこで分割する 分割前に*---*があるか？あれば１行目をコピペすればいい
       // 次の\nまでにあるか？ あれば２行目をコピペすればいい
-      console.log("replaceFormat_copypasete"); // 何行目をコピペすればいいか、フォーマットから取得
+      console.log("replaceFormat_copypasete");
 
-      var splitFormat = this.format.split(/\r\r|\n/);
-      console.log({
-        splitFormat: splitFormat
-      });
-      var pattern = "*---*"; // コピペする行を示すパターン
+      if (this.found) {
+        // 何行目をコピペすればいいか、フォーマットから取得
+        var splitFormat = this.format.split(/\r\r|\n/);
+        console.log({
+          splitFormat: splitFormat
+        });
+        var pattern = "*---*"; // コピペする行を示すパターン
 
-      var row = "";
-      var findIndex = ""; // 何行目に*---*があるか ０→１行目
+        var row = "";
+        var findIndex = ""; // 何行目に*---*があるか ０→１行目
 
-      for (var i = 0; i < splitFormat.length; i++) {
-        if (splitFormat[i].indexOf(pattern) >= 0) {
-          findIndex = i;
-          break;
+        for (var i = 0; i < splitFormat.length; i++) {
+          if (splitFormat[i].indexOf(pattern) >= 0) {
+            findIndex = i;
+            break;
+          }
         }
+
+        console.log({
+          findIndex: findIndex
+        }); // 前回ツイートからコピーする作業
+        // 前回ツイートを分割する
+
+        var splitLatestReportTweet = this.latestReportTweet_tweet.split(/\r\r|\n/); // findIndex行目を取得する
+
+        var copiedText = splitLatestReportTweet[findIndex]; // 生成するツイートのfindIndex行目をcopiedTextに置き換える
+
+        splitFormat[findIndex] = copiedText; // 生成するツイートを再結合する
+
+        var format = "";
+
+        for (var _i3 = 0; _i3 < splitFormat.length; _i3++) {
+          format += splitFormat[_i3];
+          format += "\n";
+        }
+
+        console.log(this.replacedFormat); // 最後にハッシュタグを足しとく
+
+        this.replacedFormat = format + "\n" + this.hash_tags;
+      } else {
+        this.replacedFormat = "";
       }
-
-      console.log({
-        findIndex: findIndex
-      }); // 前回ツイートからコピーする作業
-      // 前回ツイートを分割する
-
-      var splitLatestReportTweet = this.latestReportTweet_tweet.split(/\r\r|\n/); // findIndex行目を取得する
-
-      var copiedText = splitLatestReportTweet[findIndex]; // 生成するツイートのfindIndex行目をcopiedTextに置き換える
-
-      splitFormat[findIndex] = copiedText; // 生成するツイートを再結合する
-
-      var format = "";
-
-      for (var _i3 = 0; _i3 < splitFormat.length; _i3++) {
-        format += splitFormat[_i3];
-        format += "\n";
-      }
-
-      console.log(this.replacedFormat); // 最後にハッシュタグを足しとく
-
-      this.replacedFormat = format + "\n" + this.hash_tags;
     },
     addUrl: function addUrl() {
       // 末尾にURLが追加される チェックボックスがONになっていれば、Twitter画面に遷移するときに付与する

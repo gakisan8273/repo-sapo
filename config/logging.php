@@ -89,6 +89,14 @@ return [
             'driver' => 'errorlog',
             'level' => 'debug',
         ],
+
+        // rollbar アクセスログ
+        'rollbar' => [
+            'driver' => 'custom',
+            'access_token' => env('LOG_ROLLBAR_TOKEN'),
+            'via' => Xzxzyzyz\Laravel\Logging\Rollbar\RollbarLogger::class,
+            'person_fn' => 'Auth::user',
+        ],
     ],
 
 ];

@@ -13,6 +13,7 @@
     latest-report-tweet_tweet = "{{ $latestReportTweet_tweet }}"
     latest-report-tweet_time = "{{ $latestReportTweet_time }}"
     latest-report-tweet_time_for_js = "{{ $latestReportTweet_time_for_js }}"
+    found = "{{ $foundFlg }}"
     />
   @else
   <make-tweet
@@ -24,6 +25,7 @@
   latest-report-tweet_tweet = ""
   latest-report-tweet_time = ""
   latest-report-tweet_time_for_js = ""
+  found = "{{ $foundFlg }}"
   />
   @endif
 </main>

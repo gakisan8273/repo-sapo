@@ -59,6 +59,7 @@
     <div class="past tweet">
         <label for="" class="past-label label">前回のツイート<small class="past-time">{{ latestReportTweet_time }}</small></label>
         <textarea disabled name="" id="" cols="30" rows="10" class="tweet-show past-tweet-show edit_disabled" v-model="latestReportTweet_tweet"></textarea>
+
     </div>
   </div>
 </template>
@@ -75,7 +76,7 @@ export default {
       diffDays : 0,
     };
   },
-  props : ['user', 'format','calcday','hash_tags', 'start_date','latestReportTweet_tweet', 'latestReportTweet_time','latestReportTweet_time_for_js'],
+  props : ['user', 'format','calcday','hash_tags', 'start_date','latestReportTweet_tweet', 'latestReportTweet_time','latestReportTweet_time_for_js', 'found'],
   mounted() {
     this.replaceFormat_copypaste();
     this.recommendDays();
@@ -123,6 +124,12 @@ export default {
     },
     getTimesFromLatestTweet : function(){
       console.log('getTimesFromLatestTweet');
+      if (this.found) {
+      } else {
+        // console.log("if内");
+        // console.log(this.found);
+        return "";
+      }
       // 過去ツイートから学習時間を取得する
 
       // フォーマットに{}が含まれている行に対して数字とかの検索〜取得を実行する
@@ -160,6 +167,13 @@ export default {
     },
     getDaysFromLatestTweet : function(){
       console.log('getDaysFromLatestTweet');
+      if (this.found) {
+      } else {
+        // console.log("if内");
+        // console.log(this.found);
+        return "";
+      }
+      console.log(this.found);
       // 過去ツイートから日数を取得する
 
       // フォーマットに[]が含まれている行に対して数字とかの検索〜取得を実行する
@@ -230,75 +244,86 @@ export default {
       // index、入力文字列は子のInputNumbers.vueから受け取る
       console.log('replaceFormat');
       console.log({item});
+      if(this.found){
 
-      // { がある位置
-      let dividedIndex = this.dividedIndex[item-1]; //computedから
-      let dividedFormat = [];
-      console.log({dividedIndex});
+        // { がある位置
+        let dividedIndex = this.dividedIndex[item-1]; //computedから
+        let dividedFormat = [];
+        console.log({dividedIndex});
 
-      // 検索の開始位置をずらす-> {}の位置の前後で文字列を分割し、後ろの文字列から検索する
-      dividedFormat[0] = this.replacedFormat.slice(0, dividedIndex); //最初から { まで
-      dividedFormat[1] = this.replacedFormat.slice(dividedIndex); // { から終わりまで
-      console.log(dividedFormat[0]);
-      console.log(dividedFormat[1]);
-      // { の前と、置換した{ 以降のものを結合する
-      this.replacedFormat = dividedFormat[0] + dividedFormat[1].replace(/\{[^}]*\}+/u,'{'+ this.inputData_time[item-1] + '}');
+        // 検索の開始位置をずらす-> {}の位置の前後で文字列を分割し、後ろの文字列から検索する
+        dividedFormat[0] = this.replacedFormat.slice(0, dividedIndex); //最初から { まで
+        dividedFormat[1] = this.replacedFormat.slice(dividedIndex); // { から終わりまで
+        console.log(dividedFormat[0]);
+        console.log(dividedFormat[1]);
+        // { の前と、置換した{ 以降のものを結合する
+        this.replacedFormat = dividedFormat[0] + dividedFormat[1].replace(/\{[^}]*\}+/u,'{'+ this.inputData_time[item-1] + '}');
+      } else {
+        this.replacedFormat = "";
+      }
     },
     replaceFormat_day : function(){
       console.log('replaceFormat_day'); //日付欄用
+      if (this.found){
+        // [ がある位置
+        let dividedIndex = this.dividedIndex_day; //computedから
+        let dividedFormat = [];
+        console.log({dividedIndex});
 
-      // [ がある位置
-      let dividedIndex = this.dividedIndex_day; //computedから
-      let dividedFormat = [];
-      console.log({dividedIndex});
-
-      // 検索の開始位置をずらす-> {}の位置の前後で文字列を分割し、後ろの文字列から検索する
-      dividedFormat[0] = this.replacedFormat.slice(0, dividedIndex); //最初から { まで
-      dividedFormat[1] = this.replacedFormat.slice(dividedIndex); // { から終わりまで
-      console.log(dividedFormat[0]);
-      console.log(dividedFormat[1]);
-      // { の前と、置換した{ 以降のものを結合する
-      this.replacedFormat = dividedFormat[0] + dividedFormat[1].replace(/\[[^\]]*\]+/u,'['+ this.diffDays + ']');
+        // 検索の開始位置をずらす-> {}の位置の前後で文字列を分割し、後ろの文字列から検索する
+        dividedFormat[0] = this.replacedFormat.slice(0, dividedIndex); //最初から { まで
+        dividedFormat[1] = this.replacedFormat.slice(dividedIndex); // { から終わりまで
+        console.log(dividedFormat[0]);
+        console.log(dividedFormat[1]);
+        // { の前と、置換した{ 以降のものを結合する
+        this.replacedFormat = dividedFormat[0] + dividedFormat[1].replace(/\[[^\]]*\]+/u,'['+ this.diffDays + ']');
+      } else {
+        this.replacedFormat = "";
+      }
     },
     replaceFormat_copypaste : function(){
       // フォーマットを\nで検索し、そこで分割する 分割前に*---*があるか？あれば１行目をコピペすればいい
       // 次の\nまでにあるか？ あれば２行目をコピペすればいい
       console.log("replaceFormat_copypasete");
+      if (this.found){
 
-      // 何行目をコピペすればいいか、フォーマットから取得
-      let splitFormat = this.format.split(/\r\r|\n/);
-      console.log({splitFormat});
-      let pattern  = "*---*"; // コピペする行を示すパターン
-      let row = "";
+        // 何行目をコピペすればいいか、フォーマットから取得
+        let splitFormat = this.format.split(/\r\r|\n/);
+        console.log({splitFormat});
+        let pattern  = "*---*"; // コピペする行を示すパターン
+        let row = "";
 
-      let findIndex = "" // 何行目に*---*があるか ０→１行目
-      
-      for (let i = 0; i < splitFormat.length; i++) {
-        if(splitFormat[i].indexOf(pattern) >= 0){
-          findIndex = i;
-          break;
+        let findIndex = "" // 何行目に*---*があるか ０→１行目
+        
+        for (let i = 0; i < splitFormat.length; i++) {
+          if(splitFormat[i].indexOf(pattern) >= 0){
+            findIndex = i;
+            break;
+          }
         }
+        console.log({findIndex});
+
+        // 前回ツイートからコピーする作業
+        // 前回ツイートを分割する
+        let splitLatestReportTweet = this.latestReportTweet_tweet.split(/\r\r|\n/);
+        // findIndex行目を取得する
+        let copiedText = splitLatestReportTweet[findIndex];
+
+        // 生成するツイートのfindIndex行目をcopiedTextに置き換える
+        splitFormat[findIndex] = copiedText;
+
+        // 生成するツイートを再結合する
+        let format = "";
+        for (let i = 0; i < splitFormat.length; i++){
+          format += splitFormat[i];
+          format += "\n";
+        }
+        console.log(this.replacedFormat);
+        // 最後にハッシュタグを足しとく
+          this.replacedFormat = format + "\n" + this.hash_tags;
+      } else {
+        this.replacedFormat = "";
       }
-      console.log({findIndex});
-
-      // 前回ツイートからコピーする作業
-      // 前回ツイートを分割する
-      let splitLatestReportTweet = this.latestReportTweet_tweet.split(/\r\r|\n/);
-      // findIndex行目を取得する
-      let copiedText = splitLatestReportTweet[findIndex];
-
-      // 生成するツイートのfindIndex行目をcopiedTextに置き換える
-      splitFormat[findIndex] = copiedText;
-
-      // 生成するツイートを再結合する
-      let format = "";
-      for (let i = 0; i < splitFormat.length; i++){
-        format += splitFormat[i];
-        format += "\n";
-      }
-      console.log(this.replacedFormat);
-      // 最後にハッシュタグを足しとく
-        this.replacedFormat = format + "\n" + this.hash_tags;
     },
     addUrl : function(){
       // 末尾にURLが追加される チェックボックスがONになっていれば、Twitter画面に遷移するときに付与する

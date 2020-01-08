@@ -18,10 +18,12 @@ class TwitterController extends Controller
         $user = User::find(Auth::user()->id);
         // $myTweets = User::getMyTweets();
 				$latestReportTweet = User::getReportTweet();
+				
 				return view('make.make', 
-				['user'=>$user,'latestReportTweet_tweet'=>$latestReportTweet['tweet'],
+				['user'=>$user,'latestReportTweet_tweet'=>$latestReportTweet['tweet'], // tweet でエラー・・・・
 				'latestReportTweet_time'=>$latestReportTweet['created_at'],
-				'latestReportTweet_time_for_js' =>$latestReportTweet["created_at_forJS"]],
+				'latestReportTweet_time_for_js' =>$latestReportTweet["created_at_forJS"],
+			  'foundFlg'=>$latestReportTweet['found'] ],
 				);
 				// return view('make.make', 
 				// ['user'=>$user,'latestReportTweet_tweet'=>$latestReportTweet['tweet'],
@@ -29,7 +31,7 @@ class TwitterController extends Controller
 				// 'latestReportTweet_time_for_js' =>$latestReportTweet["created_at_forJS"],
 				// 'logo'=>$path]);
 			} else {
-				return view('make.make',['user'=>""]);
+				return view('make.make',['user'=>"",'foundFlg'=>0]);
 				// return view('make.make',['user'=>"",'logo'=>$path]);
 			}
     }
