@@ -28,3 +28,6 @@ Route::get('/auth/twitter/logout', 'Auth\TwitterController@logout');
 
 // Laravel x S3 練習用
 Route::post('/upload', 'Auth\TwitterController@upload');
+// Auth::routes();
+
+// Route::get('/home', 'HomeController@index')->name('home');

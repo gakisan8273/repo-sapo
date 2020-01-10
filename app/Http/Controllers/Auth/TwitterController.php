@@ -30,6 +30,7 @@ class TwitterController extends Controller
 				// 'latestReportTweet_time'=>$latestReportTweet['created_at'],
 				// 'latestReportTweet_time_for_js' =>$latestReportTweet["created_at_forJS"],
 				// 'logo'=>$path]);
+				
 			} else {
 				return view('make.make',['user'=>"",'foundFlg'=>0]);
 				// return view('make.make',['user'=>"",'logo'=>$path]);
