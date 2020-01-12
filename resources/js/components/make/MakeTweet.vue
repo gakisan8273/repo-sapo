@@ -331,7 +331,7 @@ export default {
       // チェックボックスの状態をDataにもたせておく
       console.log("addUrl");
       let word = 'Posted by:'
-      let url = 'https://gakisan8273.com/reportsupporter/'
+      let url = 'https://repo-sapo.gakisan8273.com/'
       let pattern = word + url;
       if (this.checkBoxes.find(item => item === "addUrl") ){
         this.replacedFormat += "\n" + pattern;

@@ -1,13 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118005303-4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-118005303-4');
+  </script>
+
   <meta charset="UTF-8">
 
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <meta name="twitter:card" content="summary" /> <!--①-->
   <meta name="twitter:site" content="@gakisan8273" /> <!--②-->
-  <meta property="og:url" content="http://laravel.gakisan8273.com/" /> <!--③-->
+  <meta property="og:url" content="https://repo-sapo.gakisan8273.com/" /> <!--③-->
   <meta property="og:title" content="れぽさぽ for twitter" /> <!--④-->
   <meta property="og:description" content="学習時間ツイートを手間なく生成し、貴方の貴重な時間を節約します" /> <!--⑤-->
   <meta property="og:image" content="https://gakisan8273.com/img/repo-sapo_card.png" /> <!--⑥-->

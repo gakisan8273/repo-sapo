@@ -2654,7 +2654,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       // チェックボックスの状態をDataにもたせておく
       console.log("addUrl");
       var word = 'Posted by:';
-      var url = 'https://gakisan8273.com/reportsupporter/';
+      var url = 'https://repo-sapo.gakisan8273.com/';
       var pattern = word + url;
 
       if (this.checkBoxes.find(function (item) {
