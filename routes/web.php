@@ -12,12 +12,16 @@
 */
 
 Route::get('/', 'Auth\TwitterController@index')->name('make');
+Route::get('/business', 'Auth\TwitterController@business');
 Route::post('/post-format', 'Auth\TwitterController@editFormat')->name('post-format');
+Route::post('/post-business-format', 'Auth\TwitterController@editBusinessFormat');
 Route::post('/post-calcday', 'Auth\TwitterController@editCalcday')->name('post-calcday');
 Route::get('/login', 'Auth\TwitterController@login')->name('login');
 Route::get('/format', 'Auth\TwitterController@format')->name('format');
+Route::get('/business-format', 'Auth\TwitterController@businessFormat');
 Route::get('/calcday', 'Auth\TwitterController@calcday')->name('calcday');
 Route::get('/readme', 'Auth\TwitterController@readme')->name('readme');
+Route::get('/select', 'Auth\TwitterController@select');
 
 //ログインURL
 Route::get('/auth/twitter', 'Auth\TwitterController@redirectToProvider');

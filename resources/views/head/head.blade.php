@@ -19,7 +19,7 @@
   <meta name="twitter:site" content="@gakisan8273" /> <!--②-->
   <meta property="og:url" content="https://repo-sapo.gakisan8273.com/" /> <!--③-->
   <meta property="og:title" content="れぽさぽ for twitter" /> <!--④-->
-  <meta property="og:description" content="学習時間ツイートを手間なく生成し、貴方の貴重な時間を節約します" /> <!--⑤-->
+  <meta property="og:description" content="学習時間ツイートや#業務日記の時間や日数を自動で計算し、ツイートを手間なく生成します" /> <!--⑤-->
   <meta property="og:image" content="https://gakisan8273.com/img/repo-sapo_card.png" /> <!--⑥-->
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118005303-2"></script>

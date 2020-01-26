@@ -149,7 +149,7 @@ class TwitterController extends Controller
 
         // formatビューに値を渡す $user（ログインユーザのuserテーブルの中身すべて）を渡す
         // return redirect( '/format');
-        return redirect('/format');
+        return redirect('/select');
     }
 
     // logout
@@ -161,7 +161,7 @@ class TwitterController extends Controller
     }
 
 		public function upload(Request $request)
-{
+		{
     $file = $request->file('file');
     // 第一引数はディレクトリの指定
     // 第二引数はファイル
@@ -173,5 +173,70 @@ class TwitterController extends Controller
     // ファイル名を指定する場合はputFileAsを利用する
     // $path = Storage::disk('s3')->putFileAs('/', $file, 'hoge.jpg', 'public');
     return redirect('/');
-}
+		}
+
+		public static function business()
+		{
+			if (Auth::user()){
+				$user = User::find(Auth::user()->id);
+				$latestReportTweet = User::getBusinessTweet();
+				// dd($latestReportTweet);
+				return view('business.make', ['user'=>$user, 
+																			'latestReportTweet_tweet'=>$latestReportTweet['tweet'],
+																			'latestReportTweet_time'=>$latestReportTweet['created_at'],
+																			'foundFlg'=>$latestReportTweet['found'],
+																		]
+										);
+			} else {
+				return view('business.make', ['user'=>'', 'foundFlg'=>0]);
+			}
+		}
+
+		public static function businessFormat()
+		{
+			if (Auth::user()){
+        $user = User::find(Auth::user()->id);
+        // $user = json_encode($user);
+				return view('business.format', compact('user'));
+			} else {
+				return view('business.format', ['user'=>""]);
+			}
+		}
+
+		public function editBusinessFormat(Request $request)
+		{
+			$user = User::find(Auth::user()->id);
+			$user->business_hash_tags = $request['business_hash_tags'];
+			$user->business_calcday = $request['business_calc_option'];
+			$user->business_start_date = $request['business_start_date'];
+
+				// バリデーション validateを使って書く フォームリクエストはあとで書く
+				// TODO フォームリクエストでバリデーション書き直す
+				// ラジオボタンのいずれかがあるか・日付がyyyy-mm-ddか
+
+				$validate_rule = [
+					'business_calc_option' => 'required',
+					'business_start_date' => 'date_format:Y-m-d'
+				];
+				$validate_message = [
+					'business_calc_option.required' => "ラジオボタンのいずれかにチェックを入れて下さい",
+					'business_start_date.date_format:Y-m-d' => "yyyy-mm-dd 形式で入力してください"
+				];
+
+				$request->validate($validate_rule);
+
+				$user->save();
+
+			return redirect('/business');
+		}
+
+		public function select(){
+			if (Auth::user()){
+        $user = User::find(Auth::user()->id);
+        // $user = json_encode($user);
+				return view('select', compact('user'));
+			} else {
+				return view('select', ['user'=>""]);
+			}
+		}
 }

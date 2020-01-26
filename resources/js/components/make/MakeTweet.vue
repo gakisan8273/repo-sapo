@@ -4,7 +4,6 @@
     <!-- <input-numbers :count="countDOM()['count']" :input-data-time="inputData_time"/> -->
 
       <table class="edit_table">
-
       <tr>
         <td></td>
         <td>本日の値</td>
@@ -24,7 +23,16 @@
         <td><input type="text" class="edit_disabled" disabled :value="getTimesFromLatestTweet[item-1]"></td>
         <!-- <td><input type="text" class="edit_disabled" disabled></td> -->
       </tr>
-
+      <td colspan="3">
+        <a v-show="!user" href="/login" style="color:#007bff;">こちら</a>からユーザ登録もしくはログインをして下さい
+        <p><br>このアプリでできること</p>
+        <ul>
+          <li>・自分の 学習時間ツイート を自動取得</li>
+          <li>・学習時間ツイート 用の日数を自動計算</li>
+          <li>・学習時間ツイート 用の時間の入力支援</li>
+          <li>・↑が含まれた 学習時間ツイートの雛形自動生成</li>
+        </ul>
+      </td>
     </table>
 
     <!-- フォーム送信はLaravelかな？ -->
@@ -72,7 +80,7 @@ export default {
       replacedFormat: this.format,
       inputData_day : "",
       inputData_time : Array(this.countDOM()['count']), //count個の空配列
-      checkBoxes : [],
+      checkBoxes : ["addUrl"],
       diffDays : 0,
     };
   },
@@ -81,11 +89,12 @@ export default {
     this.replaceFormat_copypaste();
     this.recommendDays();
     this.replaceFormat_day();
+    this.addUrl();
     console.log("mounted");
   },
   computed : {
     dividedIndex(){
-      console.log("dividedIndex");
+      // console.log("dividedIndex");
       // {が何個あるか探す (count - 1 ) +1 = count 個ある
       let count = 0;
       let dividedIndex = []; // { がある位置
@@ -104,7 +113,7 @@ export default {
       return dividedIndex;
     },
     dividedIndex_day : function(){
-      console.log("dividedIndex_day");
+      // console.log("dividedIndex_day");
       // {が何個あるか探す (count - 1 ) +1 = count 個ある
       let count = 0;
       let dividedIndex = []; // { がある位置
@@ -123,7 +132,7 @@ export default {
       return dividedIndex;
     },
     getTimesFromLatestTweet : function(){
-      console.log('getTimesFromLatestTweet');
+      // console.log('getTimesFromLatestTweet');
       if (this.found) {
       } else {
         // console.log("if内");
@@ -156,9 +165,9 @@ export default {
         if (findIndex[i] === 1){
           // 数字などを検索する 正規表現で ヒットしたらそれを取得し、配列に格納
           tmp = splitLatestReportTweet[i].match(pattern);
-          console.log({tmp});
+          // console.log({tmp});
           latestReportTweet_times = latestReportTweet_times.concat(tmp);
-          console.log(latestReportTweet_times);
+          // console.log(latestReportTweet_times);
         } else {
           // 何もしない
         }
@@ -166,14 +175,14 @@ export default {
       return latestReportTweet_times;
     },
     getDaysFromLatestTweet : function(){
-      console.log('getDaysFromLatestTweet');
+      // console.log('getDaysFromLatestTweet');
       if (this.found) {
       } else {
         // console.log("if内");
         // console.log(this.found);
         return "";
       }
-      console.log(this.found);
+      // console.log(this.found);
       // 過去ツイートから日数を取得する
 
       // フォーマットに[]が含まれている行に対して数字とかの検索〜取得を実行する
@@ -201,9 +210,9 @@ export default {
         if (findIndex[i] === 1){
           // 数字などを検索する 正規表現で ヒットしたらそれを取得し、配列に格納
           tmp = splitLatestReportTweet[i].match(pattern);
-          console.log({tmp});
+          // console.log({tmp});
           latestReportTweet_days = latestReportTweet_days.concat(tmp);
-          console.log(latestReportTweet_days);
+          // console.log(latestReportTweet_days);
         } else {
           // 何もしない
         }
@@ -214,13 +223,13 @@ export default {
     sentText : function(){
     //[]と{}を削除したものをツイート用に
     let sentText = this.replacedFormat.replace(/[\{\}\[\]]/g,'');
-    console.log({sentText});
+    // console.log({sentText});
     return sentText;
     }
   },
   methods : {
     countDOM : function(){
-      console.log("countDOM()");
+      // console.log("countDOM()");
       // {が何個あるか探す (count - 1 ) +1 = count 個ある
       let count = 0;
       let dividedIndex = []; // { がある位置
@@ -242,20 +251,20 @@ export default {
       // inputboxに入力すると、対応した[]{}が入力された数字に置換される
       // フォーマットを{任意文字列}で検索（{}が何番目かは、入力したinputboxの引数から読み取る）し、それを{入力文字列}に置換する
       // index、入力文字列は子のInputNumbers.vueから受け取る
-      console.log('replaceFormat');
-      console.log({item});
+      // console.log('replaceFormat');
+      // console.log({item});
       if(this.found){
 
         // { がある位置
         let dividedIndex = this.dividedIndex[item-1]; //computedから
         let dividedFormat = [];
-        console.log({dividedIndex});
+        // console.log({dividedIndex});
 
         // 検索の開始位置をずらす-> {}の位置の前後で文字列を分割し、後ろの文字列から検索する
         dividedFormat[0] = this.replacedFormat.slice(0, dividedIndex); //最初から { まで
         dividedFormat[1] = this.replacedFormat.slice(dividedIndex); // { から終わりまで
-        console.log(dividedFormat[0]);
-        console.log(dividedFormat[1]);
+        // console.log(dividedFormat[0]);
+        // console.log(dividedFormat[1]);
         // { の前と、置換した{ 以降のものを結合する
         this.replacedFormat = dividedFormat[0] + dividedFormat[1].replace(/\{[^}]*\}+/u,'{'+ this.inputData_time[item-1] + '}');
       } else {
@@ -263,18 +272,18 @@ export default {
       }
     },
     replaceFormat_day : function(){
-      console.log('replaceFormat_day'); //日付欄用
+      // console.log('replaceFormat_day'); //日付欄用
       if (this.found){
         // [ がある位置
         let dividedIndex = this.dividedIndex_day; //computedから
         let dividedFormat = [];
-        console.log({dividedIndex});
+        // console.log({dividedIndex});
 
         // 検索の開始位置をずらす-> {}の位置の前後で文字列を分割し、後ろの文字列から検索する
         dividedFormat[0] = this.replacedFormat.slice(0, dividedIndex); //最初から { まで
         dividedFormat[1] = this.replacedFormat.slice(dividedIndex); // { から終わりまで
-        console.log(dividedFormat[0]);
-        console.log(dividedFormat[1]);
+        // console.log(dividedFormat[0]);
+        // console.log(dividedFormat[1]);
         // { の前と、置換した{ 以降のものを結合する
         this.replacedFormat = dividedFormat[0] + dividedFormat[1].replace(/\[[^\]]*\]+/u,'['+ this.diffDays + ']');
       } else {
@@ -284,12 +293,12 @@ export default {
     replaceFormat_copypaste : function(){
       // フォーマットを\nで検索し、そこで分割する 分割前に*---*があるか？あれば１行目をコピペすればいい
       // 次の\nまでにあるか？ あれば２行目をコピペすればいい
-      console.log("replaceFormat_copypasete");
+      // console.log("replaceFormat_copypasete");
       if (this.found){
 
         // 何行目をコピペすればいいか、フォーマットから取得
         let splitFormat = this.format.split(/\r\r|\n/);
-        console.log({splitFormat});
+        // console.log({splitFormat});
         let pattern  = "*---*"; // コピペする行を示すパターン
         let row = "";
 
@@ -301,7 +310,7 @@ export default {
             break;
           }
         }
-        console.log({findIndex});
+        // console.log({findIndex});
 
         // 前回ツイートからコピーする作業
         // 前回ツイートを分割する
@@ -318,7 +327,7 @@ export default {
           format += splitFormat[i];
           format += "\n";
         }
-        console.log(this.replacedFormat);
+        // console.log(this.replacedFormat);
         // 最後にハッシュタグを足しとく
           this.replacedFormat = format + "\n" + this.hash_tags;
       } else {
@@ -329,16 +338,16 @@ export default {
       // 末尾にURLが追加される チェックボックスがONになっていれば、Twitter画面に遷移するときに付与する
       // POSTの前にこのメソッドを実行してthis.replacedFormatを書き換える
       // チェックボックスの状態をDataにもたせておく
-      console.log("addUrl");
+      // console.log("addUrl");
       let word = 'Posted by:'
       let url = 'https://repo-sapo.gakisan8273.com/'
       let pattern = word + url;
       if (this.checkBoxes.find(item => item === "addUrl") ){
         this.replacedFormat += "\n" + pattern;
-        console.log("added");
+        // console.log("added");
       } else {
         this.replacedFormat = this.replacedFormat.replace(pattern, "");
-        console.log("deleted");
+        // console.log("deleted");
       }
     },
     recommendDays: function(){
@@ -369,16 +378,20 @@ export default {
       let nowDate_hour = nowDate.getHours();
       let nowDate_time = nowDate.getTime();
       let diffDays = 0;
-
+      console.log(nowDate);
       switch (this.calcday) {
         case "1":
-          diffDays = Number(this.getDaysFromLatestTweet) + parseInt( ( nowDate_time - latestDate_time ) / ( 1000 * 60 * 60 * 24), 10 ); // 小数点以下切り捨て 
-          console.log(this.calcday);
-          console.log(typeof(Number(this.getDaysFromLatestTweet)));
+          // diffDays = Number(this.getDaysFromLatestTweet) + parseInt( ( nowDate_time - latestDate_time ) / ( 1000 * 60 * 60 * 24), 10 ); // 小数点以下切り捨て 
+          // diffDays = Number(this.getDaysFromLatestTweet) +  parseInt(nowDate_time / (1000*60*60*24), 10)  - parseInt(latestDate_time / ( 1000 * 60 * 60 * 24), 10); // 小数点以下切り捨て 
+          diffDays = Number(this.getDaysFromLatestTweet) +  Math.floor(nowDate_time / (1000*60*60*24))  - Math.floor(latestDate_time / ( 1000 * 60 * 60 * 24)); // 小数点以下切り捨て 
+          console.log(this.getDaysFromLatestTweet);
           console.log({nowDate_time});
           console.log({latestDate_time});
-          console.log( (nowDate_time - latestDate_time) / (1000*60*60*24) );
+          // console.log( parseInt((nowDate_time - latestDate_time) / (1000*60*60*24) ));
+          console.log( Math.floor(nowDate_time / (1000*60*60*24))  - Math.floor(latestDate_time / ( 1000 * 60 * 60 * 24)));
           console.log({diffDays}); // 1になってる ここから修正
+
+          console.log({latestDate_hour})
           // calcday１〜2共通の処理
           if (latestDate_hour < hour) {
             // 前回ツイート時間が18時以前だったら、前回ツイート日より1日前のツイートの意味
@@ -410,7 +423,7 @@ export default {
           console.log(this.calcday);
           console.log({latestDate_time});
           console.log({nowDate_time});
-          diffDays = 1 + parseInt( ( nowDate_time - latestDate_time ) / ( 1000 * 60 * 60 * 24), 10 ); // 小数点以下切り捨て start_date（yyyy-mm-dd） と 今の日付の差
+          diffDays = 1 + Math.floor(nowDate_time / (1000*60*60*24))  - Math.floor(latestDate_time / ( 1000 * 60 * 60 * 24)); // 小数点以下切り捨て start_date（yyyy-mm-dd） と 今の日付の差
           // 初日を1日目とするため１を足す
           // https://keisan.casio.jp/exec/system/1177658154 日数計算サイト これと一致した 前のreportsupporterは間違っていた・・・
           break;

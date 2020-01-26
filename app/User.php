@@ -19,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'twitter_id', 'twitter_name', 'hash_tags', 'format', 'calcday', 'start_date', 'twitter_icon'
+        'twitter_id', 'twitter_name', 'hash_tags', 'format', 'calcday', 'start_date', 'twitter_icon', 'business_format', 'business_hash_tags', 'business_calcday'
     ];
 
     /**
@@ -52,7 +52,7 @@ class User extends Authenticatable
         $requestUrl ='https://api.twitter.com/1.1/statuses/user_timeline.json';
 
         //リクエストURLにパラメータを追加
-        $count = 100;
+        $count = 1000;
         
         // 自分のstaticなメソッドを呼ぶときは$thisでなくself::
         $screen_name = self::find(Auth::user()->id)->twitter_id;
@@ -116,12 +116,15 @@ class User extends Authenticatable
         return $searchWordsArray;
     }
 
-    public static function getReportTweet(){
+    public static function getReportTweet($searchWordsArray = []){
         // 自分のタイムラインのツイートから、検索ワードを含む最新のものを取得する
-
-        // 検索ワード 配列
-        $searchWordsArray = self::makeSearchWordsForReportTweet();
 				// dd($searchWordsArray);
+				// 検索ワード 配列
+				
+				if($searchWordsArray === []){
+					$searchWordsArray = self::makeSearchWordsForReportTweet();
+				}
+
         // タイムラインのツイート 配列
         // $myTweets_full_text = self::getFromMyTweets();
         $myTweets = self::getMyTweets();
@@ -132,22 +135,21 @@ class User extends Authenticatable
 					$flg = 1; // 検索ワード一致判定フラグ
 
 					// 検索ワードがツイートに含まれるかどうか判定
-					// dd($tweet);
-					foreach ($searchWordsArray as $searchWord){
-						// $searchWord がカラ文字だとsrtposでエラーになるので、弾いておく
-						if ($searchWord){
-							if ( strpos($tweet['full_text'], $searchWord) === false){
-								// 一致しないものがあればflgを０にする
-								$flg = 0;
-								// dd('test');
-							} else {
-								// 一致したら
-								// dd('一致', $tweet, $searchWord, $flg);
+						foreach ($searchWordsArray as $searchWord){
+							// $searchWord がカラ文字だとsrtposでエラーになるので、弾いておく
+							if ($searchWord) {
+								// dump($searchWord);
+								if ( strpos($tweet['full_text'], $searchWord) === false){
+									// 一致しないものがあればflgを０にする
+										$flg = 0;
+										// dd('test');
+									} else {
+										// 一致したら
+										// dd('一致', $tweet, $searchWord, $flg);
+									}
+									// dump($flg);
 							}
 						}
-						// dd('test');
-						// dd($searchWord,$tweet,strpos($tweet, $searchWord), $flg );
-					}
 					
 					if ($flg) {
 						// 検索ワードが全て一致（flg=1)なら、変数を格納
@@ -173,7 +175,23 @@ class User extends Authenticatable
 					}
 				}
 				//最新の報告ツイートを返す
+				// dump($flg);
 				// dd($latestReportTweet);
 				return $latestReportTweet;
-    }
+		}
+		
+		public static function getBusinessTweet()
+		{
+			// #業務日記ツイートを取得する処理
+			$searchWord = self::makeSearchWordsForBusinessTweet();
+			// dd($searchWord);
+			return self::getReportTweet($searchWord);
+		}
+
+		public static function makeSearchWordsForBusinessTweet()
+		{
+			//#業務日記用を取得するときの検索ワードを作る
+			$searchWordsArrayForBusinessTweet = ["#業務日記"];
+			return $searchWordsArrayForBusinessTweet;
+		}
 }

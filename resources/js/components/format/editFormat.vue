@@ -27,7 +27,6 @@
       </textarea>
     </div>
     <send-format :user="user"/>
-    <!-- <send-format @childs-event="modifyFormat" /> -->
   </div>
 </template>
 
@@ -62,10 +61,10 @@ export default {
       let replaceObj2 = new RegExp(replacePattern2);
       let replacement2 = '[*+*]';
       this.modifiedFormat = this.modifiedFormat.replace(replaceObj2, replacement2);
-      console.log(this.modifiedFormat);
+      // console.log(this.modifiedFormat);
     },
     insertPattern_day : function(){
-      console.log("insertPattern_day");
+      // console.log("insertPattern_day");
       // フォーマット入力欄に[]を挿入する
 
       // dataにあるrecievedFormatを操作する
@@ -91,7 +90,7 @@ export default {
       // console.log(this.receivedFormat);
     },
     insertPattern_time : function(){
-      console.log("insertPattern_time");
+      // console.log("insertPattern_time");
       // フォーマット入力欄に[]を挿入する
 
       // dataにあるrecievedFormatを操作する
@@ -117,7 +116,7 @@ export default {
       // console.log(this.receivedFormat);
     },
     insertPattern_copypaste : function(){
-      console.log("insertPattern_copypaste");
+      // console.log("insertPattern_copypaste");
       // フォーマット入力欄に[]を挿入する
 
       // dataにあるrecievedFormatを操作する

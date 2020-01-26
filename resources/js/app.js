@@ -26,7 +26,10 @@ Vue.component('edit-format', require('./components/format/editFormat.vue').defau
 Vue.component('insert-button', require('./components/format/insertButton.vue').default);
 Vue.component('send-format', require('./components/format/sendFormat.vue').default);
 Vue.component('make-tweet', require('./components/make/MakeTweet.vue').default);
+Vue.component('make-business-tweet', require('./components/business/make/MakeTweet.vue').default);
 Vue.component('header-vue', require('./components/header/Header.vue').default);
+Vue.component('edit-business-format', require('./components/business/format/editFormat.vue').default);
+Vue.component('send-business-format', require('./components/business/format/sendFormat.vue').default);
 // Vue.component('insert-numbers', require('./components/make/InsertNumbers.vue').default);
 // Vue.component('input-numbers', require('./components/make/InputNumbers.vue').default);
 

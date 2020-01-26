@@ -13,7 +13,7 @@ export default {
     handleClick1 : function(){
       // disabledがボタンについているとイベントが発火しない
       event.preventDefault()
-      console.log('handleClick1');
+      // console.log('handleClick1');
       this.$emit('child-event1');
     },
     handleClick2 : function(){

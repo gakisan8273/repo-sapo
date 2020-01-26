@@ -1928,6 +1928,360 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/business/format/editFormat.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/business/format/editFormat.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _sendFormat_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sendFormat.vue */ "./resources/js/components/business/format/sendFormat.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {// receivedFormat: this.format,
+      // modifiedFormat : this.format,
+    };
+  },
+  props: ['format', 'hash_tags', 'start_date', 'calcday', 'user', 'error'],
+  mounted: function mounted() {},
+  methods: {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/business/format/sendFormat.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/business/format/sendFormat.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['user'],
+  methods: {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/business/make/MakeTweet.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/business/make/MakeTweet.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      madeFormat: "#業務日記\n",
+      inputData_day: "",
+      checkBoxes: ["addUrl"],
+      diffDays: 0,
+      youbi: 0,
+      keikaMonth: 0
+    };
+  },
+  props: ['user', 'calcday', 'hash_tags', 'start_date', 'latestReportTweet_tweet', 'latestReportTweet_time', 'found'],
+  mounted: function mounted() {
+    console.log("mounted");
+    this.recommendDays();
+    this.makeFormat();
+    this.addUrl();
+  },
+  computed: {},
+  methods: {
+    addUrl: function addUrl() {
+      // 末尾にURLが追加される チェックボックスがONになっていれば、Twitter画面に遷移するときに付与する
+      // POSTの前にこのメソッドを実行してthis.replacedFormatを書き換える
+      // チェックボックスの状態をDataにもたせておく
+      // console.log("addUrl");
+      var word = 'Posted by:';
+      var url = 'https://repo-sapo.gakisan8273.com/business';
+      var pattern = word + url;
+
+      if (this.checkBoxes.find(function (item) {
+        return item === "addUrl";
+      })) {
+        this.madeFormat += "\n" + pattern; // console.log("added");
+      } else {
+        this.madeFormat = this.madeFormat.replace(pattern, ""); // console.log("deleted");
+      }
+    },
+    recommendDays: function recommendDays() {
+      var hour = 17; // この時間を境目に前日扱いにする
+
+      var nowDate = new Date();
+      var nowDate_hour = nowDate.getHours();
+      var nowDate_time = nowDate.getTime();
+      var start_date_year = this.start_date.slice(0, 4); //"yyyy"-mm-dd
+
+      var start_date_month = this.start_date.slice(5, 7); //yyyy-"mm"-dd
+
+      var start_date_day = this.start_date.slice(8, 10); //yyyy-mm-"dd"
+
+      var start_date_time = new Date(start_date_year, start_date_month - 1, start_date_day);
+      var start_date_youbi = start_date_time.getDay(); //曜日
+
+      var nowDate_day = nowDate.getDay();
+      var diffDays = 0;
+      var weekNo = 0;
+      console.log(this.calcday);
+
+      if (this.calcday === '1') {
+        // x日目 の計算
+        // 起算日から本日までの日数 （起算日＝1とする）
+        diffDays = 1 + Math.floor(nowDate_time / (1000 * 60 * 60 * 24)) - Math.floor(start_date_time / (1000 * 60 * 60 * 24)); // 小数点以下切り捨て start_date（yyyy-mm-dd） と 今の日付の差
+        // 初日を1日目とするため１を足す
+        // https://keisan.casio.jp/exec/system/1177658154 日数計算サイト これと一致した 前のreportsupporterは間違っていた
+
+        console.log(this.calcday);
+
+        if (nowDate_hour < hour) {
+          // 今回のツイート時間が１7時以前だったら、昨日のツイートの意味
+          // 普通に経過時間を計算すると1日多くなるので、diffDaysを−１する
+          console.log("今回ツイートが１7時以前");
+          diffDays--;
+          console.log({
+            diffDays: diffDays
+          });
+        }
+      } else if (this.calcday === "2") {
+        // x週-n の計算
+        // 起算日の週から本日の週までの週数（起算日の週＝1とする）
+        // 本日の曜日 月曜＝1 とする 日曜は0でいい
+        // 起算日の曜日を取得する 日曜0~土曜6 start_date_youbi
+        // 起算日から曜日の数字を引く （その週の頭となる）
+        // ↑の日と、今日の日を引く（週の頭からの経過日数）
+        // ↑を7で割り１を足す（経過週数 起算日の週を1とする）
+        console.log({
+          nowDate_day: nowDate_day
+        });
+        console.log({
+          start_date_youbi: start_date_youbi
+        });
+        var start_date_firstDay = Math.floor(start_date_time / (1000 * 60 * 60 * 24)) - start_date_youbi;
+        var keika = Math.floor(nowDate_time / (1000 * 60 * 60 * 24)) - start_date_firstDay;
+        var keikaWeeks = Math.floor(keika / 7) + 1;
+        console.log({
+          keikaWeeks: keikaWeeks
+        });
+
+        if (nowDate_hour < hour) {
+          // 今回のツイート時間が１7時以前だったら、昨日のツイートの意味
+          // 普通に経過時間を計算すると1日多くなるので、diffDaysを−１する
+          console.log("今回ツイートが１7時以前");
+          nowDate_day--;
+
+          if (nowDate_day < 0) {
+            nowDate_day = 6;
+            keikaWeeks--;
+          }
+
+          console.log({
+            diffDays: diffDays
+          });
+        }
+
+        diffDays = keikaWeeks;
+        this.youbi = nowDate_day;
+      } else {
+        // xヶ月目 第ｘ週-n の計算
+        // 起算日が含まれる月を1ヶ月目とする
+        // 本日が月の何週目に当たるかをx週とする
+        // 曜日を-nとする
+        // 月の計算
+        // 開始年月日から年と月を抜き出す
+        // 今日の日付からも年と月を抜き出す
+        // 月を整数にし、引き算して＋1する
+        // 年を整数にし、引き算する ← ×12したものを足す
+        console.log(nowDate.getMonth()); //開始日の月
+
+        console.log(start_date_time.getMonth()); //ツイート日の月(1月＝0)
+
+        var keikaMonth = nowDate.getMonth() - start_date_time.getMonth() + 1;
+        keikaMonth += (nowDate.getFullYear() - start_date_time.getFullYear()) * 12;
+        console.log({
+          keikaMonth: keikaMonth
+        });
+        diffDays = keikaMonth; // 週の計算
+        // console.log($.datepicker.iso8601Week(nowDate));
+        // その月の1日目が何曜日かを求める
+        // 日曜→1-6日が1週目 月曜→2-7日が1週目
+        // 
+
+        var nowDate_firstDate = new Date(nowDate.getFullYear(), nowDate.getMonth(), 1); //今月の初日
+
+        var nowDate_firstDay = nowDate_firstDate.getDay(); //今月初日の曜日 日曜＝0
+        // 初日が水曜＝3で 本日26日だったら？ 5週目になるはず
+        // 最初の週の終わりは4日 -> 日曜0なら7=0+7, 月曜1なら6=7-1, 火曜2なら5=7-2
+        // 1: < 5,  2: < 5 + 7 * 1 = 12,   3: < 5 + 7 * 2 = 19,   4: < 5 + 7 * 3 = 26,   5: < 5 + 7 * 4 = 33
+
+        var nowDate_firstWeekEndDay = 7 - nowDate_firstDay;
+
+        var _weekNo;
+
+        if (nowDate.getDate() <= 7 * 1 - nowDate_firstDay) {
+          // 1
+          _weekNo = 1;
+        } else if (nowDate.getDate() <= 7 * 2 - nowDate_firstDay) {
+          // 2
+          _weekNo = 2;
+        } else if (nowDate.getDate() <= 7 * 3 - nowDate_firstDay) {
+          // 3
+          _weekNo = 3;
+        } else if (nowDate.getDate() <= 7 * 4 - nowDate_firstDay) {
+          // 4
+          _weekNo = 4;
+        } else if (nowDate.getDate() <= 7 * 5 - nowDate_firstDay) {
+          // 5
+          _weekNo = 5;
+        } else if (nowDate.getDate() <= 7 * 2 - nowDate_firstDay) {
+          // 6
+          _weekNo = 6;
+        }
+
+        if (nowDate_hour < hour) {
+          // 今回のツイート時間が１7時以前だったら、昨日のツイートの意味
+          // 普通に経過時間を計算すると1日多くなるので、diffDaysを−１する
+          console.log("今回ツイートが１7時以前");
+          nowDate_day--;
+
+          if (nowDate_day < 0) {
+            nowDate_day = 6;
+            _weekNo--;
+          }
+        }
+
+        this.youbi = nowDate_day;
+        this.weekNo = _weekNo;
+      }
+
+      console.log("出力される日数は↓");
+      console.log({
+        diffDays: diffDays
+      }); // return diffDays;
+
+      this.diffDays = diffDays;
+    },
+    makeFormat: function makeFormat() {
+      // calcday1のとき this.diffdays + "日目"
+      if (this.calcday === '1') {
+        this.madeFormat += this.diffDays + "日目\n";
+      } else if (this.calcday === '2') {
+        // calcday2のとき this.diffdays + "週目 - " + 曜日
+        this.madeFormat += this.diffDays + "週目-" + this.youbi + "\n";
+      } else {
+        this.madeFormat += this.diffDays + "ヶ月目　第" + this.weekNo + "週-" + this.youbi + "\n";
+      }
+
+      this.madeFormat += "\n\n\n" + this.hash_tags;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/format/editFormat.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/format/editFormat.vue?vue&type=script&lang=js& ***!
@@ -1939,7 +2293,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _insertButton_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./insertButton.vue */ "./resources/js/components/format/insertButton.vue");
 /* harmony import */ var _sendFormat_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sendFormat.vue */ "./resources/js/components/format/sendFormat.vue");
-//
 //
 //
 //
@@ -1998,11 +2351,11 @@ __webpack_require__.r(__webpack_exports__);
       var replacePattern2 = /\[[^\]]*\]/g;
       var replaceObj2 = new RegExp(replacePattern2);
       var replacement2 = '[*+*]';
-      this.modifiedFormat = this.modifiedFormat.replace(replaceObj2, replacement2);
-      console.log(this.modifiedFormat);
+      this.modifiedFormat = this.modifiedFormat.replace(replaceObj2, replacement2); // console.log(this.modifiedFormat);
     },
     insertPattern_day: function insertPattern_day() {
-      console.log("insertPattern_day"); // フォーマット入力欄に[]を挿入する
+      // console.log("insertPattern_day");
+      // フォーマット入力欄に[]を挿入する
       // dataにあるrecievedFormatを操作する
       // 選択カーソルの最初と最後を取得する
       // カーソル最初まででsliceする
@@ -2011,7 +2364,6 @@ __webpack_require__.r(__webpack_exports__);
       // 文字列を結合する 改行はどうなる？
       // console.log(this.$refs.insert.focus());
       // let textarea = document.getElementsByClassName('js-format')[0];
-
       var pos_start = this.$refs.insert.selectionStart;
       var pos_end = this.$refs.insert.selectionEnd;
       var val = this.receivedFormat;
@@ -2026,7 +2378,8 @@ __webpack_require__.r(__webpack_exports__);
       // console.log(this.receivedFormat);
     },
     insertPattern_time: function insertPattern_time() {
-      console.log("insertPattern_time"); // フォーマット入力欄に[]を挿入する
+      // console.log("insertPattern_time");
+      // フォーマット入力欄に[]を挿入する
       // dataにあるrecievedFormatを操作する
       // 選択カーソルの最初と最後を取得する
       // カーソル最初まででsliceする
@@ -2035,7 +2388,6 @@ __webpack_require__.r(__webpack_exports__);
       // 文字列を結合する 改行はどうなる？
       // console.log(this.$refs.insert.focus());
       // let textarea = document.getElementsByClassName('js-format')[0];
-
       var pos_start = this.$refs.insert.selectionStart;
       var pos_end = this.$refs.insert.selectionEnd;
       var val = this.receivedFormat;
@@ -2050,7 +2402,8 @@ __webpack_require__.r(__webpack_exports__);
       // console.log(this.receivedFormat);
     },
     insertPattern_copypaste: function insertPattern_copypaste() {
-      console.log("insertPattern_copypaste"); // フォーマット入力欄に[]を挿入する
+      // console.log("insertPattern_copypaste");
+      // フォーマット入力欄に[]を挿入する
       // dataにあるrecievedFormatを操作する
       // 選択カーソルの最初と最後を取得する
       // カーソル最初まででsliceする
@@ -2059,7 +2412,6 @@ __webpack_require__.r(__webpack_exports__);
       // 文字列を結合する 改行はどうなる？
       // console.log(this.$refs.insert.focus());
       // let textarea = document.getElementsByClassName('js-format')[0];
-
       var pos_start = this.$refs.insert.selectionStart;
       var pos_end = this.$refs.insert.selectionEnd;
       var val = this.receivedFormat;
@@ -2100,8 +2452,8 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     handleClick1: function handleClick1() {
       // disabledがボタンについているとイベントが発火しない
-      event.preventDefault();
-      console.log('handleClick1');
+      event.preventDefault(); // console.log('handleClick1');
+
       this.$emit('child-event1');
     },
     handleClick2: function handleClick2() {
@@ -2209,10 +2561,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       menu: false,
+      activeBusinessMake: false,
+      activeBusinessFormat: false,
       activeMake: false,
       activeFormat: false,
       activeCalcday: false,
@@ -2240,6 +2606,14 @@ __webpack_require__.r(__webpack_exports__);
       });
 
       switch (path) {
+        case "/business":
+          this.activeBusinessMake = true;
+          break;
+
+        case "/business-format":
+          this.activeBusinessFormat = true;
+          break;
+
         case "/":
           this.activeMake = true;
           break;
@@ -2282,8 +2656,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2358,7 +2738,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       inputData_day: "",
       inputData_time: Array(this.countDOM()['count']),
       //count個の空配列
-      checkBoxes: [],
+      checkBoxes: ["addUrl"],
       diffDays: 0
     };
   },
@@ -2367,12 +2747,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     this.replaceFormat_copypaste();
     this.recommendDays();
     this.replaceFormat_day();
+    this.addUrl();
     console.log("mounted");
   },
   computed: {
     dividedIndex: function dividedIndex() {
-      console.log("dividedIndex"); // {が何個あるか探す (count - 1 ) +1 = count 個ある
-
+      // console.log("dividedIndex");
+      // {が何個あるか探す (count - 1 ) +1 = count 個ある
       var count = 0;
       var dividedIndex = []; // { がある位置
       // let format = this.replacedFormat;
@@ -2393,8 +2774,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       return dividedIndex;
     },
     dividedIndex_day: function dividedIndex_day() {
-      console.log("dividedIndex_day"); // {が何個あるか探す (count - 1 ) +1 = count 個ある
-
+      // console.log("dividedIndex_day");
+      // {が何個あるか探す (count - 1 ) +1 = count 個ある
       var count = 0;
       var dividedIndex = []; // { がある位置
       // let format = this.replacedFormat;
@@ -2415,8 +2796,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       return dividedIndex;
     },
     getTimesFromLatestTweet: function getTimesFromLatestTweet() {
-      console.log('getTimesFromLatestTweet');
-
+      // console.log('getTimesFromLatestTweet');
       if (this.found) {} else {
         // console.log("if内");
         // console.log(this.found);
@@ -2451,30 +2831,26 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       for (var _i = 0; _i < findIndex.length; _i++) {
         if (findIndex[_i] === 1) {
           // 数字などを検索する 正規表現で ヒットしたらそれを取得し、配列に格納
-          tmp = splitLatestReportTweet[_i].match(pattern);
-          console.log({
-            tmp: tmp
-          });
-          latestReportTweet_times = latestReportTweet_times.concat(tmp);
-          console.log(latestReportTweet_times);
+          tmp = splitLatestReportTweet[_i].match(pattern); // console.log({tmp});
+
+          latestReportTweet_times = latestReportTweet_times.concat(tmp); // console.log(latestReportTweet_times);
         } else {// 何もしない
-        }
+          }
       }
 
       return latestReportTweet_times;
     },
     getDaysFromLatestTweet: function getDaysFromLatestTweet() {
-      console.log('getDaysFromLatestTweet');
-
+      // console.log('getDaysFromLatestTweet');
       if (this.found) {} else {
         // console.log("if内");
         // console.log(this.found);
         return "";
-      }
-
-      console.log(this.found); // 過去ツイートから日数を取得する
+      } // console.log(this.found);
+      // 過去ツイートから日数を取得する
       // フォーマットに[]が含まれている行に対して数字とかの検索〜取得を実行する
       // フォーマットを行ごとに分割する
+
 
       var splitFormat = this.format.split(/\r\r|\n/); // []を含むか判定する
 
@@ -2502,31 +2878,26 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       for (var _i2 = 0; _i2 < findIndex.length; _i2++) {
         if (findIndex[_i2] === 1) {
           // 数字などを検索する 正規表現で ヒットしたらそれを取得し、配列に格納
-          tmp = splitLatestReportTweet[_i2].match(pattern);
-          console.log({
-            tmp: tmp
-          });
-          latestReportTweet_days = latestReportTweet_days.concat(tmp);
-          console.log(latestReportTweet_days);
+          tmp = splitLatestReportTweet[_i2].match(pattern); // console.log({tmp});
+
+          latestReportTweet_days = latestReportTweet_days.concat(tmp); // console.log(latestReportTweet_days);
         } else {// 何もしない
-        }
+          }
       }
 
       return latestReportTweet_days;
     },
     sentText: function sentText() {
       //[]と{}を削除したものをツイート用に
-      var sentText = this.replacedFormat.replace(/[\{\}\[\]]/g, '');
-      console.log({
-        sentText: sentText
-      });
+      var sentText = this.replacedFormat.replace(/[\{\}\[\]]/g, ''); // console.log({sentText});
+
       return sentText;
     }
   },
   methods: {
     countDOM: function countDOM() {
-      console.log("countDOM()"); // {が何個あるか探す (count - 1 ) +1 = count 個ある
-
+      // console.log("countDOM()");
+      // {が何個あるか探す (count - 1 ) +1 = count 個ある
       var count = 0;
       var dividedIndex = []; // { がある位置
       // let format = this.replacedFormat;
@@ -2550,26 +2921,21 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       // inputboxに入力すると、対応した[]{}が入力された数字に置換される
       // フォーマットを{任意文字列}で検索（{}が何番目かは、入力したinputboxの引数から読み取る）し、それを{入力文字列}に置換する
       // index、入力文字列は子のInputNumbers.vueから受け取る
-      console.log('replaceFormat');
-      console.log({
-        item: item
-      });
-
+      // console.log('replaceFormat');
+      // console.log({item});
       if (this.found) {
         // { がある位置
         var dividedIndex = this.dividedIndex[item - 1]; //computedから
 
-        var dividedFormat = [];
-        console.log({
-          dividedIndex: dividedIndex
-        }); // 検索の開始位置をずらす-> {}の位置の前後で文字列を分割し、後ろの文字列から検索する
+        var dividedFormat = []; // console.log({dividedIndex});
+        // 検索の開始位置をずらす-> {}の位置の前後で文字列を分割し、後ろの文字列から検索する
 
         dividedFormat[0] = this.replacedFormat.slice(0, dividedIndex); //最初から { まで
 
         dividedFormat[1] = this.replacedFormat.slice(dividedIndex); // { から終わりまで
-
-        console.log(dividedFormat[0]);
-        console.log(dividedFormat[1]); // { の前と、置換した{ 以降のものを結合する
+        // console.log(dividedFormat[0]);
+        // console.log(dividedFormat[1]);
+        // { の前と、置換した{ 以降のものを結合する
 
         this.replacedFormat = dividedFormat[0] + dividedFormat[1].replace(/\{(?:[\0-\|~-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])*\}+/, '{' + this.inputData_time[item - 1] + '}');
       } else {
@@ -2577,23 +2943,20 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
     },
     replaceFormat_day: function replaceFormat_day() {
-      console.log('replaceFormat_day'); //日付欄用
-
+      // console.log('replaceFormat_day'); //日付欄用
       if (this.found) {
         // [ がある位置
         var dividedIndex = this.dividedIndex_day; //computedから
 
-        var dividedFormat = [];
-        console.log({
-          dividedIndex: dividedIndex
-        }); // 検索の開始位置をずらす-> {}の位置の前後で文字列を分割し、後ろの文字列から検索する
+        var dividedFormat = []; // console.log({dividedIndex});
+        // 検索の開始位置をずらす-> {}の位置の前後で文字列を分割し、後ろの文字列から検索する
 
         dividedFormat[0] = this.replacedFormat.slice(0, dividedIndex); //最初から { まで
 
         dividedFormat[1] = this.replacedFormat.slice(dividedIndex); // { から終わりまで
-
-        console.log(dividedFormat[0]);
-        console.log(dividedFormat[1]); // { の前と、置換した{ 以降のものを結合する
+        // console.log(dividedFormat[0]);
+        // console.log(dividedFormat[1]);
+        // { の前と、置換した{ 以降のものを結合する
 
         this.replacedFormat = dividedFormat[0] + dividedFormat[1].replace(/\[(?:[\0-\\\^-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])*\]+/, '[' + this.diffDays + ']');
       } else {
@@ -2603,14 +2966,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     replaceFormat_copypaste: function replaceFormat_copypaste() {
       // フォーマットを\nで検索し、そこで分割する 分割前に*---*があるか？あれば１行目をコピペすればいい
       // 次の\nまでにあるか？ あれば２行目をコピペすればいい
-      console.log("replaceFormat_copypasete");
-
+      // console.log("replaceFormat_copypasete");
       if (this.found) {
         // 何行目をコピペすればいいか、フォーマットから取得
-        var splitFormat = this.format.split(/\r\r|\n/);
-        console.log({
-          splitFormat: splitFormat
-        });
+        var splitFormat = this.format.split(/\r\r|\n/); // console.log({splitFormat});
+
         var pattern = "*---*"; // コピペする行を示すパターン
 
         var row = "";
@@ -2621,12 +2981,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             findIndex = i;
             break;
           }
-        }
-
-        console.log({
-          findIndex: findIndex
-        }); // 前回ツイートからコピーする作業
+        } // console.log({findIndex});
+        // 前回ツイートからコピーする作業
         // 前回ツイートを分割する
+
 
         var splitLatestReportTweet = this.latestReportTweet_tweet.split(/\r\r|\n/); // findIndex行目を取得する
 
@@ -2639,9 +2997,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         for (var _i3 = 0; _i3 < splitFormat.length; _i3++) {
           format += splitFormat[_i3];
           format += "\n";
-        }
+        } // console.log(this.replacedFormat);
+        // 最後にハッシュタグを足しとく
 
-        console.log(this.replacedFormat); // 最後にハッシュタグを足しとく
 
         this.replacedFormat = format + "\n" + this.hash_tags;
       } else {
@@ -2652,7 +3010,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       // 末尾にURLが追加される チェックボックスがONになっていれば、Twitter画面に遷移するときに付与する
       // POSTの前にこのメソッドを実行してthis.replacedFormatを書き換える
       // チェックボックスの状態をDataにもたせておく
-      console.log("addUrl");
+      // console.log("addUrl");
       var word = 'Posted by:';
       var url = 'https://repo-sapo.gakisan8273.com/';
       var pattern = word + url;
@@ -2660,11 +3018,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       if (this.checkBoxes.find(function (item) {
         return item === "addUrl";
       })) {
-        this.replacedFormat += "\n" + pattern;
-        console.log("added");
+        this.replacedFormat += "\n" + pattern; // console.log("added");
       } else {
-        this.replacedFormat = this.replacedFormat.replace(pattern, "");
-        console.log("deleted");
+        this.replacedFormat = this.replacedFormat.replace(pattern, ""); // console.log("deleted");
       }
     },
     recommendDays: function recommendDays() {
@@ -2694,24 +3050,30 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       var nowDate_hour = nowDate.getHours();
       var nowDate_time = nowDate.getTime();
       var diffDays = 0;
+      console.log(nowDate);
 
       switch (this.calcday) {
         case "1":
-          diffDays = Number(this.getDaysFromLatestTweet) + parseInt((nowDate_time - latestDate_time) / (1000 * 60 * 60 * 24), 10); // 小数点以下切り捨て 
+          // diffDays = Number(this.getDaysFromLatestTweet) + parseInt( ( nowDate_time - latestDate_time ) / ( 1000 * 60 * 60 * 24), 10 ); // 小数点以下切り捨て 
+          // diffDays = Number(this.getDaysFromLatestTweet) +  parseInt(nowDate_time / (1000*60*60*24), 10)  - parseInt(latestDate_time / ( 1000 * 60 * 60 * 24), 10); // 小数点以下切り捨て 
+          diffDays = Number(this.getDaysFromLatestTweet) + Math.floor(nowDate_time / (1000 * 60 * 60 * 24)) - Math.floor(latestDate_time / (1000 * 60 * 60 * 24)); // 小数点以下切り捨て 
 
-          console.log(this.calcday);
-          console.log(_typeof(Number(this.getDaysFromLatestTweet)));
+          console.log(this.getDaysFromLatestTweet);
           console.log({
             nowDate_time: nowDate_time
           });
           console.log({
             latestDate_time: latestDate_time
-          });
-          console.log((nowDate_time - latestDate_time) / (1000 * 60 * 60 * 24));
+          }); // console.log( parseInt((nowDate_time - latestDate_time) / (1000*60*60*24) ));
+
+          console.log(Math.floor(nowDate_time / (1000 * 60 * 60 * 24)) - Math.floor(latestDate_time / (1000 * 60 * 60 * 24)));
           console.log({
             diffDays: diffDays
           }); // 1になってる ここから修正
-          // calcday１〜2共通の処理
+
+          console.log({
+            latestDate_hour: latestDate_hour
+          }); // calcday１〜2共通の処理
 
           if (latestDate_hour < hour) {
             // 前回ツイート時間が18時以前だったら、前回ツイート日より1日前のツイートの意味
@@ -2761,7 +3123,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           console.log({
             nowDate_time: nowDate_time
           });
-          diffDays = 1 + parseInt((nowDate_time - latestDate_time) / (1000 * 60 * 60 * 24), 10); // 小数点以下切り捨て start_date（yyyy-mm-dd） と 今の日付の差
+          diffDays = 1 + Math.floor(nowDate_time / (1000 * 60 * 60 * 24)) - Math.floor(latestDate_time / (1000 * 60 * 60 * 24)); // 小数点以下切り捨て start_date（yyyy-mm-dd） と 今の日付の差
           // 初日を1日目とするため１を足す
           // https://keisan.casio.jp/exec/system/1177658154 日数計算サイト これと一致した 前のreportsupporterは間違っていた・・・
 
@@ -38323,6 +38685,507 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/business/format/editFormat.vue?vue&type=template&id=517ef4b5&":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/business/format/editFormat.vue?vue&type=template&id=517ef4b5& ***!
+  \*****************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("div", { staticClass: "make_format-hash" }, [
+        _c("label", { staticClass: "label", attrs: { for: "" } }, [
+          _vm._v("ハッシュタグ　(#業務日記 以外のタグを入力して下さい)")
+        ]),
+        _vm._v(" "),
+        _c("textarea", {
+          staticClass: "tweet-show today-tweet-show",
+          attrs: { name: "business_hash_tags", id: "", cols: "30", rows: "3" },
+          domProps: { value: _vm.hash_tags },
+          on: {
+            input: function($event) {
+              return _vm.$emit("input", $event.target.value)
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "input-group" }, [
+        _c("div", { staticClass: "input-group-text" }, [_vm._v("業務開始日")]),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control",
+          attrs: {
+            type: "text",
+            name: "business_start_date",
+            placeholder: "yyyy-mm-dd"
+          },
+          domProps: { value: _vm.start_date }
+        })
+      ]),
+      _vm._v(" "),
+      _vm.error
+        ? _c("div", { staticClass: "error" }, [_vm._v(_vm._s(_vm.error))])
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "form-check", staticStyle: { "margin-top": "15px" } },
+        [
+          _vm.calcday === "1"
+            ? _c("input", {
+                staticClass: "form-check-input",
+                attrs: {
+                  type: "radio",
+                  name: "business_calc_option",
+                  id: "radio1a",
+                  value: "1",
+                  checked: ""
+                }
+              })
+            : _c("input", {
+                staticClass: "form-check-input",
+                attrs: {
+                  type: "radio",
+                  name: "business_calc_option",
+                  id: "radio1a",
+                  value: "1"
+                }
+              }),
+          _vm._v(" "),
+          _vm._m(0)
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-check" }, [
+        _vm.calcday === "2"
+          ? _c("input", {
+              staticClass: "form-check-input",
+              attrs: {
+                type: "radio",
+                name: "business_calc_option",
+                id: "radio1b",
+                value: "2",
+                checked: ""
+              }
+            })
+          : _c("input", {
+              staticClass: "form-check-input",
+              attrs: {
+                type: "radio",
+                name: "business_calc_option",
+                id: "radio1b",
+                value: "2"
+              }
+            }),
+        _vm._v(" "),
+        _vm._m(1)
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-check" }, [
+        _vm.calcday === "3"
+          ? _c("input", {
+              staticClass: "form-check-input",
+              attrs: {
+                type: "radio",
+                name: "business_calc_option",
+                id: "radio1c",
+                value: "3",
+                checked: ""
+              }
+            })
+          : _c("input", {
+              staticClass: "form-check-input",
+              attrs: {
+                type: "radio",
+                name: "business_calc_option",
+                id: "radio1c",
+                value: "3"
+              }
+            }),
+        _vm._v(" "),
+        _vm._m(2)
+      ]),
+      _vm._v(" "),
+      _c("send-business-format", { attrs: { user: _vm.user } })
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "calc-title", attrs: { for: "radio1a" } },
+      [
+        _vm._v("起算日からの経過日数を自動計算します"),
+        _c("br"),
+        _vm._v("（x日目）")
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "calc-title", attrs: { for: "radio1b" } },
+      [
+        _vm._v("起算日からの経過週と本日の曜日を数字で出力します"),
+        _c("br"),
+        _vm._v("（x週目-n）")
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "calc-title", attrs: { for: "radio1c" } },
+      [
+        _vm._v("起算日からの経過月と本日の週数・曜日を数字で出力します"),
+        _c("br"),
+        _vm._v("（xヶ月目 第y週-n）")
+      ]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/business/format/sendFormat.vue?vue&type=template&id=725010b3&":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/business/format/sendFormat.vue?vue&type=template&id=725010b3& ***!
+  \*****************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "button",
+    {
+      staticClass: "today-make_tweet main-btn",
+      class: { active: _vm.activeFormat },
+      attrs: { disabled: !_vm.user }
+    },
+    [_vm._v("\n  フォーマット登録/変更\n")]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/business/make/MakeTweet.vue?vue&type=template&id=3a4d6f56&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/business/make/MakeTweet.vue?vue&type=template&id=3a4d6f56& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c(
+      "table",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: !_vm.user,
+            expression: "!user"
+          }
+        ],
+        staticClass: "edit_table"
+      },
+      [
+        _c(
+          "a",
+          { staticStyle: { color: "#007bff" }, attrs: { href: "/login" } },
+          [_vm._v("こちら")]
+        ),
+        _vm._v("からユーザ登録もしくはログインをして下さい\n      "),
+        _vm._m(0),
+        _vm._v(" "),
+        _vm._m(1)
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        staticClass: "today tweet",
+        attrs: { action: "https://twitter.com/compose/tweet", method: "get" }
+      },
+      [
+        _c("label", { staticClass: "today-label label", attrs: { for: "" } }, [
+          _vm._v("生成されるツイート")
+        ]),
+        _vm._v(" "),
+        _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.madeFormat,
+              expression: "madeFormat"
+            }
+          ],
+          staticClass: "tweet-show today-tweet-show",
+          attrs: { name: "text", id: "", cols: "30", rows: "10" },
+          domProps: { value: _vm.madeFormat },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.madeFormat = $event.target.value
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("p", { staticClass: "tweet-tips" }, [
+          _vm._v("ctrl+cmd+space で絵文字が入力できます")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-check" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.checkBoxes,
+                expression: "checkBoxes"
+              }
+            ],
+            staticClass: "form-check-input js-addurl",
+            attrs: { value: "addUrl", type: "checkbox", id: "check1a" },
+            domProps: {
+              checked: Array.isArray(_vm.checkBoxes)
+                ? _vm._i(_vm.checkBoxes, "addUrl") > -1
+                : _vm.checkBoxes
+            },
+            on: {
+              change: [
+                function($event) {
+                  var $$a = _vm.checkBoxes,
+                    $$el = $event.target,
+                    $$c = $$el.checked ? true : false
+                  if (Array.isArray($$a)) {
+                    var $$v = "addUrl",
+                      $$i = _vm._i($$a, $$v)
+                    if ($$el.checked) {
+                      $$i < 0 && (_vm.checkBoxes = $$a.concat([$$v]))
+                    } else {
+                      $$i > -1 &&
+                        (_vm.checkBoxes = $$a
+                          .slice(0, $$i)
+                          .concat($$a.slice($$i + 1)))
+                    }
+                  } else {
+                    _vm.checkBoxes = $$c
+                  }
+                },
+                _vm.addUrl
+              ]
+            }
+          }),
+          _vm._v(" "),
+          _vm._m(2)
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-check today-form-check" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.checkBoxes,
+                expression: "checkBoxes"
+              }
+            ],
+            staticClass: "form-check-input js-addurl",
+            attrs: { value: "closeTab", type: "checkbox", id: "check2a" },
+            domProps: {
+              checked: Array.isArray(_vm.checkBoxes)
+                ? _vm._i(_vm.checkBoxes, "closeTab") > -1
+                : _vm.checkBoxes
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.checkBoxes,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = "closeTab",
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 && (_vm.checkBoxes = $$a.concat([$$v]))
+                  } else {
+                    $$i > -1 &&
+                      (_vm.checkBoxes = $$a
+                        .slice(0, $$i)
+                        .concat($$a.slice($$i + 1)))
+                  }
+                } else {
+                  _vm.checkBoxes = $$c
+                }
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm._m(3)
+        ]),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "today-make_tweet main-btn",
+            attrs: { disabled: !_vm.user }
+          },
+          [
+            _c("i", { staticClass: "fab fa-twitter" }),
+            _vm._v("\n        ツイート画面へ\n      ")
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "past tweet" }, [
+      _c("label", { staticClass: "past-label label", attrs: { for: "" } }, [
+        _vm._v("前回のツイート"),
+        _c("small", { staticClass: "past-time" }, [
+          _vm._v(_vm._s(_vm.latestReportTweet_time))
+        ])
+      ]),
+      _vm._v(" "),
+      _c("textarea", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.latestReportTweet_tweet,
+            expression: "latestReportTweet_tweet"
+          }
+        ],
+        staticClass: "tweet-show past-tweet-show edit_disabled",
+        attrs: { disabled: "", name: "", id: "", cols: "30", rows: "10" },
+        domProps: { value: _vm.latestReportTweet_tweet },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.latestReportTweet_tweet = $event.target.value
+          }
+        }
+      })
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [_c("br"), _vm._v("このアプリでできること")])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("ul", [
+      _c("li", [_vm._v("・自分の #業務日記 を自動取得")]),
+      _vm._v(" "),
+      _c("li", [_vm._v("・#業務日記 用の日数を自動計算")]),
+      _vm._v(" "),
+      _c("li", [_vm._v("・↑が含まれた #業務日記 ツイートの雛形自動生成")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "form-check-label", attrs: { for: "check1a" } },
+      [
+        _vm._v("作成者を応援する"),
+        _c("small", [_vm._v("（本文にURLを表記）")]),
+        _c("br"),
+        _vm._v(" "),
+        _c("small", [
+          _c(
+            "a",
+            {
+              attrs: { href: "https://ofuse.me/users/13507", target: "_blank" }
+            },
+            [
+              _c("br"),
+              _vm._v("もっと応援してくれる人はこちら"),
+              _c("br"),
+              _vm._v("（外部サイトに移動します）")
+            ]
+          )
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "form-check-label", attrs: { for: "check2a" } },
+      [
+        _vm._v("ツイート生成後タブを閉じる"),
+        _c("small", [_vm._v("（未実装）")])
+      ]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/format/editFormat.vue?vue&type=template&id=2c6fb704&":
 /*!********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/format/editFormat.vue?vue&type=template&id=2c6fb704& ***!
@@ -38553,10 +39416,34 @@ var render = function() {
             "a",
             {
               staticClass: "header-nav-menu-item-link",
+              class: { active: _vm.activeBusinessMake },
+              attrs: { href: "/business" }
+            },
+            [_vm._v("#業務日記生成")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "header-nav-menu-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "header-nav-menu-item-link",
+              class: { active: _vm.activeBusinessFormat },
+              attrs: { href: "/business-format" }
+            },
+            [_vm._v("#業務日記用フォーマット")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "header-nav-menu-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "header-nav-menu-item-link",
               class: { active: _vm.activeMake },
               attrs: { href: "/" }
             },
-            [_vm._v("報告ツイート生成")]
+            [_vm._v("学習報告生成")]
           )
         ]),
         _vm._v(" "),
@@ -38568,7 +39455,7 @@ var render = function() {
               class: { active: _vm.activeFormat },
               attrs: { href: "/format" }
             },
-            [_vm._v("フォーマット登録/変更")]
+            [_vm._v("学習報告用フォーマット")]
           )
         ]),
         _vm._v(" "),
@@ -38580,7 +39467,7 @@ var render = function() {
               class: { active: _vm.activeCalcday },
               attrs: { href: "/calcday" }
             },
-            [_vm._v("日数計算方法変更")]
+            [_vm._v("学習報告用日数計算方法")]
           )
         ]),
         _vm._v(" "),
@@ -38604,7 +39491,7 @@ var render = function() {
               class: { active: _vm.activeLogin },
               attrs: { href: "/login" }
             },
-            [_vm._v("新規登録/ログイン/ログアウト")]
+            [_vm._v("新規登録/ログイン")]
           )
         ])
       ])
@@ -38622,6 +39509,30 @@ var render = function() {
     _vm._v(" "),
     _c("nav", { staticClass: "header-nav-sm", class: { active: _vm.menu } }, [
       _c("ul", { staticClass: "header-nav-sm-menu" }, [
+        _c("li", { staticClass: "header-nav-sm-menu-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "header-nav-sm-menu-item-link",
+              class: { active: _vm.activeBusinessMake },
+              attrs: { href: "/business" }
+            },
+            [_vm._v("#業務日記生成")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "header-nav-sm-menu-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "header-nav-sm-menu-item-link",
+              class: { active: _vm.activeBusinessFormat },
+              attrs: { href: "/business-format" }
+            },
+            [_vm._v("#業務日記用フォーマット")]
+          )
+        ]),
+        _vm._v(" "),
         _c("li", { staticClass: "header-nav-sm-menu-item" }, [
           _c(
             "a",
@@ -38691,7 +39602,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "header-logo" }, [
-      _c("a", { attrs: { href: "/" } }, [
+      _c("a", { attrs: { href: "/select" } }, [
         _c("img", {
           attrs: { src: "/assets/images/repo-sapo_logo.png", alt: "れぽさぽ" }
         })
@@ -38809,7 +39720,30 @@ var render = function() {
               })
             ])
           ])
-        })
+        }),
+        _vm._v(" "),
+        _c("td", { attrs: { colspan: "3" } }, [
+          _c(
+            "a",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: !_vm.user,
+                  expression: "!user"
+                }
+              ],
+              staticStyle: { color: "#007bff" },
+              attrs: { href: "/login" }
+            },
+            [_vm._v("こちら")]
+          ),
+          _vm._v("からユーザ登録もしくはログインをして下さい\n      "),
+          _vm._m(1),
+          _vm._v(" "),
+          _vm._m(2)
+        ])
       ],
       2
     ),
@@ -38917,7 +39851,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _vm._m(1)
+          _vm._m(3)
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "form-check today-form-check" }, [
@@ -38960,7 +39894,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _vm._m(2)
+          _vm._m(4)
         ]),
         _vm._v(" "),
         _c(
@@ -39020,6 +39954,26 @@ var staticRenderFns = [
       _c("td", [_vm._v("本日の値")]),
       _vm._v(" "),
       _c("td", [_vm._v("前回の値")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [_c("br"), _vm._v("このアプリでできること")])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("ul", [
+      _c("li", [_vm._v("・自分の 学習時間ツイート を自動取得")]),
+      _vm._v(" "),
+      _c("li", [_vm._v("・学習時間ツイート 用の日数を自動計算")]),
+      _vm._v(" "),
+      _c("li", [_vm._v("・学習時間ツイート 用の時間の入力支援")]),
+      _vm._v(" "),
+      _c("li", [_vm._v("・↑が含まれた 学習時間ツイートの雛形自動生成")])
     ])
   },
   function() {
@@ -51287,7 +52241,10 @@ Vue.component('edit-format', __webpack_require__(/*! ./components/format/editFor
 Vue.component('insert-button', __webpack_require__(/*! ./components/format/insertButton.vue */ "./resources/js/components/format/insertButton.vue")["default"]);
 Vue.component('send-format', __webpack_require__(/*! ./components/format/sendFormat.vue */ "./resources/js/components/format/sendFormat.vue")["default"]);
 Vue.component('make-tweet', __webpack_require__(/*! ./components/make/MakeTweet.vue */ "./resources/js/components/make/MakeTweet.vue")["default"]);
-Vue.component('header-vue', __webpack_require__(/*! ./components/header/Header.vue */ "./resources/js/components/header/Header.vue")["default"]); // Vue.component('insert-numbers', require('./components/make/InsertNumbers.vue').default);
+Vue.component('make-business-tweet', __webpack_require__(/*! ./components/business/make/MakeTweet.vue */ "./resources/js/components/business/make/MakeTweet.vue")["default"]);
+Vue.component('header-vue', __webpack_require__(/*! ./components/header/Header.vue */ "./resources/js/components/header/Header.vue")["default"]);
+Vue.component('edit-business-format', __webpack_require__(/*! ./components/business/format/editFormat.vue */ "./resources/js/components/business/format/editFormat.vue")["default"]);
+Vue.component('send-business-format', __webpack_require__(/*! ./components/business/format/sendFormat.vue */ "./resources/js/components/business/format/sendFormat.vue")["default"]); // Vue.component('insert-numbers', require('./components/make/InsertNumbers.vue').default);
 // Vue.component('input-numbers', require('./components/make/InputNumbers.vue').default);
 
 /**
@@ -51483,6 +52440,213 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MakeFormat_vue_vue_type_template_id_d360bca0___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MakeFormat_vue_vue_type_template_id_d360bca0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/business/format/editFormat.vue":
+/*!****************************************************************!*\
+  !*** ./resources/js/components/business/format/editFormat.vue ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _editFormat_vue_vue_type_template_id_517ef4b5___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./editFormat.vue?vue&type=template&id=517ef4b5& */ "./resources/js/components/business/format/editFormat.vue?vue&type=template&id=517ef4b5&");
+/* harmony import */ var _editFormat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./editFormat.vue?vue&type=script&lang=js& */ "./resources/js/components/business/format/editFormat.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _editFormat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _editFormat_vue_vue_type_template_id_517ef4b5___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _editFormat_vue_vue_type_template_id_517ef4b5___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/business/format/editFormat.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/business/format/editFormat.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/business/format/editFormat.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_editFormat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./editFormat.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/business/format/editFormat.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_editFormat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/business/format/editFormat.vue?vue&type=template&id=517ef4b5&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/business/format/editFormat.vue?vue&type=template&id=517ef4b5& ***!
+  \***********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editFormat_vue_vue_type_template_id_517ef4b5___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./editFormat.vue?vue&type=template&id=517ef4b5& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/business/format/editFormat.vue?vue&type=template&id=517ef4b5&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editFormat_vue_vue_type_template_id_517ef4b5___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editFormat_vue_vue_type_template_id_517ef4b5___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/business/format/sendFormat.vue":
+/*!****************************************************************!*\
+  !*** ./resources/js/components/business/format/sendFormat.vue ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _sendFormat_vue_vue_type_template_id_725010b3___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sendFormat.vue?vue&type=template&id=725010b3& */ "./resources/js/components/business/format/sendFormat.vue?vue&type=template&id=725010b3&");
+/* harmony import */ var _sendFormat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sendFormat.vue?vue&type=script&lang=js& */ "./resources/js/components/business/format/sendFormat.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _sendFormat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _sendFormat_vue_vue_type_template_id_725010b3___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _sendFormat_vue_vue_type_template_id_725010b3___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/business/format/sendFormat.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/business/format/sendFormat.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/business/format/sendFormat.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_sendFormat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./sendFormat.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/business/format/sendFormat.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_sendFormat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/business/format/sendFormat.vue?vue&type=template&id=725010b3&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/business/format/sendFormat.vue?vue&type=template&id=725010b3& ***!
+  \***********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_sendFormat_vue_vue_type_template_id_725010b3___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./sendFormat.vue?vue&type=template&id=725010b3& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/business/format/sendFormat.vue?vue&type=template&id=725010b3&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_sendFormat_vue_vue_type_template_id_725010b3___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_sendFormat_vue_vue_type_template_id_725010b3___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/business/make/MakeTweet.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/business/make/MakeTweet.vue ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _MakeTweet_vue_vue_type_template_id_3a4d6f56___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MakeTweet.vue?vue&type=template&id=3a4d6f56& */ "./resources/js/components/business/make/MakeTweet.vue?vue&type=template&id=3a4d6f56&");
+/* harmony import */ var _MakeTweet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MakeTweet.vue?vue&type=script&lang=js& */ "./resources/js/components/business/make/MakeTweet.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _MakeTweet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _MakeTweet_vue_vue_type_template_id_3a4d6f56___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _MakeTweet_vue_vue_type_template_id_3a4d6f56___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/business/make/MakeTweet.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/business/make/MakeTweet.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/business/make/MakeTweet.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MakeTweet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./MakeTweet.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/business/make/MakeTweet.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MakeTweet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/business/make/MakeTweet.vue?vue&type=template&id=3a4d6f56&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/business/make/MakeTweet.vue?vue&type=template&id=3a4d6f56& ***!
+  \********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MakeTweet_vue_vue_type_template_id_3a4d6f56___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./MakeTweet.vue?vue&type=template&id=3a4d6f56& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/business/make/MakeTweet.vue?vue&type=template&id=3a4d6f56&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MakeTweet_vue_vue_type_template_id_3a4d6f56___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MakeTweet_vue_vue_type_template_id_3a4d6f56___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
