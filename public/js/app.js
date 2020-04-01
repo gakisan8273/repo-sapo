@@ -2112,8 +2112,12 @@ __webpack_require__.r(__webpack_exports__);
       var hour = 17; // この時間を境目に前日扱いにする
 
       var nowDate = new Date();
+      var nowDate_year = nowDate.getFullYear();
+      var nowDate_month = nowDate.getMonth();
+      var nowDate_date = nowDate.getDate();
       var nowDate_hour = nowDate.getHours();
       var nowDate_time = nowDate.getTime();
+      var nowDate_Zero = new Date(nowDate_year, nowDate_month, nowDate_date);
       var start_date_year = this.start_date.slice(0, 4); //"yyyy"-mm-dd
 
       var start_date_month = this.start_date.slice(5, 7); //yyyy-"mm"-dd
@@ -2131,7 +2135,8 @@ __webpack_require__.r(__webpack_exports__);
       if (this.calcday === '1') {
         // x日目 の計算
         // 起算日から本日までの日数 （起算日＝1とする）
-        diffDays = 1 + Math.floor(nowDate_time / (1000 * 60 * 60 * 24)) - Math.floor(start_date_time / (1000 * 60 * 60 * 24)); // 小数点以下切り捨て start_date（yyyy-mm-dd） と 今の日付の差
+        // diffDays = 1 + Math.floor(nowDate_time / (1000*60*60*24))  - Math.floor(start_date_time / ( 1000 * 60 * 60 * 24)); // 小数点以下切り捨て start_date（yyyy-mm-dd） と 今の日付の差
+        diffDays = 1 + (nowDate_Zero - start_date_time) / (1000 * 60 * 60 * 24); // 小数点以下切り捨て start_date（yyyy-mm-dd） と 今の日付の差
         // 初日を1日目とするため１を足す
         // https://keisan.casio.jp/exec/system/1177658154 日数計算サイト これと一致した 前のreportsupporterは間違っていた
 
@@ -2159,10 +2164,22 @@ __webpack_require__.r(__webpack_exports__);
         });
         console.log({
           start_date_youbi: start_date_youbi
-        });
-        var start_date_firstDay = Math.floor(start_date_time / (1000 * 60 * 60 * 24)) - start_date_youbi;
-        var keika = Math.floor(nowDate_time / (1000 * 60 * 60 * 24)) - start_date_firstDay;
+        }); // let start_date_firstDay = Math.floor(start_date_time / ( 1000 * 60 * 60 * 24)) - start_date_youbi;
+
+        var start_date_firstDay = start_date_day - start_date_youbi; // let keika = nowDate_date - start_date_firstDay;
+
+        var start_date_firstWeek = new Date(start_date_year, start_date_month - 1, start_date_firstDay);
+        var keika = (nowDate_Zero - start_date_firstWeek) / (1000 * 60 * 60 * 24);
         var keikaWeeks = Math.floor(keika / 7) + 1;
+        console.log({
+          start_date_firstWeek: start_date_firstWeek
+        });
+        console.log({
+          start_date_time: start_date_time
+        });
+        console.log({
+          keika: keika
+        });
         console.log({
           keikaWeeks: keikaWeeks
         });
@@ -3042,38 +3059,28 @@ __webpack_require__.r(__webpack_exports__);
 
       var latestDate = new Date(this.latestReportTweet_time_for_js); // 前回ツイートの日付 Dateオブジェクト
 
-      var latestDate_hour = latestDate.getHours(); // 時間を取得
+      var latestDate_year = latestDate.getFullYear();
+      var latestDate_month = latestDate.getMonth();
+      var latestDate_date = latestDate.getDate();
+      var latestDate_hour = latestDate.getHours(); // 時間を取得 19
 
       var latestDate_time = latestDate.getTime(); // ミリ秒単位の経過時間
 
+      var latestDate_Zero = new Date(latestDate_year, latestDate_month, latestDate_date);
       var nowDate = new Date();
+      var nowDate_year = nowDate.getFullYear();
+      var nowDate_month = nowDate.getMonth();
+      var nowDate_date = nowDate.getDate();
       var nowDate_hour = nowDate.getHours();
       var nowDate_time = nowDate.getTime();
-      var diffDays = 0;
-      console.log(nowDate);
+      var nowDate_Zero = new Date(nowDate_year, nowDate_month, nowDate_date);
+      var diffDays = 0; //latestDate :  午後7:47 · 2020年1月26日 230日目
+      //nowDate : 午前8:37 · 2020年1月28日 230日目になってしまった（231になるはず）
 
       switch (this.calcday) {
         case "1":
-          // diffDays = Number(this.getDaysFromLatestTweet) + parseInt( ( nowDate_time - latestDate_time ) / ( 1000 * 60 * 60 * 24), 10 ); // 小数点以下切り捨て 
-          // diffDays = Number(this.getDaysFromLatestTweet) +  parseInt(nowDate_time / (1000*60*60*24), 10)  - parseInt(latestDate_time / ( 1000 * 60 * 60 * 24), 10); // 小数点以下切り捨て 
-          diffDays = Number(this.getDaysFromLatestTweet) + Math.floor(nowDate_time / (1000 * 60 * 60 * 24)) - Math.floor(latestDate_time / (1000 * 60 * 60 * 24)); // 小数点以下切り捨て 
-
-          console.log(this.getDaysFromLatestTweet);
-          console.log({
-            nowDate_time: nowDate_time
-          });
-          console.log({
-            latestDate_time: latestDate_time
-          }); // console.log( parseInt((nowDate_time - latestDate_time) / (1000*60*60*24) ));
-
-          console.log(Math.floor(nowDate_time / (1000 * 60 * 60 * 24)) - Math.floor(latestDate_time / (1000 * 60 * 60 * 24)));
-          console.log({
-            diffDays: diffDays
-          }); // 1になってる ここから修正
-
-          console.log({
-            latestDate_hour: latestDate_hour
-          }); // calcday１〜2共通の処理
+          //UNIXタイムスタンプの基準は 0 = 1970/1/1 09:00:00 (JST) 9時間ずれてる・・・
+          diffDays = Number(this.getDaysFromLatestTweet) + (nowDate_Zero - latestDate_Zero) / (60 * 60 * 24 * 1000); // calcday１〜2共通の処理
 
           if (latestDate_hour < hour) {
             // 前回ツイート時間が18時以前だったら、前回ツイート日より1日前のツイートの意味
@@ -39722,28 +39729,31 @@ var render = function() {
           ])
         }),
         _vm._v(" "),
-        _c("td", { attrs: { colspan: "3" } }, [
-          _c(
-            "a",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: !_vm.user,
-                  expression: "!user"
-                }
-              ],
-              staticStyle: { color: "#007bff" },
-              attrs: { href: "/login" }
-            },
-            [_vm._v("こちら")]
-          ),
-          _vm._v("からユーザ登録もしくはログインをして下さい\n      "),
-          _vm._m(1),
-          _vm._v(" "),
-          _vm._m(2)
-        ])
+        _c(
+          "td",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: !_vm.user,
+                expression: "!user"
+              }
+            ],
+            attrs: { colspan: "3" }
+          },
+          [
+            _c(
+              "a",
+              { staticStyle: { color: "#007bff" }, attrs: { href: "/login" } },
+              [_vm._v("こちら")]
+            ),
+            _vm._v("からユーザ登録もしくはログインをして下さい\n      "),
+            _vm._m(1),
+            _vm._v(" "),
+            _vm._m(2)
+          ]
+        )
       ],
       2
     ),
@@ -39960,7 +39970,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("p", [_c("br"), _vm._v("このアプリでできること")])
+    return _c("p", [_c("br"), _vm._v("このアプリでできること ")])
   },
   function() {
     var _vm = this

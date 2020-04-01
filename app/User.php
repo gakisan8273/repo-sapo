@@ -193,5 +193,5 @@ class User extends Authenticatable
 			//#業務日記用を取得するときの検索ワードを作る
 			$searchWordsArrayForBusinessTweet = ["#業務日記"];
 			return $searchWordsArrayForBusinessTweet;
-		}
+        }
 }

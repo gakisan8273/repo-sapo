@@ -23,9 +23,9 @@
         <td><input type="text" class="edit_disabled" disabled :value="getTimesFromLatestTweet[item-1]"></td>
         <!-- <td><input type="text" class="edit_disabled" disabled></td> -->
       </tr>
-      <td colspan="3">
-        <a v-show="!user" href="/login" style="color:#007bff;">こちら</a>からユーザ登録もしくはログインをして下さい
-        <p><br>このアプリでできること</p>
+      <td v-show="!user" colspan="3">
+        <a href="/login" style="color:#007bff;">こちら</a>からユーザ登録もしくはログインをして下さい
+        <p><br>このアプリでできること </p>
         <ul>
           <li>・自分の 学習時間ツイート を自動取得</li>
           <li>・学習時間ツイート 用の日数を自動計算</li>
@@ -372,26 +372,30 @@ export default {
       // ０時〜１８時のツイートは、前日扱いとする （日を跨いで前日の報告ツイートをすることを想定）
       const hour = 18; // この時間を境目に前日扱いにする
       let latestDate = new Date(this.latestReportTweet_time_for_js); // 前回ツイートの日付 Dateオブジェクト
-      let latestDate_hour = latestDate.getHours(); // 時間を取得
+      let latestDate_year = latestDate.getFullYear();
+      let latestDate_month = latestDate.getMonth();
+      let latestDate_date = latestDate.getDate();
+      let latestDate_hour = latestDate.getHours(); // 時間を取得 19
       let latestDate_time = latestDate.getTime(); // ミリ秒単位の経過時間
-      let nowDate = new Date();
+      let latestDate_Zero = new Date(latestDate_year, latestDate_month, latestDate_date);
+      let nowDate = new Date(); 
+      let nowDate_year = nowDate.getFullYear();
+      let nowDate_month = nowDate.getMonth();
+      let nowDate_date = nowDate.getDate();
       let nowDate_hour = nowDate.getHours();
       let nowDate_time = nowDate.getTime();
+      let nowDate_Zero = new Date(nowDate_year, nowDate_month, nowDate_date);
       let diffDays = 0;
-      console.log(nowDate);
+
+      //latestDate :  午後7:47 · 2020年1月26日 230日目
+      //nowDate : 午前8:37 · 2020年1月28日 230日目になってしまった（231になるはず）
+
       switch (this.calcday) {
         case "1":
-          // diffDays = Number(this.getDaysFromLatestTweet) + parseInt( ( nowDate_time - latestDate_time ) / ( 1000 * 60 * 60 * 24), 10 ); // 小数点以下切り捨て 
-          // diffDays = Number(this.getDaysFromLatestTweet) +  parseInt(nowDate_time / (1000*60*60*24), 10)  - parseInt(latestDate_time / ( 1000 * 60 * 60 * 24), 10); // 小数点以下切り捨て 
-          diffDays = Number(this.getDaysFromLatestTweet) +  Math.floor(nowDate_time / (1000*60*60*24))  - Math.floor(latestDate_time / ( 1000 * 60 * 60 * 24)); // 小数点以下切り捨て 
-          console.log(this.getDaysFromLatestTweet);
-          console.log({nowDate_time});
-          console.log({latestDate_time});
-          // console.log( parseInt((nowDate_time - latestDate_time) / (1000*60*60*24) ));
-          console.log( Math.floor(nowDate_time / (1000*60*60*24))  - Math.floor(latestDate_time / ( 1000 * 60 * 60 * 24)));
-          console.log({diffDays}); // 1になってる ここから修正
-
-          console.log({latestDate_hour})
+          //UNIXタイムスタンプの基準は 0 = 1970/1/1 09:00:00 (JST) 9時間ずれてる・・・
+          
+          diffDays = Number(this.getDaysFromLatestTweet) + (nowDate_Zero - latestDate_Zero)/(60*60*24*1000);
+          
           // calcday１〜2共通の処理
           if (latestDate_hour < hour) {
             // 前回ツイート時間が18時以前だったら、前回ツイート日より1日前のツイートの意味

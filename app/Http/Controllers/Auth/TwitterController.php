@@ -238,5 +238,74 @@ class TwitterController extends Controller
 			} else {
 				return view('select', ['user'=>""]);
 			}
-		}
+    }
+    
+    public function getFollowees()
+    {
+      $bearerToken = env("TWITTER_BEARER_TOKEN"); // 公開しないものは.envから読み込む
+      $requestUrl ='https://api.twitter.com/1.1/friends/ids.json';
+
+      $screen_name = 'xhack20';
+
+        $params = array(
+            'screen_name' => $screen_name,
+        );
+        // クエリ形式に変換
+        if($params){
+                $Qparams = http_build_query($params);
+                $requestUrl .= '?'.$Qparams;
+        }
+
+        // リクエスト用のコンテキスト
+        $context = array(
+            'http' => array(
+                'method' => 'GET' , // リクエストメソッド
+                'header' => array(			  // ヘッダー
+                    'Authorization: Bearer '. $bearerToken,
+                ) ,
+            ) ,
+        ) ;
+
+        // //ストリームコンテキストを作成 file_get_contentsのオプションとして使う時に必要　詳しくは知らん
+        $Scontext = stream_context_create($context);
+        // debug('コンテキスト',$Scontext);
+        $json = file_get_contents($requestUrl, false, $Scontext);//ただの文字列（JSON？）なので、あとで連想配列に変換する
+        // これがタイムラインのツイート１００個 full_textがツイート内容 created_atがツイート日時
+        $followeeIDs = json_decode($json, true); //jsonを連想配列に変換 falseだとオブジェクトに変換
+        // dd($followeesIDs);
+
+
+        $requestUrl ='https://api.twitter.com/1.1/users/lookup.json';
+
+      $screen_name = 'xhack20';
+        foreach ($followeeIDs as $followeeID ) {
+        $params = array(
+            'user_id' => $followeeID,
+        );
+        // クエリ形式に変換
+        if($params){
+                $Qparams = http_build_query($params);
+                $requestUrl .= '?'.$Qparams;
+        }
+
+        // リクエスト用のコンテキスト
+        $context = array(
+            'http' => array(
+                'method' => 'GET' , // リクエストメソッド
+                'header' => array(			  // ヘッダー
+                    'Authorization: Bearer '. $bearerToken,
+                ) ,
+            ) ,
+        ) ;
+
+        // //ストリームコンテキストを作成 file_get_contentsのオプションとして使う時に必要　詳しくは知らん
+        $Scontext = stream_context_create($context);
+        // debug('コンテキスト',$Scontext);
+        $json = file_get_contents($requestUrl, false, $Scontext);//ただの文字列（JSON？）なので、あとで連想配列に変換する
+        // これがタイムラインのツイート１００個 full_textがツイート内容 created_atがツイート日時
+        $followee = json_decode($json, true); //jsonを連想配列に変換 falseだとオブジェクトに変換
+        dd($followee);
+        }
+        // return $followees;
+    }
 }

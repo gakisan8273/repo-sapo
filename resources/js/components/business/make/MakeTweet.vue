@@ -86,8 +86,12 @@ export default {
     recommendDays : function(){
       const hour = 17; // この時間を境目に前日扱いにする
       let nowDate = new Date();
+      let nowDate_year = nowDate.getFullYear();
+      let nowDate_month = nowDate.getMonth();
+      let nowDate_date = nowDate.getDate();
       let nowDate_hour = nowDate.getHours();
       let nowDate_time = nowDate.getTime();
+      let nowDate_Zero = new Date(nowDate_year, nowDate_month, nowDate_date);
       let start_date_year = this.start_date.slice(0,4); //"yyyy"-mm-dd
       let start_date_month = this.start_date.slice(5,7); //yyyy-"mm"-dd
       let start_date_day = this.start_date.slice(8,10); //yyyy-mm-"dd"
@@ -101,7 +105,8 @@ export default {
       if(this.calcday === '1'){
         // x日目 の計算
         // 起算日から本日までの日数 （起算日＝1とする）
-        diffDays = 1 + Math.floor(nowDate_time / (1000*60*60*24))  - Math.floor(start_date_time / ( 1000 * 60 * 60 * 24)); // 小数点以下切り捨て start_date（yyyy-mm-dd） と 今の日付の差
+        // diffDays = 1 + Math.floor(nowDate_time / (1000*60*60*24))  - Math.floor(start_date_time / ( 1000 * 60 * 60 * 24)); // 小数点以下切り捨て start_date（yyyy-mm-dd） と 今の日付の差
+        diffDays = 1 + (nowDate_Zero  - start_date_time) / ( 1000 * 60 * 60 * 24); // 小数点以下切り捨て start_date（yyyy-mm-dd） と 今の日付の差
           // 初日を1日目とするため１を足す
           // https://keisan.casio.jp/exec/system/1177658154 日数計算サイト これと一致した 前のreportsupporterは間違っていた
           console.log(this.calcday);
@@ -122,11 +127,17 @@ export default {
         // ↑を7で割り１を足す（経過週数 起算日の週を1とする）
         console.log({nowDate_day});
         console.log({start_date_youbi});
-        let start_date_firstDay = Math.floor(start_date_time / ( 1000 * 60 * 60 * 24)) - start_date_youbi;
-        let keika = Math.floor(nowDate_time / (1000*60*60*24)) - start_date_firstDay;
+        // let start_date_firstDay = Math.floor(start_date_time / ( 1000 * 60 * 60 * 24)) - start_date_youbi;
+        let start_date_firstDay = start_date_day - start_date_youbi;
+        // let keika = nowDate_date - start_date_firstDay;
+        let start_date_firstWeek = new Date(start_date_year, start_date_month - 1, start_date_firstDay);
+        let keika = (nowDate_Zero - start_date_firstWeek) / ( 1000 * 60 * 60 * 24);
         let keikaWeeks = Math.floor(keika / 7) + 1;
+        console.log({start_date_firstWeek});
+        console.log({start_date_time});
+        console.log({keika});
         console.log({keikaWeeks});
-        
+
         if (nowDate_hour < hour) {
             // 今回のツイート時間が１7時以前だったら、昨日のツイートの意味
             // 普通に経過時間を計算すると1日多くなるので、diffDaysを−１する
